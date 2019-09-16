@@ -1,0 +1,29 @@
+{
+  "links": {
+    "activities": "frActivities",
+    "destinations": "frDestinations",
+    "faq": "frFAQ",
+    "aboutUs": "frAbout us",
+    "contact": "frContact",
+    "new": "frAd new",
+    "english": "English",
+    "french": "French"
+  },
+  "home": {
+    "title": "Home fr",
+    "topDestinations": "frTop Destinations",
+    "introduction": "Ceci est un texte d'introduction en Français."
+  },
+  "about": {
+    "title": "À propos",
+    "introduction": "Cette page est faite pour vous donner plus d'informations."
+  },
+  "excursionAddNew": {
+    "tabs": {
+      "language": "Французский",
+      "city": {
+        "spb": "saint-petersbourg"
+      }
+    }
+  }
+}
