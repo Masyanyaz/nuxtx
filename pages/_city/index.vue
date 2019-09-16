@@ -11,52 +11,45 @@
       </v-layout>
     </v-container>
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      {{$t('home.topDestinations')}}
+      Excursion
     </h2>
-    <CityCards :ads="ads"/>
+    <ExcursionCards :ads="ads"/>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
-  import CityCards from "../components/City/CityCards";
+  import ExcursionCards from "../../components/Excursion/ExcursionCards";
 
   export default {
-    async fetch({store}) {
+    async asyncData({store, route}) {
       const url = {
-        language: store.state.locale
+        language: store.state.locale,
+        city: route.params.city
       };
-      if (store.getters['city/ads'].length === 0) {
-        await store.dispatch('city/fetchAds', url)
-      }
+      await store.dispatch('excursion/fetchAds', url)
     },
     data() {
       return {
-
+        title: 'asd',
+        showGalery: false,
+        ad: null
       }
     },
     head() {
       return {
-        title: this.$t('home.title'),
+        title: 'asdasd',
         meta: [
-          {hid: 'description', name: 'description', content: 'desc home'}
+          {hid: 'description', name: 'description', content: 'asdad'}
         ]
       }
     },
-    computed: mapGetters({
-      loading: 'shared/loading',
-      user: 'user/user',
-      ads: 'city/ads'
-    }),
     components: {
-      CityCards
+      ExcursionCards
     },
-    nuxtI18n: {
-      paths: {
-        en: '/',
-        fr: '/'
-      }
-    }
+    computed: mapGetters({
+      ads: 'excursion/ads',
+    }),
   }
 </script>
 

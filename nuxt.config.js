@@ -6,7 +6,6 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -20,7 +19,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#bababa' },
   /*
   ** Global CSS
   */
@@ -30,7 +29,14 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/firebase.js',
+    '~/plugins/i18n.js'
   ],
+
+
+  router: {
+    middleware: ['authenticated', 'i18n']
+  },
   /*
   ** Nuxt.js dev-modules
   */
@@ -43,6 +49,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    'nuxt-i18n'
   ],
   /*
   ** Axios module configuration
@@ -55,20 +62,8 @@ module.exports = {
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
+    defaultAssets: {
+      icons: 'md'
     }
   },
   /*
@@ -80,5 +75,15 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  i18n: {
+    locales: [
+      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English'},
+      { code: 'fr', iso: 'fr-FR', file: 'fr.json', name: 'Français'},
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en'
   }
 }
