@@ -259,7 +259,7 @@
             image: this.image
           }
 
-          this.$store.dispatch('excursion/createAd', ad)
+          this.$store.dispatch('excursion/createExcursion', ad)
             .then(() => {
               this.$router.push('/admin')
             })

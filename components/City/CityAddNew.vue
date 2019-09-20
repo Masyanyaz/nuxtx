@@ -192,7 +192,7 @@
             image: this.image
           }
 
-          this.$store.dispatch('city/createAd', ad)
+          this.$store.dispatch('city/createCity', ad)
             .then(() => {
               this.$router.push('/admin')
             })

@@ -49,6 +49,13 @@
         <v-btn
           text
           v-if="isUserloggedIn"
+          :to="localePath('admin')"
+        >
+          Ad new
+        </v-btn>
+        <v-btn
+          text
+          v-if="isUserloggedIn"
           @click="onLogout"
         >
           <v-icon left>exit_to_app</v-icon>
@@ -94,7 +101,6 @@
           {title: this.$t('Navbar.faq'), url: 'faq'},
           {title: this.$t('Navbar.aboutUs'), url: 'about-us'},
           {title: this.$t('Navbar.contact'), url: 'contact'},
-          {title: this.$t('Navbar.new'), url: 'admin'}
         ]
       }
     },
