@@ -4,6 +4,11 @@ const express = require('express');
 const {Nuxt, Builder} = require('nuxt');
 const app = express();
 
+mongoose.connect('....') // it is problem
+
+app.use('/', require('.......'))
+
+module.exports = { path: '/server/api', handler: app }
 // const db = require('./config/database');
 //
 // app.use(bodyParser.urlencoded({extended: true}));
