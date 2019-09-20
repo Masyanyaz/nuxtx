@@ -49,8 +49,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'nuxt-i18n',
-    '~/modules/api'
+    'nuxt-i18n'
   ],
   serverMiddleware: [
     '~server/index'
