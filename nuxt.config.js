@@ -49,17 +49,9 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'nuxt-i18n'
+    'nuxt-i18n',
+    '~/modules/api'
   ],
-  hooks: {
-    build: {
-      done(builder) {
-        if (!builder.nuxt.options.dev) {
-          setTimeout(() => process.exit(0), 1000);
-        }
-      }
-    }
-  },
   serverMiddleware: [
     '~server/index'
   ],
