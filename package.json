@@ -1,4 +1,10 @@
 {
+  "config": {
+    "nuxt": {
+      "host": "116.203.230.90",
+      "port": "3333"
+    }
+  },
   "name": "newnuxt",
   "version": "1.0.0",
   "description": "My tiptop Nuxt.js project",
