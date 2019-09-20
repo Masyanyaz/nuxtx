@@ -4,11 +4,6 @@ const express = require('express');
 const {Nuxt, Builder} = require('nuxt');
 const app = express();
 
-mongoose.connect('....') // it is problem
-
-app.use('/', require('.......'))
-
-module.exports = { path: '/server/api', handler: app }
 // const db = require('./config/database');
 //
 // app.use(bodyParser.urlencoded({extended: true}));
@@ -76,15 +71,15 @@ async function start() {
   const {host, port} = nuxt.options.server;
 
   // Build only in dev mode
-  // if (config.dev) {
-  //   const builder = new Builder(nuxt);
-  //   await builder.build()
-  // } else {
-  //   await nuxt.ready()
-  // }
+  if (config.dev) {
+    const builder = new Builder(nuxt);
+    await builder.build()
+  } else {
+    await nuxt.ready()
+  }
 
   // Give nuxt middleware to express
-  // app.use(nuxt.render);
+  app.use(nuxt.render);
 
   // Listen the server
   app.listen(port, host);
