@@ -51,6 +51,10 @@ module.exports = {
     '@nuxtjs/axios',
     'nuxt-i18n'
   ],
+
+  serverMiddleware: [
+    '~server/index'
+  ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

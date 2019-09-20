@@ -4,9 +4,9 @@
       <v-layout>
         <v-flex xs12>
           <div
-            :style="{background: 'url(' + ad.imageSrc + ') no-repeat 50% 15% /cover'}"
+            :style="{background: 'url(' + exc.imageSrc + ') no-repeat 50% 15% /cover'}"
             class="welcome-top">
-            <div class="welcome-top__text">{{ad.name}}</div>
+            <div class="welcome-top__text">{{exc.name}}</div>
             <v-btn
               text
               @click="showGalery = !showGalery"
@@ -24,12 +24,12 @@
       </v-layout>
     </v-container>
     <div style="margin: 0 25px;">
-      <ExcursionHeader :ad="ad"/>
+      <ExcursionHeader :exc="exc"/>
       <v-container>
         <v-layout row>
           <v-flex md9 xs12>
             <h2>Overview</h2>
-            <div v-html="ad.detailText"/>
+            <div v-html="exc.detailText"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -45,7 +45,7 @@
               >
                 <div
                   class="d-flex align-center"
-                  v-for="(incl, i) in ad.included"
+                  v-for="(incl, i) in exc.included"
                 >
                   <v-icon
                     style="color: rgb(46, 204, 113)"
@@ -64,7 +64,7 @@
               >
                 <div
                   class="d-flex align-center"
-                  v-for="(excl, i) in ad.excluded"
+                  v-for="(excl, i) in exc.excluded"
                 >
                   <v-icon
                     style="color: rgb(250, 86, 54)"
@@ -90,7 +90,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <ExcursionCards :ads="ads"/>
+    <ExcursionCards :excursions="excursions"/>
   </div>
 </template>
 
@@ -99,30 +99,31 @@
   import ExcursionHeader from '@/components/Excursion/ExcursionHeader'
   import ExcursionGalery from '@/components/Excursion/ExcursionGalery'
   import ExcursionEdit from '@/components/Excursion/ExcursionEdit'
-  import ExcursionCards from "../../../components/Excursion/ExcursionCards";
+  import ExcursionCards from "@/components/Excursion/ExcursionCards";
 
   export default {
-    async asyncData({store, params, route}) {
-      const url = {
-        language: store.state.locale,
-        city: route.params.city
-      };
-      await store.dispatch('excursion/fetchAds', url)
-      let ad = await store.getters['excursion/adByUrl'](params.id)
-      return {ad}
+    async asyncData({store, params}) {
+      if (store.getters['excursion/excursions'].length === 0) {
+        const url = {
+          language: store.state.locale,
+          city: params.city
+        };
+        await store.dispatch('excursion/fetchExcursions', url)
+      }
+      let exc = await store.getters['excursion/excByUrl'](params.id)
+      return {exc}
     },
     data() {
       return {
         title: 'asd',
-        showGalery: false,
-        ad: null
+        showGalery: false
       }
     },
     head() {
       return {
-        title: this.ad.title,
+        title: this.exc.title,
         meta: [
-          {hid: 'description', name: 'description', content: this.ad.description}
+          {hid: 'description', name: 'description', content: this.exc.description}
         ]
       }
     },
@@ -133,7 +134,7 @@
       ExcursionEdit
     },
     computed: mapGetters({
-      ads: 'excursion/ads',
+      excursions: 'excursion/excursions',
     }),
   }
 </script>

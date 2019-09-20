@@ -7,7 +7,7 @@
             <v-icon left class="fill-height mr-1">alarm</v-icon>
             <div class="d-flex" style="flex-direction: column">
               <b>Duration</b>
-              <span>{{ad.time}} hours</span>
+              <span>{{exc.time}} hours</span>
             </div>
           </div>
           <div class="d-flex align-center justify-center">
@@ -21,14 +21,14 @@
             <v-icon right class="fill-height mr-1">group</v-icon>
             <div class="d-flex" style="flex-direction: column">
               <b>Group Size</b>
-              <span>{{ad.groupSize}} peoples</span>
+              <span>{{exc.groupSize}} peoples</span>
             </div>
           </div>
           <div class="d-flex align-center justify-center">
             <v-icon right class="fill-height mr-1">alarm</v-icon>
             <div class="d-flex" style="flex-direction: column">
               <b>Price</b>
-              <span>{{ad.price}} €</span>
+              <span>{{exc.price}} €</span>
             </div>
           </div>
         </div>
@@ -39,6 +39,6 @@
 
 <script>
   export default {
-    props: ['ad']
+    props: ['exc']
   }
 </script>

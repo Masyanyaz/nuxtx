@@ -7,18 +7,18 @@
         md4
         lg3
         xl2
-        v-for="ad in ads"
-        :key="ad.id"
+        v-for="exc in excursions"
+        :key="exc.id"
       >
         <v-hover>
           <v-card
             slot-scope="{ hover }"
             :class="`elevation-${hover ? 16 : 2}`"
             class="pointer"
-            :to="'/' + ad.city + '/' + ad.url"
+            :to="'/' + exc.city + '/' + exc.url"
           >
             <v-img
-              :src="ad.imageSrc"
+              :src="exc.imageSrc"
               class="white--text"
               height="200px"
               aspect-ratio="3"
@@ -28,8 +28,8 @@
                 primary-title
               >
                 <div style="text-align: center">
-                  <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{ad.name}}</h3>
-                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{ad.id}}</p>
+                  <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{exc.name}}</h3>
+                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{exc.id}}</p>
                 </div>
               </v-card-title>
             </v-img>
@@ -44,8 +44,8 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    props: ['excursions'],
     computed: mapGetters({
-      ads: 'excursion/ads',
       loading: 'shared/loading'
     }),
   }

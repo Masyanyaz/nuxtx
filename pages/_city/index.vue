@@ -13,7 +13,7 @@
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       Excursion
     </h2>
-    <ExcursionCards :ads="ads"/>
+    <ExcursionCards :excursions="excursions"/>
   </div>
 </template>
 
@@ -22,25 +22,27 @@
   import ExcursionCards from "../../components/Excursion/ExcursionCards";
 
   export default {
-    async asyncData({store, route}) {
+    async asyncData({store, params}) {
+      // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
         language: store.state.locale,
-        city: route.params.city
+        city: params.city
       };
-      await store.dispatch('excursion/fetchAds', url)
+      await store.dispatch('excursion/fetchExcursions', url)
+      await store.dispatch('city/fetchCities', url)
+      let city = await store.getters['city/cityByUrl'](params.city)
+      return {city}
     },
     data() {
       return {
-        title: 'asd',
-        showGalery: false,
-        ad: null
+
       }
     },
     head() {
       return {
-        title: 'asdasd',
+        title: this.city.title,
         meta: [
-          {hid: 'description', name: 'description', content: 'asdad'}
+          {hid: 'description', name: 'description', content: this.city.description}
         ]
       }
     },
@@ -48,7 +50,7 @@
       ExcursionCards
     },
     computed: mapGetters({
-      ads: 'excursion/ads',
+      excursions: 'excursion/excursions',
     }),
   }
 </script>

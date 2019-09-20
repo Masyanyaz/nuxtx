@@ -13,23 +13,28 @@
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('home.topDestinations')}}
     </h2>
-    <CityCards :ads="ads"/>
+    <CityCards :cities="cities"/>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
   import CityCards from "../components/City/CityCards";
+  // import axios from "../.nuxt/axios";
 
   export default {
     async fetch({store}) {
-      const url = {
-        language: store.state.locale
-      };
-      if (store.getters['city/ads'].length === 0) {
-        await store.dispatch('city/fetchAds', url)
+      if (store.getters['city/cities'].length === 0) {
+        const url = {
+          language: store.state.locale
+        };
+        await store.dispatch('city/fetchCities', url)
       }
     },
+    // async asyncData({$axios}) {
+    //   const posts = await $axios.$get('http://localhost:3000/admin/getposts')
+    //   return {posts: posts.data}
+    // },
     data() {
       return {
 
@@ -37,16 +42,16 @@
     },
     head() {
       return {
-        title: this.$t('home.title'),
+        title: this.$t('index.title'),
         meta: [
-          {hid: 'description', name: 'description', content: 'desc home'}
+          {hid: 'description', name: 'description', content: this.$t('index.description')}
         ]
       }
     },
     computed: mapGetters({
       loading: 'shared/loading',
       user: 'user/user',
-      ads: 'city/ads'
+      cities: 'city/cities'
     }),
     components: {
       CityCards

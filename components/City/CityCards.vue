@@ -7,18 +7,18 @@
         md4
         lg3
         xl2
-        v-for="ad in ads"
-        :key="ad.id"
+        v-for="city in cities"
+        :key="city.id"
       >
         <v-hover>
           <v-card
             slot-scope="{ hover }"
             :class="`elevation-${hover ? 16 : 2}`"
             class="pointer"
-            :to="ad.url"
+            :to="city.url"
           >
             <v-img
-              :src="ad.imageSrc"
+              :src="city.imageSrc"
               class="white--text"
               height="200px"
               aspect-ratio="3"
@@ -28,8 +28,8 @@
                 primary-title
               >
                 <div style="text-align: center">
-                  <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{ad.name}}</h3>
-                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{ad.id}}</p>
+                  <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{city.name}}</h3>
+                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{city.id}}</p>
                 </div>
               </v-card-title>
             </v-img>
@@ -44,8 +44,8 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    props: ['cities'],
     computed: mapGetters({
-      ads: 'city/ads',
       loading: 'shared/loading'
     }),
   }

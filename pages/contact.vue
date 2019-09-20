@@ -16,11 +16,13 @@
         hhh: this.$t('about.title')
       }
     },
-    head: {
-      title: 'Contact',
-      meta: [
-        { hid: 'description', name: 'description', content: 'desc Contact' }
-      ]
+    head() {
+      return {
+        title: this.$t('index.title'),
+        meta: [
+          {hid: 'description', name: 'description', content: this.$t('index.description')}
+        ]
+      }
     },
     nuxtI18n: {
       paths: {

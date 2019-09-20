@@ -25,11 +25,13 @@
 
 <script>
   export default {
-    head: {
-      title: 'FAQ',
-      meta: [
-        {hid: 'description', name: 'description', content: 'desc faq'}
-      ]
+    head() {
+      return {
+        title: this.$t('index.title'),
+        meta: [
+          {hid: 'description', name: 'description', content: this.$t('index.description')}
+        ]
+      }
     },
     nuxtI18n: {
       paths: {

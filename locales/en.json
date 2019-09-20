@@ -1,5 +1,16 @@
 {
-  "links": {
+  "Excursion": {
+    "ExcursionHeader": {
+
+    }
+  },
+  "City": {
+
+  },
+  "Footer": {
+
+  },
+  "Navbar": {
     "activities": "Activities",
     "destinations": "Destinations",
     "faq": "FAQ",
@@ -9,14 +20,40 @@
     "english": "English",
     "french": "French"
   },
-  "home": {
+  "index": {
     "title": "Home",
-    "topDestinations": "Top Destinations",
-    "introduction": "This is an introduction in English."
+    "description": "Home des",
+    "h1": "",
+    "topDestinations": "Top Destinations"
+  },
+  "faq": {
+    "title": "Home",
+    "description": "",
+    "h1": "",
+    "items": {
+      "1": {
+
+      },
+      "2": {
+
+      },
+      "3": {
+
+      },
+      "4": {
+
+      }
+    }
   },
   "about": {
-    "title": "About",
-    "introduction": "This page is made to give you more informations."
+    "title": "Home",
+    "description": "",
+    "h1": ""
+  },
+  "contact": {
+    "title": "Home",
+    "description": "",
+    "h1": ""
   },
   "excursionAddNew": {
     "tabs": {

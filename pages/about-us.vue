@@ -18,12 +18,14 @@
 
 <script>
   export default {
-    head: {
-      title: 'About us',
-      meta: [
-        { hid: 'description', name: 'description', content: 'desc About us' }
-      ]
-    }
+    head() {
+      return {
+        title: this.$t('index.title'),
+        meta: [
+          {hid: 'description', name: 'description', content: this.$t('index.description')}
+        ]
+      }
+    },
   }
 </script>
 

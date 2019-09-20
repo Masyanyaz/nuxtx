@@ -1,9 +1,10 @@
 import * as fb from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
+import {db} from "../plugins/firebase";
 
-class Ad {
-  constructor(h1, name, url, title, description, language, imageSrc = '', id = null) {
+class City {
+  constructor(h1, name, url, title, description, language, imageSrc = '', dataCreated = Date.now()) {
     this.h1 = h1
     this.name = name
     this.url = url
@@ -11,49 +12,49 @@ class Ad {
     this.description = description
     this.language = language
     this.imageSrc = imageSrc
-    this.id = id
+    this.dataCreated = dataCreated
   }
 }
 
 export const state = () => ({
-  ads: []
+  cities: []
 })
 
 export const mutations = {
-  createAd(state, payload) {
-    state.ads.push(payload)
+  createCity(state, payload) {
+    state.cities.push(payload)
   },
-  loadAds(state, payload) {
-    state.ads = payload
+  loadCities(state, payload) {
+    state.cities = payload
   },
-  updateAd(state, payload) {
-    const ad = state.ads.find(a => {
+  updateCity(state, payload) {
+    const city = state.cities.find(a => {
       return a.id === payload.id
     })
 
-    ad.h1 = payload.h1
-    ad.price = payload.price
-    ad.time = payload.time
-    ad.groupSize = payload.groupSize
-    ad.detailText = payload.detailText
-    ad.included = payload.included
-    ad.excluded = payload.excluded
-    ad.name = payload.name
-    ad.url = payload.url
-    ad.title = payload.title
-    ad.description = payload.description
+    city.h1 = payload.h1
+    city.price = payload.price
+    city.time = payload.time
+    city.groupSize = payload.groupSize
+    city.detailText = payload.detailText
+    city.included = payload.included
+    city.excluded = payload.excluded
+    city.name = payload.name
+    city.url = payload.url
+    city.title = payload.title
+    city.description = payload.description
   }
 }
 
 export const actions = {
-  async createAd({commit, getters}, payload) {
+  async createCity({commit, getters}, payload) {
     // commit('clearError')
     // commit('setLoading', true)
 
     const image = payload.image
 
     try {
-      const newAd = new Ad(
+      const newCity = new City(
         payload.h1,
         payload.name,
         payload.url,
@@ -61,22 +62,21 @@ export const actions = {
         payload.description,
         payload.language,
         '',
+        payload.dataCreated
       )
+      const ref = await db.collection(`language/${newCity.language}/cities`).doc(newCity.url)
+      ref.set(Object.assign({}, newCity))
 
-      const ad = await fb.database().ref(`${newAd.language}/cities`).push(newAd)
       const imageExt = image.name.slice(image.name.lastIndexOf('.'))
 
-      const fileData = await fb.storage().ref(`${newAd.language}/${newAd.url}.${imageExt}`).put(image)
+      const fileData = await fb.storage().ref(`language/${newCity.language}/${newCity.url}.${imageExt}`).put(image)
       const imageSrc = await fileData.ref.getDownloadURL()
 
-      fb.database().ref(`${newAd.language}/cities`).child(ad.key).update({
-        imageSrc
-      })
+      ref.update({imageSrc})
         .then(() => {
           // commit('setLoading', false)
-          commit('createAd', {
-            ...newAd,
-            id: ad.key,
+          commit('createCity', {
+            ...newCity,
             imageSrc
           })
         })
@@ -86,48 +86,36 @@ export const actions = {
       throw error
     }
   },
-  async fetchAds({commit}, payload) {
+  async fetchCities({commit}, payload) {
     // commit('clearError')
     // commit('setLoading', true)
 
-    const resultAds = []
+    const results = []
 
     try {
-      const fbVal = await fb.database().ref(`${payload.language}/cities`).once('value')
-      const ads = fbVal.val()
+      const ref = await db.collection(`language/${payload.language}/cities`)
+      await ref.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          results.push(doc.data())
+        });
 
-      Object.keys(ads).forEach(key => {
-        const ad = ads[key]
-        resultAds.push(
-          new Ad(
-            ad.h1,
-            ad.name,
-            ad.url,
-            ad.title,
-            ad.description,
-            ad.language,
-            ad.imageSrc,
-            key
-          )
-        )
-      })
-
-      commit('loadAds', JSON.parse(JSON.stringify(resultAds)))
-      // commit('setLoading', false)
+        commit('loadCities', results)
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
     } catch (error) {
       // commit('setError', error.message)
       // commit('setLoading', false)
       throw error
     }
-
   },
-  async updateAd ({commit}, payload) {
+  async updateCity({commit}, payload) {
     // commit('clearError')
     // commit('setLoading', true)
 
     try {
-      await fb.database().ref('ads').child(payload.id).update(payload)
-      commit('updateAd', payload)
+      await fb.database().ref('cities').child(payload.id).update(payload)
+      commit('updateCity', payload)
       // commit('setLoading', false)
     } catch (error) {
       // commit('setError', error.message)
@@ -138,17 +126,12 @@ export const actions = {
 }
 
 export const getters = {
-  ads(state) {
-    return state.ads
+  cities(state) {
+    return state.cities
   },
-  promoAds(state) {
-    return state.ads.filter(ad => {
-      return ad.promo
-    })
-  },
-  adByUrl(state) {
-    return adUrl => {
-      return state.ads.find(ad => ad.url === adUrl)
+  cityByUrl(state) {
+    return cityUrl => {
+      return state.cities.find(city => city.url === cityUrl)
     }
   }
 }

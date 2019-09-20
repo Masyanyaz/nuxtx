@@ -12,3 +12,5 @@ if (!firebase.apps.length) {
       appId: "1:378888820830:web:4924b520cb7a7fd8"
     })
 }
+
+export const db = firebase.firestore()

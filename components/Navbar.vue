@@ -54,20 +54,20 @@
           <v-icon left>exit_to_app</v-icon>
           Logout
         </v-btn>
-        <v-btn
-          text
-          :to="switchLocalePath('en')"
-          @click="switchLanguage"
-        >
-          English
-        </v-btn>
-        <v-btn
-          text
-          :to="switchLocalePath('fr')"
-          @click="switchLanguage"
-        >
-          Français
-        </v-btn>
+<!--        <v-btn-->
+<!--          text-->
+<!--          :to="switchLocalePath('en')"-->
+<!--          @click="switchLanguage"-->
+<!--        >-->
+<!--          English-->
+<!--        </v-btn>-->
+<!--        <v-btn-->
+<!--          text-->
+<!--          :to="switchLocalePath('fr')"-->
+<!--          @click="switchLanguage"-->
+<!--        >-->
+<!--          Français-->
+<!--        </v-btn>-->
       </v-toolbar-items>
     </v-toolbar>
   </div>
@@ -89,12 +89,12 @@
       },
       links() {
         return [
-          {title: this.$t('links.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
-          {title: this.$t('links.destinations'), icon: 'keyboard_arrow_down', url: 'destinations'},
-          {title: this.$t('links.faq'), url: 'faq'},
-          {title: this.$t('links.aboutUs'), url: 'about-us'},
-          {title: this.$t('links.contact'), url: 'contact'},
-          {title: this.$t('links.new'), url: 'admin'}
+          {title: this.$t('Navbar.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
+          {title: this.$t('Navbar.destinations'), icon: 'keyboard_arrow_down', url: 'destinations'},
+          {title: this.$t('Navbar.faq'), url: 'faq'},
+          {title: this.$t('Navbar.aboutUs'), url: 'about-us'},
+          {title: this.$t('Navbar.contact'), url: 'contact'},
+          {title: this.$t('Navbar.new'), url: 'admin'}
         ]
       }
     },
