@@ -3,7 +3,6 @@
     <v-layout row wrap>
       <v-flex>
         <h1>destinations</h1>
-        <p>update</p>
       </v-flex>
     </v-layout>
   </v-container>
