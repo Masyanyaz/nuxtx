@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid class="pl-0 pr-0">
-      <v-layout row>
+      <v-layout>
         <v-flex xs12>
           <div class="welcome-top">
             <div class="welcome-top__text"><span>Необычные</span> экскурсии <br>от местных <span>жителей
@@ -10,6 +10,7 @@
         </v-flex>
       </v-layout>
     </v-container>
+    {{posts}}
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('home.topDestinations')}}
     </h2>
@@ -31,14 +32,13 @@
         await store.dispatch('city/fetchCities', url)
       }
     },
-    // async asyncData({$axios}) {
-    //   const posts = await $axios.$get('http://localhost:3000/admin/getposts')
-    //   return {posts: posts.data}
-    // },
+    async asyncData({$axios}) {
+      const posts = await $axios.$get('http://localhost:3331/en/getcities')
+      console.log(posts)
+      return {posts: posts.data}
+    },
     data() {
-      return {
-
-      }
+      return {}
     },
     head() {
       return {

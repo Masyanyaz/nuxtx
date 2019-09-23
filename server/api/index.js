@@ -1,13 +1,12 @@
 const express = require('express');
-// const mysql = require('mysql');
-// const bodyParser = require('body-parser');
-const {Nuxt, Builder} = require('nuxt');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
 const app = express();
-//
-// const db = require('./config/database');
-//
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+
+const db = require('../config/database');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // // create db
 // app.get('/createdb', (req, res) => {
@@ -47,43 +46,23 @@ const app = express();
 // });
 //
 // get posts
-// app.get('/admin/getposts', (req, res) => {
-//   let sql = 'SELECT * FROM posts';
-//   let query = db.query(sql,(err, result) => {
-//     if (err) throw err;
-//     res.send(result)
-//   });
-// });
+app.get('/en/getcities', (req, res) => {
+  let sql = 'SELECT * FROM posts';
+  let query = db.query(sql,(err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+app.get('/en/getcities/:id', (req, res) => {
+  let sql = `SELECT * FROM posts WHERE id = ${req.params.id}`;
+  let query = db.query(sql,(err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
 
 // import api from './api'
-
-
-// Import and Set Nuxt.js options
-const config = require('../nuxt.config.js');
-config.dev = process.env.NODE_ENV !== 'production';
-
-async function start() {
-  // app.use('/api', api)
-
-  // Init Nuxt.js
-  const nuxt = new Nuxt(config);
-
-  const {host, port} = nuxt.options.server;
-
-  // Build only in dev mode
-  if (config.dev) {
-    const builder = new Builder(nuxt);
-    await builder.build()
-  } else {
-    await nuxt.ready()
-  }
-
-  // Give nuxt middleware to express
-  app.use(nuxt.render);
-
-  // Listen the server
-  app.listen(port, host);
-  console.log('Server started')
-}
-
-start();
+app.listen(3331, () => {
+  console.log('started')
+})
