@@ -177,7 +177,7 @@
       }
     },
     computed: mapGetters({
-      loading: 'shared/loading',
+      loading: 'shared/loading'
     }),
     methods: {
       createAd() {

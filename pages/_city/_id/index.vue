@@ -102,14 +102,17 @@
   import ExcursionCards from "@/components/Excursion/ExcursionCards";
 
   export default {
-    async asyncData({store, params}) {
-      if (store.getters['excursion/excursions'].length === 0) {
-        const url = {
-          language: store.state.locale,
-          city: params.city
-        };
-        await store.dispatch('excursion/fetchExcursions', url)
-      }
+    async asyncData({store, params, error}) {
+        if (store.getters['excursion/excursions'].length === 0) {
+          const url = {
+            language: store.state.locale,
+            city: params.city
+          };
+          await store.dispatch('excursion/fetchExcursions', url)
+          if(store.getters['excursion/excByUrl'](params.id) === undefined) {
+            error({statusCode: 404})
+          }
+        }
       let exc = await store.getters['excursion/excByUrl'](params.id)
       return {exc}
     },
@@ -193,9 +196,11 @@
 
   .included {
     max-width: 600px;
+
     &-item {
       margin-top: 10px;
     }
+
     @media (max-width: 600px) {
       flex-direction: column;
     }

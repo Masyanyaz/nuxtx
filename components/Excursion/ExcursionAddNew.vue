@@ -89,6 +89,34 @@
               v-if="imageSrc">
           </v-flex>
         </v-layout>
+<!--        <v-layout row mb-3>-->
+<!--          <v-flex xs12>-->
+<!--            <v-btn-->
+<!--              @click="galeryUpload"-->
+<!--              class="warning"-->
+<!--            >-->
+<!--              Upload-->
+<!--              <v-icon right dark>cloud_upload</v-icon>-->
+<!--            </v-btn>-->
+<!--            <input-->
+<!--              ref="galeryInput"-->
+<!--              type="file"-->
+<!--              @change="onGaleryChange"-->
+<!--              style="display: none;"-->
+<!--              accept="image/*"-->
+<!--              multiple>-->
+<!--          </v-flex>-->
+<!--        </v-layout>-->
+<!--        {{images}}-->
+<!--        <v-layout row>-->
+<!--          <v-flex xs12>-->
+<!--            <img-->
+<!--              class="mr-3"-->
+<!--              height="100px"-->
+<!--              v-for="item in galerySrc" v-if="galerySrc" :key="item"-->
+<!--              :src="item">-->
+<!--          </v-flex>-->
+<!--        </v-layout>-->
         <v-layout row>
           <v-flex xs12>
             <v-spacer></v-spacer>
@@ -110,11 +138,14 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    props: ['cities'],
     data() {
       return {
         promo: false,
         valid: false,
+        galerySrc: [],
         image: null,
+        images: [],
         imageSrc: '',
         tab: null,
         tabs: {
@@ -223,16 +254,19 @@
                 model: '',
                 required: true,
                 select: true,
-                items: [
-                  {text: 'Санкт-Петербург', value: this.$t('excursionAddNew.tabs.city.spb')},
-                  {text: 'Москва', value: 'moscow'},
-                ],
+                items: [],
                 rules: v => !!v || 'Is required'
               }
             }
           },
         },
       }
+    },
+    created() {
+      let cities = this.cities
+      cities.forEach(a => {
+        this.tabs.section.item.city.items.push({text: a.name, value: a.url})
+      })
     },
     computed: mapGetters({
       loading: 'shared/loading',
@@ -256,7 +290,8 @@
             city: this.tabs.section.item.city.model,
             language: this.tabs.section.item.language.model,
             promo: this.promo,
-            image: this.image
+            image: this.image,
+            images: this.images
           }
 
           this.$store.dispatch('excursion/createExcursion', ad)
@@ -271,6 +306,9 @@
       triggerUpload() {
         this.$refs.fileInput.click()
       },
+      galeryUpload() {
+        this.$refs.galeryInput.click()
+      },
       onFileChange(event) {
         const file = event.target.files[0]
 
@@ -281,7 +319,18 @@
         }
         reader.readAsDataURL(file)
         this.image = file
-      }
+      },
+      // onGaleryChange(event) {
+      //   const file = event.target.files[0]
+      //
+      //   const reader = new FileReader()
+      //
+      //   reader.onload = e => {
+      //     this.galerySrc.push(reader.result)
+      //   }
+      //   reader.readAsDataURL(file)
+      //   this.images.push(file)
+      // },
     }
   }
 </script>

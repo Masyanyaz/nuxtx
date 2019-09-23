@@ -22,7 +22,10 @@
   import ExcursionCards from "../../components/Excursion/ExcursionCards";
 
   export default {
-    async asyncData({store, params}) {
+    async asyncData({store, params, error}) {
+      if(store.getters['city/cityByUrl'](params.city) === undefined) {
+        error({statusCode: 404})
+      }
       // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
         language: store.state.locale,
