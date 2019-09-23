@@ -10,7 +10,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    {{posts}}
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('home.topDestinations')}}
     </h2>
@@ -32,11 +31,11 @@
         await store.dispatch('city/fetchCities', url)
       }
     },
-    async asyncData({$axios}) {
-      const posts = await $axios.$get('http://localhost:3331/en/getcities')
-      console.log(posts)
-      return {posts: posts.data}
-    },
+    // async asyncData({$axios}) {
+    //   const posts = await $axios.$get('http://localhost:3331/en/getcities')
+    //   console.log(posts)
+    //   return {posts: posts.data}
+    // },
     data() {
       return {}
     },
