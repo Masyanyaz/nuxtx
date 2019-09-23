@@ -23,9 +23,6 @@
 
   export default {
     async asyncData({store, params, error}) {
-      if(store.getters['city/cityByUrl'](params.city) === undefined) {
-        error({statusCode: 404})
-      }
       // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
         language: store.state.locale,
@@ -33,6 +30,9 @@
       };
       await store.dispatch('excursion/fetchExcursions', url)
       await store.dispatch('city/fetchCities', url)
+      if(store.getters['city/cityByUrl'](params.city) === undefined) {
+        error({statusCode: 404})
+      }
       let city = await store.getters['city/cityByUrl'](params.city)
       return {city}
     },

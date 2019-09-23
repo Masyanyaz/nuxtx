@@ -2,6 +2,7 @@
   <div>
     <h1>admin panel</h1>
     <v-btn to="admin/add-new">Add</v-btn>
+    <v-btn to="admin/addcity">Add city</v-btn>
   </div>
 </template>
 

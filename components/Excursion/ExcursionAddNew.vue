@@ -289,9 +289,7 @@
             description: this.tabs.metaTags.item.description.model,
             city: this.tabs.section.item.city.model,
             language: this.tabs.section.item.language.model,
-            promo: this.promo,
             image: this.image,
-            images: this.images
           }
 
           this.$store.dispatch('excursion/createExcursion', ad)
