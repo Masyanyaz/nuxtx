@@ -69,14 +69,8 @@
       }
     },
     methods: {
-      async onSubmit() {
-        await this.$axios.post('http://localhost:3333/send')
-          .then(res => {
-            console.log('super')
-          })
-          .catch(e => {
-            console.log(e)
-          })
+      async onSubmit({$axios}) {
+        form.submit()
       }
     }
   }
