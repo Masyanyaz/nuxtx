@@ -9,6 +9,9 @@
           ref="form"
           v-model="valid"
           validation
+          action="/send"
+          method="POST"
+          id="form"
         >
           <v-text-field
             v-model="form.password"
@@ -38,7 +41,6 @@
         <v-btn
           width="200px"
           @click="onSubmit"
-          :loading="loading"
           :disabled="!valid"
           color="primary"
         >Book now
@@ -66,14 +68,15 @@
         ]
       }
     },
-    computed: {
-      loading() {
-        return this.$store.getters.loading
-      }
-    },
     methods: {
-      onSubmit() {
-
+      async onSubmit() {
+        await this.$axios.post('http://localhost:3333/send')
+          .then(res => {
+            console.log('super')
+          })
+          .catch(e => {
+            console.log(e)
+          })
       }
     }
   }
