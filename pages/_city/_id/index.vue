@@ -23,26 +23,16 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <div style="margin: 0 25px 50px;">
+    <div style="margin: 0 60px; display: flex; flex-direction: row">
       <v-container>
         <v-layout>
-          <v-flex md9 xs12>
+          <v-flex xs12>
             <ExcursionHeader :exc="exc"/>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-container>
-        <v-layout row>
-          <v-flex md9 xs12>
+
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
             <hr>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-container>
-        <v-layout row>
-          <v-flex md9 xs12>
+
             <h2>Included/Exclude</h2>
             <div class="d-flex justify-space-between included">
               <div
@@ -88,14 +78,8 @@
           </v-flex>
         </v-layout>
       </v-container>
+      <Form style="padding-top: 12px;" />
     </div>
-    <v-container fluid style="position: absolute; top: 470px;" class="form">
-      <v-layout justify-end>
-        <v-flex md3>
-          <Form />
-        </v-flex>
-      </v-layout>
-    </v-container>
     <v-container>
       <v-layout row>
         <v-flex xs12>
@@ -158,6 +142,11 @@
 </script>
 
 <style scoped lang="scss">
+  h2 {
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+
   .car-link {
     bottom: 50px;
     left: 50%;
@@ -220,6 +209,7 @@
       flex-direction: column;
     }
   }
+
   .form {
     @media (max-width: 960px) {
       display: none;
