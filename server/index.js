@@ -85,7 +85,6 @@ app.post('/send', (req, res) => {
       subject: 'First', // Subject line
       html: output // html body
     });
-    res.redirect('/')
   }
 
   main().catch(console.error);
