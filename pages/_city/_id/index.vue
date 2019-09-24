@@ -23,17 +23,23 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <div style="margin: 0 25px;">
-      <ExcursionHeader :exc="exc"/>
+    <div style="margin: 0 25px 50px;">
+      <v-container>
+        <v-layout>
+          <v-flex md9 xs12>
+            <ExcursionHeader :exc="exc"/>
+          </v-flex>
+        </v-layout>
+      </v-container>
       <v-container>
         <v-layout row>
           <v-flex md9 xs12>
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
+            <hr>
           </v-flex>
         </v-layout>
       </v-container>
-      <hr>
       <v-container>
         <v-layout row>
           <v-flex md9 xs12>
@@ -78,11 +84,18 @@
                 </div>
               </div>
             </div>
+            <hr>
           </v-flex>
         </v-layout>
       </v-container>
-      <hr>
     </div>
+    <v-container fluid style="position: absolute; top: 470px;" class="form">
+      <v-layout justify-end>
+        <v-flex md3>
+          <Form />
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-container>
       <v-layout row>
         <v-flex xs12>
@@ -100,19 +113,20 @@
   import ExcursionGalery from '@/components/Excursion/ExcursionGalery'
   import ExcursionEdit from '@/components/Excursion/ExcursionEdit'
   import ExcursionCards from "@/components/Excursion/ExcursionCards";
+  import Form from "@/components/Form";
 
   export default {
     async asyncData({store, params, error}) {
-        if (store.getters['excursion/excursions'].length === 0) {
-          const url = {
-            language: store.state.locale,
-            city: params.city
-          };
-          await store.dispatch('excursion/fetchExcursions', url)
-          if(store.getters['excursion/excByUrl'](params.id) === undefined) {
-            error({statusCode: 404})
-          }
+      if (store.getters['excursion/excursions'].length === 0) {
+        const url = {
+          language: store.state.locale,
+          city: params.city
+        };
+        await store.dispatch('excursion/fetchExcursions', url)
+        if (store.getters['excursion/excByUrl'](params.id) === undefined) {
+          error({statusCode: 404})
         }
+      }
       let exc = await store.getters['excursion/excByUrl'](params.id)
       return {exc}
     },
@@ -134,7 +148,8 @@
       ExcursionCards,
       ExcursionHeader,
       ExcursionGalery,
-      ExcursionEdit
+      ExcursionEdit,
+      Form
     },
     computed: mapGetters({
       excursions: 'excursion/excursions',
@@ -203,6 +218,11 @@
 
     @media (max-width: 600px) {
       flex-direction: column;
+    }
+  }
+  .form {
+    @media (max-width: 960px) {
+      display: none;
     }
   }
 </style>

@@ -4,14 +4,13 @@
       <v-layout>
         <v-flex xs12>
           <div class="welcome-top">
-            <div class="welcome-top__text"><span>Необычные</span> экскурсии <br>от местных <span>жителей
-            </span></div>
+            <div class="welcome-top__text"><span>{{$t('index.h1')}}</span></div>
           </div>
         </v-flex>
       </v-layout>
     </v-container>
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      {{$t('home.topDestinations')}}
+      {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
   </div>
@@ -31,13 +30,10 @@
         await store.dispatch('city/fetchCities', url)
       }
     },
-    // async asyncData({$axios}) {
-    //   const posts = await $axios.$get('http://localhost:3331/en/getcities')
-    //   console.log(posts)
-    //   return {posts: posts.data}
-    // },
     data() {
-      return {}
+      return {
+
+      }
     },
     head() {
       return {
