@@ -1,53 +1,51 @@
 <template>
-  <div>
-    <v-card class="elevation-12" style="width: 270px;">
-      <v-toolbar dark color="primary" class="d-flex justify-center">
-        <v-toolbar-title>ONLINE ORDER FORM</v-toolbar-title>
-      </v-toolbar>
-      <v-card-text>
-        <v-form
-          ref="form"
-          v-model="valid"
-          validation
-          action="/send"
-          method="POST"
-          id="form"
-        >
-          <v-text-field
-            v-model="form.password"
-            name="name"
-            label="Name"
-            type="text"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.email"
-            :rules="emailRules"
-            name="email"
-            label="Email"
-            type="email"
-          ></v-text-field>
-          <v-textarea
-            v-model="form.message"
-            name="message"
-            label="Message"
-            type="text"
-            rows="3"
-          ></v-textarea>
-        </v-form>
-      </v-card-text>
-      <v-card-actions
-        class="d-flex justify-center"
+  <v-card class="elevation-12" style="width: 270px;">
+    <v-toolbar dark color="primary" class="d-flex justify-center">
+      <v-toolbar-title>ONLINE ORDER FORM</v-toolbar-title>
+    </v-toolbar>
+    <v-card-text>
+      <v-form
+        ref="form"
+        v-model="valid"
+        validation
+        action="/send"
+        method="POST"
+        id="form"
       >
-        <v-btn
-          width="200px"
-          @click="onSubmit"
-          :disabled="!valid"
-          color="primary"
-        >Book now
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+        <v-text-field
+          v-model="form.password"
+          name="name"
+          label="Name"
+          type="text"
+        ></v-text-field>
+        <v-text-field
+          v-model="form.email"
+          :rules="emailRules"
+          name="email"
+          label="Email"
+          type="email"
+        ></v-text-field>
+        <v-textarea
+          v-model="form.message"
+          name="message"
+          label="Message"
+          type="text"
+          rows="3"
+        ></v-textarea>
+      </v-form>
+    </v-card-text>
+    <v-card-actions
+      class="d-flex justify-center"
+    >
+      <v-btn
+        width="200px"
+        @click="onSubmit"
+        :disabled="!valid"
+        color="primary"
+      >Book now
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>

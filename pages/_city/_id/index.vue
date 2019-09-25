@@ -7,23 +7,23 @@
             :style="{background: 'url(' + exc.imageSrc + ') no-repeat 50% 15% /cover'}"
             class="welcome-top">
             <div class="welcome-top__text">{{exc.name}}</div>
-            <v-btn
-              text
-              @click="showGalery = !showGalery"
-              style="font-size: calc(12px + 2 * ((100vw) / 600));"
-            >
-              <v-icon>insert_photo</v-icon>
-              More photo
-            </v-btn>
+<!--            <v-btn-->
+<!--              text-->
+<!--              @click="showGalery = !showGalery"-->
+<!--              style="font-size: calc(12px + 2 * ((100vw) / 600));"-->
+<!--            >-->
+<!--              <v-icon>insert_photo</v-icon>-->
+<!--              More photo-->
+<!--            </v-btn>-->
           </div>
-          <div v-if="showGalery" class="galery align-center justify-center d-flex" @click.self="showGalery =
-            !showGalery">
-            <ExcursionGalery style="max-width: 60%; max-height: 400px; position: absolute;"/>
-          </div>
+<!--          <div v-if="showGalery" class="galery align-center justify-center d-flex" @click.self="showGalery =-->
+<!--            !showGalery">-->
+<!--            <ExcursionGalery style="max-width: 60%; max-height: 400px; position: absolute;"/>-->
+<!--          </div>-->
         </v-flex>
       </v-layout>
     </v-container>
-    <div style="margin: 0 60px; display: flex; flex-direction: row">
+    <div style="margin: 0 5%; display: flex; flex-direction: row">
       <v-container>
         <v-layout>
           <v-flex xs12>
@@ -78,7 +78,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <Form style="padding-top: 12px;" />
+      <Form class="form" />
     </div>
     <v-container>
       <v-layout row>
@@ -211,6 +211,8 @@
   }
 
   .form {
+    margin-top: 12px;
+
     @media (max-width: 960px) {
       display: none;
     }

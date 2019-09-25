@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.get('/api', (req, res) => {
   res.send('hello')
 });
-app.get('/createtable', (req, res) => {
+app.get('/api/createtable', (req, res) => {
   let sql = 'CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body varchar(255), PRIMARY KEY(id))';
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -31,7 +31,7 @@ app.get('/createtable', (req, res) => {
 });
 
 // post 1
-app.get('/addpost1', (req, res) => {
+app.get('/api/addpost1', (req, res) => {
   let post = {title: 'post 1', body: 'this body post 1'};
   let sql = 'INSERT INTO posts SET ?';
   let query = db.query(sql, post, (err, result) => {
@@ -40,7 +40,7 @@ app.get('/addpost1', (req, res) => {
   });
 });
 
-app.get('/admin/addpost2', (req, res) => {
+app.get('/api/addpost2', (req, res) => {
   let post = {title: 'post 2', body: 'this body post 2'};
   let sql = 'INSERT INTO posts SET ?';
   let query = db.query(sql, post, (err, result) => {
@@ -50,8 +50,8 @@ app.get('/admin/addpost2', (req, res) => {
 });
 
 //get posts
-app.get('/admin/getposts', (req, res) => {
-  let sql = 'SELECT * FROM posts';
+app.get('/api/getposts', (req, res) => {
+  let sql = 'SELECT * FROM cities';
   let query = db.query(sql,(err, result) => {
     if (err) throw err;
     res.send(result)
