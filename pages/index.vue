@@ -19,7 +19,6 @@
 <script>
   import {mapGetters} from 'vuex'
   import CityCards from "../components/City/CityCards";
-  // import axios from "../.nuxt/axios";
 
   export default {
     async fetch({store}) {

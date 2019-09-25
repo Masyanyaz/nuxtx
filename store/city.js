@@ -86,23 +86,30 @@ export const actions = {
       throw error
     }
   },
-  async fetchCities({commit}, payload) {
+  async fetchCities({commit, $axios}, payload) {
     // commit('clearError')
     // commit('setLoading', true)
 
-    const results = []
+    // const results = []
 
     try {
-      const ref = await db.collection(`language/${payload.language}/cities`)
-      await ref.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          results.push(doc.data())
-        });
-
-        commit('loadCities', results)
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
-      });
+      await this.$axios.get('/api/getcities')
+        .then((data) => {
+          commit('loadCities', data.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+      // const ref = await db.collection(`language/${payload.language}/cities`)
+      // await ref.get().then((querySnapshot) => {
+      //   querySnapshot.forEach((doc) => {
+      //     results.push(doc.data())
+      //   });
+      //
+      //   commit('loadCities', results)
+      // }).catch(function (error) {
+      //   console.log("Error getting document:", error);
+      // });
     } catch (error) {
       // commit('setError', error.message)
       // commit('setLoading', false)

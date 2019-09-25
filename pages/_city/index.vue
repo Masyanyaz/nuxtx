@@ -3,9 +3,11 @@
     <v-container fluid class="pl-0 pr-0">
       <v-layout row>
         <v-flex xs12>
-          <div class="welcome-top">
-            <div class="welcome-top__text"><span>Необычные</span> экскурсии <br>от местных <span>жителей
-            </span></div>
+          <div
+            :style="{background: 'url(' + city.imageSrc + ') no-repeat 50% 15% /cover'}"
+            class="welcome-top"
+          >
+            <div class="welcome-top__text">{{city.title}}</div>
           </div>
         </v-flex>
       </v-layout>
@@ -13,7 +15,9 @@
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       Excursion
     </h2>
-    <ExcursionCards :excursions="excursions"/>
+    Foot: <input type="checkbox" value="foot" v-model="filter">
+    Car: <input type="checkbox" value="car" v-model="filter">
+    <ExcursionCards :excursions="filtered"/>
   </div>
 </template>
 
@@ -30,7 +34,7 @@
       };
       await store.dispatch('excursion/fetchExcursions', url)
       await store.dispatch('city/fetchCities', url)
-      if(store.getters['city/cityByUrl'](params.city) === undefined) {
+      if (store.getters['city/cityByUrl'](params.city) === undefined) {
         error({statusCode: 404})
       }
       let city = await store.getters['city/cityByUrl'](params.city)
@@ -38,7 +42,7 @@
     },
     data() {
       return {
-
+        filter: []
       }
     },
     head() {
@@ -52,9 +56,17 @@
     components: {
       ExcursionCards
     },
-    computed: mapGetters({
-      excursions: 'excursion/excursions',
-    }),
+    computed: {
+      filtered() {
+        if(this.filter.length === 0) return this.excursions
+        return this.excursions.filter(item => {
+          return this.filter.includes(item.type)
+        })
+      },
+      ...mapGetters({
+        excursions: 'excursion/excursions',
+      })
+    },
   }
 </script>
 

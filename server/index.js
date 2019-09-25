@@ -31,7 +31,7 @@ app.get('/api/createtable', (req, res) => {
 });
 
 // post 1
-app.get('/api/addpost1', (req, res) => {
+app.post('/api/addpost1', (req, res) => {
   let post = {title: 'post 1', body: 'this body post 1'};
   let sql = 'INSERT INTO posts SET ?';
   let query = db.query(sql, post, (err, result) => {
@@ -50,8 +50,32 @@ app.get('/api/addpost2', (req, res) => {
 });
 
 //get posts
-app.get('/api/getposts', (req, res) => {
+app.get('/api/getcities', (req, res) => {
   let sql = 'SELECT * FROM cities';
+  let query = db.query(sql,(err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+app.get('/api/getcities/:id', (req, res) => {
+  let sql = `SELECT * FROM cities WHERE url = '${req.params.id}'`;
+  let query = db.query(sql,(err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+app.get('/api/getexcursion', (req, res) => {
+  let sql = 'SELECT * FROM excursion';
+  let query = db.query(sql,(err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+app.get('/api/getexcursion/:id', (req, res) => {
+  let sql = `SELECT * FROM excursion WHERE city = '${req.params.id}'`;
   let query = db.query(sql,(err, result) => {
     if (err) throw err;
     res.send(result)
@@ -65,9 +89,6 @@ app.post('/send', (req, res) => {
   `;
 
   async function main() {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       host: 'smtp.mail.ru',

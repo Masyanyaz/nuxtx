@@ -18,7 +18,7 @@
             :to="city.url"
           >
             <v-img
-              :src="city.imageSrc"
+              :src="city.previewImageSrc"
               class="white--text"
               height="200px"
               aspect-ratio="3"

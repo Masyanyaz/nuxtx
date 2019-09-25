@@ -108,22 +108,27 @@ export const actions = {
     // commit('clearError')
     // commit('setLoading', true)
 
-    const results = []
-
     try {
-      const ref = await db.collection(`language/${payload.language}/cities/${payload.city}/excursion`)
-      await ref.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          results.push(doc.data())
-        });
-
-        commit('loadExcursions', results)
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
-      });
+      if (payload.city === undefined) {
+        await this.$axios.get('/api/getexcursion')
+          .then((data) => {
+            commit('loadExcursions', data.data)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      } else {
+        await this.$axios.get(`/api/getexcursion/${payload.city}`)
+          .then((data) => {
+            commit('loadExcursions', data.data)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      }
     } catch (error) {
-      // commit('setError', error.message)
-      // commit('setLoading', false)
+      //   // commit('setError', error.message)
+      //   // commit('setLoading', false)
       throw error
     }
   },
