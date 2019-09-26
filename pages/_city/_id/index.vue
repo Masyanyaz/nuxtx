@@ -30,7 +30,7 @@
             <ExcursionHeader :exc="exc"/>
 
             <h2>Overview</h2>
-            <div v-html="exc.detailText"/>
+            <div v-html="exc.detailText" />
             <hr>
 
             <h2>Included/Exclude</h2>
@@ -41,7 +41,7 @@
               >
                 <div
                   class="d-flex align-center"
-                  v-for="(incl, i) in exc.included"
+                  v-for="(incl, i) in exc.included.split('\n')"
                 >
                   <v-icon
                     style="color: rgb(46, 204, 113)"
@@ -60,7 +60,7 @@
               >
                 <div
                   class="d-flex align-center"
-                  v-for="(excl, i) in exc.excluded"
+                  v-for="(excl, i) in exc.excluded.split('\n')"
                 >
                   <v-icon
                     style="color: rgb(250, 86, 54)"

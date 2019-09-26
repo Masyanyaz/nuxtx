@@ -8,6 +8,9 @@
           v-model="valid"
           validation
           class="mb-3"
+          action="/api/addexcursion"
+          method="POST"
+          id="form"
         >
           <v-tabs
             v-model="tab"
@@ -32,15 +35,47 @@
                   :key="index"
                   class="pl-3 pr-3"
                 >
-                  <v-select
+                  <div
                     v-if="i.select"
-                    :label="i.itemName"
-                    :required="i.required"
-                    :disabled="i.disabled"
-                    v-model="i.model"
-                    :rules="[i.rules]"
-                    :items="i.items"
-                  ></v-select>
+                  >
+                    <v-select
+                      :label="i.itemName"
+                      :name="i.itemName"
+                      :required="i.required"
+                      :disabled="i.disabled"
+                      v-model="i.model"
+                      :rules="[i.rules]"
+                      :items="i.items"
+                      return-object="true"
+                    ></v-select>
+                    <v-text-field
+                      v-if="i.itemName !== 'city_id'"
+                      :rules="[i.rules]"
+                      v-model="i.model"
+                      :required="i.required"
+                      :name="i.itemName"
+                      :label="i.itemName"
+                      type="text"
+                    ></v-text-field>
+                    <v-text-field
+                      v-if="i.itemName === 'city_id'"
+                      :rules="[i.rules]"
+                      v-model="i.model.value"
+                      :required="i.required"
+                      :name="i.itemName"
+                      :label="i.itemName"
+                      type="text"
+                    ></v-text-field>
+                    <v-text-field
+                      v-if="i.itemName === 'city_id'"
+                      :rules="[i.rules]"
+                      v-model="i.model.valueUrl"
+                      :required="i.required"
+                      :name="i.itemName2"
+                      :label="i.itemName2"
+                      type="text"
+                    ></v-text-field>
+                  </div>
                   <v-textarea
                     v-else-if="i.textarea"
                     v-model="i.model"
@@ -64,65 +99,65 @@
             </v-tabs-items>
           </v-tabs>
         </v-form>
-        <v-layout row mb-3>
-          <v-flex xs12>
-            <v-btn
-              @click="triggerUpload"
-              class="warning"
-            >
-              Upload
-              <v-icon right dark>cloud_upload</v-icon>
-            </v-btn>
-            <input
-              ref="fileInput"
-              type="file"
-              @change="onFileChange"
-              style="display: none;"
-              accept="image/*">
-          </v-flex>
-        </v-layout>
-        <v-layout row>
-          <v-flex xs12>
-            <img
-              height="100px"
-              :src="imageSrc"
-              v-if="imageSrc">
-          </v-flex>
-        </v-layout>
-<!--        <v-layout row mb-3>-->
-<!--          <v-flex xs12>-->
-<!--            <v-btn-->
-<!--              @click="galeryUpload"-->
-<!--              class="warning"-->
-<!--            >-->
-<!--              Upload-->
-<!--              <v-icon right dark>cloud_upload</v-icon>-->
-<!--            </v-btn>-->
-<!--            <input-->
-<!--              ref="galeryInput"-->
-<!--              type="file"-->
-<!--              @change="onGaleryChange"-->
-<!--              style="display: none;"-->
-<!--              accept="image/*"-->
-<!--              multiple>-->
-<!--          </v-flex>-->
-<!--        </v-layout>-->
-<!--        {{images}}-->
-<!--        <v-layout row>-->
-<!--          <v-flex xs12>-->
-<!--            <img-->
-<!--              class="mr-3"-->
-<!--              height="100px"-->
-<!--              v-for="item in galerySrc" v-if="galerySrc" :key="item"-->
-<!--              :src="item">-->
-<!--          </v-flex>-->
-<!--        </v-layout>-->
+        <!--        <v-layout row mb-3>-->
+        <!--          <v-flex xs12>-->
+        <!--            <v-btn-->
+        <!--              @click="triggerUpload"-->
+        <!--              class="warning"-->
+        <!--            >-->
+        <!--              Upload-->
+        <!--              <v-icon right dark>cloud_upload</v-icon>-->
+        <!--            </v-btn>-->
+        <!--            <input-->
+        <!--              ref="fileInput"-->
+        <!--              type="file"-->
+        <!--              @change="onFileChange"-->
+        <!--              style="display: none;"-->
+        <!--              accept="image/*">-->
+        <!--          </v-flex>-->
+        <!--        </v-layout>-->
+        <!--        <v-layout row>-->
+        <!--          <v-flex xs12>-->
+        <!--            <img-->
+        <!--              height="100px"-->
+        <!--              :src="imageSrc"-->
+        <!--              v-if="imageSrc">-->
+        <!--          </v-flex>-->
+        <!--        </v-layout>-->
+        <!--        <v-layout row mb-3>-->
+        <!--          <v-flex xs12>-->
+        <!--            <v-btn-->
+        <!--              @click="galeryUpload"-->
+        <!--              class="warning"-->
+        <!--            >-->
+        <!--              Upload-->
+        <!--              <v-icon right dark>cloud_upload</v-icon>-->
+        <!--            </v-btn>-->
+        <!--            <input-->
+        <!--              ref="galeryInput"-->
+        <!--              type="file"-->
+        <!--              @change="onGaleryChange"-->
+        <!--              style="display: none;"-->
+        <!--              accept="image/*"-->
+        <!--              multiple>-->
+        <!--          </v-flex>-->
+        <!--        </v-layout>-->
+        <!--        {{images}}-->
+        <!--        <v-layout row>-->
+        <!--          <v-flex xs12>-->
+        <!--            <img-->
+        <!--              class="mr-3"-->
+        <!--              height="100px"-->
+        <!--              v-for="item in galerySrc" v-if="galerySrc" :key="item"-->
+        <!--              :src="item">-->
+        <!--          </v-flex>-->
+        <!--        </v-layout>-->
         <v-layout row>
           <v-flex xs12>
             <v-spacer></v-spacer>
             <v-btn
               :loading="loading"
-              :disabled="!valid || !image || loading"
+              :disabled="!valid || image || loading"
               class="success"
               @click="createAd"
             >Create ad
@@ -175,7 +210,7 @@
                 rules: false
               },
               groupSize: {
-                itemName: 'Group size',
+                itemName: 'groupSize',
                 model: '',
                 rules: false
               },
@@ -190,19 +225,19 @@
             headerName: 'Мета теги',
             item: {
               h1: {
-                itemName: 'H1',
+                itemName: 'h1',
                 model: '',
                 required: true,
                 rules: v => !!v || 'Is required'
               },
               title: {
-                itemName: 'Title',
+                itemName: 'title',
                 model: '',
                 required: true,
                 rules: v => !!v || 'Is required'
               },
               description: {
-                itemName: 'Description',
+                itemName: 'description',
                 model: '',
                 required: true,
                 rules: v => !!v || 'Is required'
@@ -239,7 +274,7 @@
             headerName: 'Раздел',
             item: {
               language: {
-                itemName: 'Language',
+                itemName: 'language',
                 model: this.$store.state.locale,
                 required: true,
                 select: true,
@@ -250,13 +285,31 @@
                 rules: v => !!v || 'Is required'
               },
               city: {
-                itemName: 'Город',
-                model: '',
+                itemName: 'city_id',
+                itemName2: 'url',
+                model: '1',
                 required: true,
                 select: true,
                 items: [],
                 rules: v => !!v || 'Is required'
               }
+            }
+          },
+          photoGalery: {
+            headerName: 'Фотографии',
+            item: {
+              previewImageSrc: {
+                itemName: 'previewImageSrc',
+                model: '',
+                required: true,
+                rules: v => !!v || 'Is required'
+              },
+              imageSrc: {
+                itemName: 'imageSrc',
+                model: '',
+                required: true,
+                rules: v => !!v || 'Is required'
+              },
             }
           },
         },
@@ -265,41 +318,44 @@
     created() {
       let cities = this.cities
       cities.forEach(a => {
-        this.tabs.section.item.city.items.push({text: a.name, value: a.url})
+        this.tabs.section.item.city.items.push({text: a.name, value: a.id, valueUrl: a.url})
       })
     },
-    computed: mapGetters({
-      loading: 'shared/loading',
-    }),
+    computed: {
+      ...mapGetters({
+        loading: 'shared/loading',
+      })
+    },
     methods: {
       createAd() {
-        if (this.$refs.form.validate() && this.image) {
-          const ad = {
-            h1: this.tabs.metaTags.item.h1.model,
-            price: this.tabs.main.item.price.model,
-            time: this.tabs.main.item.time.model,
-            groupSize: this.tabs.main.item.groupSize.model,
-            type: this.tabs.main.item.type.model,
-            detailText: this.tabs.detail.item.detailText.model,
-            included: this.tabs.detail.item.included.model,
-            excluded: this.tabs.detail.item.excluded.model,
-            name: this.tabs.main.item.name.model,
-            url: this.tabs.main.item.url.model,
-            title: this.tabs.metaTags.item.title.model,
-            description: this.tabs.metaTags.item.description.model,
-            city: this.tabs.section.item.city.model,
-            language: this.tabs.section.item.language.model,
-            image: this.image,
-          }
-
-          this.$store.dispatch('excursion/createExcursion', ad)
-            .then(() => {
-              this.$router.push('/admin')
-            })
-            .catch((e) => {
-              console.log(e)
-            })
-        }
+        form.submit()
+        // if (this.$refs.form.validate() && this.image) {
+        //   const ad = {
+        //     h1: this.tabs.metaTags.item.h1.model,
+        //     price: this.tabs.main.item.price.model,
+        //     time: this.tabs.main.item.time.model,
+        //     groupSize: this.tabs.main.item.groupSize.model,
+        //     type: this.tabs.main.item.type.model,
+        //     detailText: this.tabs.detail.item.detailText.model,
+        //     included: this.tabs.detail.item.included.model,
+        //     excluded: this.tabs.detail.item.excluded.model,
+        //     name: this.tabs.main.item.name.model,
+        //     url: this.tabs.main.item.url.model,
+        //     title: this.tabs.metaTags.item.title.model,
+        //     description: this.tabs.metaTags.item.description.model,
+        //     city: this.tabs.section.item.city.model,
+        //     language: this.tabs.section.item.language.model,
+        //     image: this.image,
+        //   }
+        //
+        //   this.$store.dispatch('excursion/createExcursion', ad)
+        //     .then(() => {
+        //       this.$router.push('/admin')
+        //     })
+        //     .catch((e) => {
+        //       console.log(e)
+        //     })
+        // }
       },
       triggerUpload() {
         this.$refs.fileInput.click()

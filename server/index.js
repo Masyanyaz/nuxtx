@@ -31,12 +31,50 @@ app.get('/api/createtable', (req, res) => {
 });
 
 // post 1
-app.post('/api/addpost1', (req, res) => {
-  let post = {title: 'post 1', body: 'this body post 1'};
-  let sql = 'INSERT INTO posts SET ?';
-  let query = db.query(sql, post, (err, result) => {
+app.post('/api/addcity', (req, res) => {
+  console.log(req.body)
+  let city = {
+    title: req.body.title,
+    description: req.body.description,
+    h1: req.body.h1,
+    url: req.body.url,
+    language: req.body.language,
+    name: req.body.name,
+    previewImageSrc: req.body.previewImageSrc,
+    imageSrc: req.body.imageSrc,
+  };
+  let sql = 'INSERT INTO cities SET ?';
+  let query = db.query(sql, city, (err, result) => {
     if (err) throw err;
-    res.sendStatus(200)
+    res.sendStatus(200);
+  });
+});
+
+app.post('/api/addexcursion', (req, res) => {
+  console.log(req.body)
+  let exc = {
+    city: req.body.city,
+    city_id: req.body.city_id,
+    title: req.body.title,
+    description: req.body.description,
+    h1: req.body.h1,
+    url: req.body.url,
+    language: req.body.language,
+    name: req.body.name,
+    detailText: req.body.detailText,
+    included: req.body.included,
+    excluded: req.body.excluded,
+    groupSize: req.body.groupSize,
+    price: req.body.price,
+    time: req.body.time,
+    type: req.body.type,
+    previewImageSrc: req.body.previewImageSrc,
+    imageSrc: req.body.imageSrc,
+  };
+  let sql = 'INSERT INTO excursion SET ?';
+  let query = db.query(sql, exc, (err, result) => {
+    if (err) throw err;
+    res.sendStatus(200);
   });
 });
 

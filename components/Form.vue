@@ -67,7 +67,7 @@
       }
     },
     methods: {
-      async onSubmit({$axios}) {
+      onSubmit() {
         form.submit()
       }
     }

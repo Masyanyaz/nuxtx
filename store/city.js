@@ -51,40 +51,44 @@ export const actions = {
     // commit('clearError')
     // commit('setLoading', true)
 
-    const image = payload.image
-
-    try {
-      const newCity = new City(
-        payload.h1,
-        payload.name,
-        payload.url,
-        payload.title,
-        payload.description,
-        payload.language,
-        '',
-        payload.dataCreated
-      )
-      const ref = await db.collection(`language/${newCity.language}/cities`).doc(newCity.url)
-      ref.set(Object.assign({}, newCity))
-
-      const imageExt = image.name.slice(image.name.lastIndexOf('.'))
-
-      const fileData = await fb.storage().ref(`language/${newCity.language}/${newCity.url}.${imageExt}`).put(image)
-      const imageSrc = await fileData.ref.getDownloadURL()
-
-      ref.update({imageSrc})
-        .then(() => {
-          // commit('setLoading', false)
-          commit('createCity', {
-            ...newCity,
-            imageSrc
-          })
+    // const image = payload.image
+    //
+      await this.$axios.post('/api/addcity')
+        .then((data) => {
+          commit('createCity', data.data)
         })
-    } catch (error) {
+        .catch(e => {
+          console.log(e)
+        })
+
+    //   const newCity = new City(
+    //     payload.h1,
+    //     payload.name,
+    //     payload.url,
+    //     payload.title,
+    //     payload.description,
+    //     payload.language,
+    //     '',
+    //     payload.dataCreated
+    //   )
+    //   const ref = await db.collection(`language/${newCity.language}/cities`).doc(newCity.url)
+    //   ref.set(Object.assign({}, newCity))
+    //
+    //   const imageExt = image.name.slice(image.name.lastIndexOf('.'))
+    //
+    //   const fileData = await fb.storage().ref(`language/${newCity.language}/${newCity.url}.${imageExt}`).put(image)
+    //   const imageSrc = await fileData.ref.getDownloadURL()
+    //
+    //   ref.update({imageSrc})
+    //     .then(() => {
+    //       // commit('setLoading', false)
+    //       commit('createCity', {
+    //         ...newCity,
+    //         imageSrc
+    //       })
+    //     })
       // commit('setError', error.message)
       // commit('setLoading', false)
-      throw error
-    }
   },
   async fetchCities({commit, $axios}, payload) {
     // commit('clearError')
@@ -92,7 +96,6 @@ export const actions = {
 
     // const results = []
 
-    try {
       await this.$axios.get('/api/getcities')
         .then((data) => {
           commit('loadCities', data.data)
@@ -110,11 +113,8 @@ export const actions = {
       // }).catch(function (error) {
       //   console.log("Error getting document:", error);
       // });
-    } catch (error) {
       // commit('setError', error.message)
       // commit('setLoading', false)
-      throw error
-    }
   },
   async updateCity({commit}, payload) {
     // commit('clearError')
