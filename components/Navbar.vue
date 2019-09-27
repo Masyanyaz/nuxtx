@@ -61,20 +61,20 @@
           <v-icon left>exit_to_app</v-icon>
           Logout
         </v-btn>
-<!--        <v-btn-->
-<!--          text-->
-<!--          :to="switchLocalePath('en')"-->
-<!--          @click="switchLanguage"-->
-<!--        >-->
-<!--          English-->
-<!--        </v-btn>-->
-<!--        <v-btn-->
-<!--          text-->
-<!--          :to="switchLocalePath('fr')"-->
-<!--          @click="switchLanguage"-->
-<!--        >-->
-<!--          Français-->
-<!--        </v-btn>-->
+        <v-btn
+          text
+          :to="switchLocalePath('en')"
+          @click="switchLanguage"
+        >
+          English
+        </v-btn>
+        <v-btn
+          text
+          :to="switchLocalePath('fr')"
+          @click="switchLanguage"
+        >
+          Français
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>

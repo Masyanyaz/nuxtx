@@ -8,15 +8,14 @@
         ref="form"
         v-model="valid"
         validation
-        action="/send"
-        method="POST"
-        id="form"
       >
         <v-text-field
-          v-model="form.password"
+          v-model="form.name"
+          :rules="[v => !!v || 'Name is required']"
           name="name"
           label="Name"
           type="text"
+          required
         ></v-text-field>
         <v-text-field
           v-model="form.email"
@@ -24,6 +23,7 @@
           name="email"
           label="Email"
           type="email"
+          required
         ></v-text-field>
         <v-textarea
           v-model="form.message"
@@ -32,6 +32,18 @@
           type="text"
           rows="3"
         ></v-textarea>
+        <v-checkbox
+          style="margin-top: 0"
+          v-model="checkbox"
+          :rules="[v => !!v || 'You must agree to continue!']"
+          label="Do you agree?"
+          required
+        ></v-checkbox>
+        <div
+          v-if="isSend"
+        >
+          {{msg}}
+        </div>
       </v-form>
     </v-card-text>
     <v-card-actions
@@ -52,13 +64,14 @@
   export default {
     data() {
       return {
+        checkbox: false,
         form: {
           name: '',
           email: '',
           message: '',
         },
-        isError: false,
-        errMsg: '',
+        isSend: false,
+        msg: '',
         valid: false,
         emailRules: [
           v => !!v || 'E-mail is required',
@@ -68,7 +81,20 @@
     },
     methods: {
       onSubmit() {
-        form.submit()
+        this.$axios.post('/send', {
+          name: this.form.name,
+          email: this.form.email,
+          message: this.form.message,
+        })
+          .then(res => {
+            this.isSend = true;
+            this.msg = res.data
+          })
+          .catch(e => {
+            this.isSend = true;
+            this.msg = e
+          })
+        // form.submit()
       }
     }
   }

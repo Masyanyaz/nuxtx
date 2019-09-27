@@ -97,7 +97,7 @@ app.get('/api/getcities', (req, res) => {
 });
 
 app.get('/api/getcities/:id', (req, res) => {
-  let sql = `SELECT * FROM cities WHERE url = '${req.params.id}'`;
+  let sql = `SELECT * FROM cities WHERE lang = '${req.params.id}'`;
   let query = db.query(sql,(err, result) => {
     if (err) throw err;
     res.send(result)
@@ -123,6 +123,7 @@ app.get('/api/getexcursion/:id', (req, res) => {
 app.post('/send', (req, res) => {
   const output = `
     <p>Name: ${req.body.name}</p>
+    <p>Email: ${req.body.email}</p>
     <p>Message: ${req.body.message}</p>
   `;
 
@@ -144,13 +145,14 @@ app.post('/send', (req, res) => {
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: '"Masyanyaz" <crazymax96@bk.ru>', // sender address
-      to: `${req.body.email}`, // list of receivers
+      to: `bryachnev.wunder.russia@gmail.com`, // list of receivers
       subject: 'First', // Subject line
       html: output // html body
     });
   }
 
   main().catch(console.error);
+  res.send('Form submitted')
 });
 
 

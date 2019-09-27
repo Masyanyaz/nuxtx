@@ -15,7 +15,7 @@
             slot-scope="{ hover }"
             :class="`elevation-${hover ? 16 : 2}`"
             class="pointer"
-            :to="city.url"
+            :to="$store.state.locale === 'en' ? city.url : $store.state.locale + '/' + city.url"
           >
             <v-img
               :src="city.previewImageSrc"

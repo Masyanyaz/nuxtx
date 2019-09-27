@@ -96,7 +96,7 @@ export const actions = {
 
     // const results = []
 
-      await this.$axios.get('/api/getcities')
+      await this.$axios.get(`/api/getcities/${payload.language}`)
         .then((data) => {
           commit('loadCities', data.data)
         })
