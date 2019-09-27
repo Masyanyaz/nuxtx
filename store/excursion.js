@@ -117,7 +117,7 @@ export const actions = {
       //       console.log(e)
       //     })
       // } else {
-      await this.$axios.get(`/api/getexcursion/${payload.city}`)
+      await this.$axios.get(`/api/getexcursion/${payload.language}/${payload.city}`)
         .then((data) => {
           commit('loadExcursions', data.data)
         })

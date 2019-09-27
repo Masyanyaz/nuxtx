@@ -8,9 +8,6 @@
           v-model="valid"
           validation
           class="mb-3"
-          action="/api/addexcursion"
-          method="POST"
-          id="form"
         >
           <v-tabs
             v-model="tab"
@@ -35,47 +32,17 @@
                   :key="index"
                   class="pl-3 pr-3"
                 >
-                  <div
+                  <v-select
                     v-if="i.select"
-                  >
-                    <v-select
-                      :label="i.itemName"
-                      :name="i.itemName"
-                      :required="i.required"
-                      :disabled="i.disabled"
-                      v-model="i.model"
-                      :rules="[i.rules]"
-                      :items="i.items"
-                      return-object="true"
-                    ></v-select>
-                    <v-text-field
-                      v-if="i.itemName !== 'city_id'"
-                      :rules="[i.rules]"
-                      v-model="i.model"
-                      :required="i.required"
-                      :name="i.itemName"
-                      :label="i.itemName"
-                      type="text"
-                    ></v-text-field>
-                    <v-text-field
-                      v-if="i.itemName === 'city_id'"
-                      :rules="[i.rules]"
-                      v-model="i.model.value"
-                      :required="i.required"
-                      :name="i.itemName"
-                      :label="i.itemName"
-                      type="text"
-                    ></v-text-field>
-                    <v-text-field
-                      v-if="i.itemName === 'city_id'"
-                      :rules="[i.rules]"
-                      v-model="i.model.valueUrl"
-                      :required="i.required"
-                      :name="i.itemName2"
-                      :label="i.itemName2"
-                      type="text"
-                    ></v-text-field>
-                  </div>
+                    :label="i.itemName"
+                    :name="i.itemName"
+                    :required="i.required"
+                    :disabled="i.disabled"
+                    v-model="i.model"
+                    :rules="[i.rules]"
+                    :items="i.items"
+                    return-object
+                  ></v-select>
                   <v-textarea
                     v-else-if="i.textarea"
                     v-model="i.model"
@@ -162,6 +129,11 @@
               @click="createAd"
             >Create ad
             </v-btn>
+            <div
+              v-if="isSend"
+            >
+              {{msg}}
+            </div>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -180,6 +152,8 @@
         valid: false,
         galerySrc: [],
         image: null,
+        isSend: false,
+        msg: '',
         images: [],
         imageSrc: '',
         tab: null,
@@ -273,21 +247,21 @@
           section: {
             headerName: 'Раздел',
             item: {
-              language: {
-                itemName: 'language',
-                model: this.$store.state.locale,
+              lang: {
+                itemName: 'lang',
+                model: '',
                 required: true,
                 select: true,
-                disabled: true,
+                disabled: false,
                 items: [
-                  {text: this.$t('excursionAddNew.tabs.language'), value: this.$store.state.locale},
+                  {text: 'Английский', value: 'en'},
+                  {text: 'Французккий', value: 'fr'},
                 ],
                 rules: v => !!v || 'Is required'
               },
               city: {
-                itemName: 'city_id',
-                itemName2: 'url',
-                model: '1',
+                itemName: 'city',
+                model: '',
                 required: true,
                 select: true,
                 items: [],
@@ -318,7 +292,7 @@
     created() {
       let cities = this.cities
       cities.forEach(a => {
-        this.tabs.section.item.city.items.push({text: a.name, value: a.id, valueUrl: a.url})
+        this.tabs.section.item.city.items.push({text: a.name, value: a.id, url: a.url})
       })
     },
     computed: {
@@ -328,34 +302,34 @@
     },
     methods: {
       createAd() {
-        form.submit()
-        // if (this.$refs.form.validate() && this.image) {
-        //   const ad = {
-        //     h1: this.tabs.metaTags.item.h1.model,
-        //     price: this.tabs.main.item.price.model,
-        //     time: this.tabs.main.item.time.model,
-        //     groupSize: this.tabs.main.item.groupSize.model,
-        //     type: this.tabs.main.item.type.model,
-        //     detailText: this.tabs.detail.item.detailText.model,
-        //     included: this.tabs.detail.item.included.model,
-        //     excluded: this.tabs.detail.item.excluded.model,
-        //     name: this.tabs.main.item.name.model,
-        //     url: this.tabs.main.item.url.model,
-        //     title: this.tabs.metaTags.item.title.model,
-        //     description: this.tabs.metaTags.item.description.model,
-        //     city: this.tabs.section.item.city.model,
-        //     language: this.tabs.section.item.language.model,
-        //     image: this.image,
-        //   }
-        //
-        //   this.$store.dispatch('excursion/createExcursion', ad)
-        //     .then(() => {
-        //       this.$router.push('/admin')
-        //     })
-        //     .catch((e) => {
-        //       console.log(e)
-        //     })
-        // }
+        this.$axios.post('/api/addexcursion', {
+          city: this.tabs.section.item.city.model.url,
+          city_id: this.tabs.section.item.city.model.value,
+          title: this.tabs.metaTags.item.title.model,
+          description: this.tabs.metaTags.item.description.model,
+          h1: this.tabs.metaTags.item.h1.model,
+          url: this.tabs.main.item.url.model,
+          lang: this.tabs.section.item.lang.model.value,
+          name: this.tabs.main.item.name.model,
+          detailText: this.tabs.detail.item.detailText.model,
+          included: this.tabs.detail.item.included.model,
+          excluded: this.tabs.detail.item.excluded.model,
+          groupSize: this.tabs.main.item.groupSize.model,
+          price: this.tabs.main.item.price.model,
+          time: this.tabs.main.item.time.model,
+          type: this.tabs.main.item.type.model,
+          previewImageSrc: this.tabs.photoGalery.item.previewImageSrc.model,
+          imageSrc: this.tabs.photoGalery.item.imageSrc.model,
+        })
+          .then(res => {
+            this.$refs.form.reset();
+            this.isSend = true;
+            this.msg = res.data
+          })
+          .catch(e => {
+            this.isSend = true;
+            this.msg = e
+          })
       },
       triggerUpload() {
         this.$refs.fileInput.click()

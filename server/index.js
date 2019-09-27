@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const upload = require('express-fileupload');
 const {Nuxt, Builder} = require('nuxt');
 const nodemailer = require('nodemailer');
 const app = express();
@@ -8,6 +9,8 @@ const db = require('./config/database');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.use(upload());
 
 // // create db
 // app.get('/createdb', (req, res) => {
@@ -30,23 +33,36 @@ app.get('/api/createtable', (req, res) => {
   })
 });
 
+app.post('/api/ccc', (req, res) => {
+  console.log(req.files);
+});
+
 // post 1
 app.post('/api/addcity', (req, res) => {
-  console.log(req.body)
   let city = {
     title: req.body.title,
     description: req.body.description,
     h1: req.body.h1,
     url: req.body.url,
-    language: req.body.language,
+    lang: req.body.lang,
     name: req.body.name,
-    previewImageSrc: req.body.previewImageSrc,
-    imageSrc: req.body.imageSrc,
   };
+  let file = req.files.file;
+  let filename = file.name;
+  let fileExt = filename.slice(filename.lastIndexOf('.'));
+  filename = `${city.lang}-${city.url}-${city.name}${fileExt}`;
+  let filePath = `/image/${city.lang}/${city.url}/` + filename;
+  file.mv('./static' + filePath, e => {
+    if(e) console.log(e)
+  });
+  city.previewImageSrc = filePath;
+  city.imageSrc = filePath;
+  console.log(city);
+
   let sql = 'INSERT INTO cities SET ?';
   let query = db.query(sql, city, (err, result) => {
     if (err) throw err;
-    res.sendStatus(200);
+    res.send('Form submitted')
   });
 });
 
@@ -59,7 +75,7 @@ app.post('/api/addexcursion', (req, res) => {
     description: req.body.description,
     h1: req.body.h1,
     url: req.body.url,
-    language: req.body.language,
+    lang: req.body.lang,
     name: req.body.name,
     detailText: req.body.detailText,
     included: req.body.included,
@@ -74,7 +90,7 @@ app.post('/api/addexcursion', (req, res) => {
   let sql = 'INSERT INTO excursion SET ?';
   let query = db.query(sql, exc, (err, result) => {
     if (err) throw err;
-    res.sendStatus(200);
+    res.send('Form submitted');
   });
 });
 
@@ -112,8 +128,8 @@ app.get('/api/getexcursion', (req, res) => {
   });
 });
 
-app.get('/api/getexcursion/:id', (req, res) => {
-  let sql = `SELECT * FROM excursion WHERE city = '${req.params.id}'`;
+app.get('/api/getexcursion/:lang/:id', (req, res) => {
+  let sql = `SELECT * FROM excursion WHERE city = '${req.params.id}' AND lang = '${req.params.lang}'`;
   let query = db.query(sql,(err, result) => {
     if (err) throw err;
     res.send(result)
