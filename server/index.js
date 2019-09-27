@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const upload = require('express-fileupload');
 const {Nuxt, Builder} = require('nuxt');
 const nodemailer = require('nodemailer');
@@ -50,8 +51,12 @@ app.post('/api/addcity', (req, res) => {
   let file = req.files.file;
   let filename = file.name;
   let fileExt = filename.slice(filename.lastIndexOf('.'));
-  filename = `${city.lang}-${city.url}-${city.name}${fileExt}`;
-  let filePath = `/image/${city.lang}/${city.url}/` + filename;
+  filename = `${city.name}${fileExt}`;
+  let path = `/image/${city.lang}/${city.url}/`;
+  let filePath = path + filename;
+  fs.mkdirSync('./static' + path, {recursive: true}, e => {
+    throw e;
+  });
   file.mv('./static' + filePath, e => {
     if(e) console.log(e)
   });
