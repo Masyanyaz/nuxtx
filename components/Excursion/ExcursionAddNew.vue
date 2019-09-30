@@ -260,23 +260,22 @@
               detailText: {
                 itemName: 'detailText',
                 model: '',
-                required: true,
+                required: false,
                 textarea: true,
                 rules: v => !!v || 'Is required'
               },
               included: {
                 itemName: 'included',
                 model: '',
-                required: true,
+                required: false,
                 textarea: true,
                 rules: v => !!v || 'Is required'
               },
               excluded: {
                 itemName: 'excluded',
                 model: '',
-                required: true,
+                required: false,
                 textarea: true,
-                rules: v => !!v || 'Is required'
               }
             }
           },

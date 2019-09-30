@@ -10,12 +10,12 @@
     <v-btn
       class="error mr-2"
       text
-      @click="deleteExcursion"
+      @click="deleteCity"
     >
       Dalete
     </v-btn>
     <v-dialog
-      width="900px"
+      width="700px"
       v-model="modal"
       v-if="modal"
     >
@@ -55,12 +55,12 @@
                       <v-select
                         v-if="i.select"
                         :label="i.itemName"
-                        :name="i.itemName"
                         :required="i.required"
                         :disabled="i.disabled"
                         v-model="i.model"
                         :rules="[i.rules]"
                         :items="i.items"
+                        :name="i.itemName"
                         return-object
                       ></v-select>
                       <v-textarea
@@ -173,7 +173,7 @@
                   :loading="loading"
                   :disabled="!valid || loading"
                   class="success"
-                  @click="updatedExcursion"
+                  @click="updatedCity"
                 >Create ad
                 </v-btn>
                 <div
@@ -194,22 +194,22 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    props: ['cities', 'exc'],
+    props: ['city'],
     data() {
       return {
         modal: false,
         images: {
           preview: {
             image: null,
-            src: this.exc.previewImage
+            src: this.city.previewImage
           },
           main: {
             image: null,
-            src: this.exc.mainImage
+            src: this.city.mainImage
           },
           galery: {
             image: [],
-            src: this.exc.galery
+            src: this.city.galery
           },
         },
         valid: false,
@@ -222,35 +222,15 @@
             item: {
               name: {
                 itemName: 'name',
-                model: this.exc.name,
+                model: this.city.name,
                 required: true,
                 rules: v => !!v || 'Is required'
               },
               url: {
                 itemName: 'url',
-                model: this.exc.url,
+                model: this.city.url,
                 required: true,
                 rules: v => !!v || 'Is required'
-              },
-              price: {
-                itemName: 'price',
-                model: this.exc.price,
-                rules: false
-              },
-              time: {
-                itemName: 'time',
-                model: this.exc.time,
-                rules: false
-              },
-              groupSize: {
-                itemName: 'groupSize',
-                model: this.exc.groupSize,
-                rules: false
-              },
-              type: {
-                itemName: 'type',
-                model: this.exc.type,
-                rules: false
               }
             }
           },
@@ -259,47 +239,21 @@
             item: {
               h1: {
                 itemName: 'h1',
-                model: this.exc.h1,
+                model: this.city.h1,
                 required: true,
                 rules: v => !!v || 'Is required'
               },
               title: {
                 itemName: 'title',
-                model: this.exc.title,
+                model: this.city.title,
                 required: true,
                 rules: v => !!v || 'Is required'
               },
               description: {
                 itemName: 'description',
-                model: this.exc.description,
+                model: this.city.description,
                 required: true,
                 rules: v => !!v || 'Is required'
-              }
-            }
-          },
-          detail: {
-            headerName: 'Детальное описание',
-            item: {
-              detailText: {
-                itemName: 'detailText',
-                model: this.exc.detailText,
-                required: false,
-                textarea: true,
-                rules: v => !!v || 'Is required'
-              },
-              included: {
-                itemName: 'included',
-                model: this.exc.included,
-                required: false,
-                textarea: true,
-                rules: v => !!v || 'Is required'
-              },
-              excluded: {
-                itemName: 'excluded',
-                model: this.exc.excluded,
-                required: false,
-                textarea: true,
-                rules: false
               }
             }
           },
@@ -308,56 +262,33 @@
             item: {
               lang: {
                 itemName: 'lang',
-                model: this.exc.lang,
+                model: '',
                 required: true,
                 select: true,
                 disabled: false,
                 items: [
                   {text: 'Английский', value: 'en'},
-                  {text: 'Французккий', value: 'fr'},
+                  {text: 'Французский', value: 'fr'},
                 ],
-                rules: v => !!v || 'Is required'
-              },
-              city: {
-                itemName: 'city',
-                model: this.exc.city,
-                required: true,
-                select: true,
-                items: [],
                 rules: v => !!v || 'Is required'
               }
             }
-          }
+          },
+
         },
       }
     },
-    created() {
-      this.cities.forEach(a => {
-        this.tabs.section.item.city.items.push({text: a.name, value: a.id, url: a.url})
-      })
-    },
-    computed: {
-      ...mapGetters({
-        loading: 'shared/loading',
-      })
-    },
+    computed: mapGetters({
+      loading: 'shared/loading'
+    }),
     methods: {
-      updatedExcursion() {
+      updatedCity() {
         let formData = new FormData();
         formData.append('previewImage', this.images.preview.image);
         formData.append('mainImage', this.images.main.image);
         this.images.galery.image.forEach(img => {
           formData.append('galery', img);
         })
-        formData.append('city', this.tabs.section.item.city.model.url);
-        formData.append('city_id', this.tabs.section.item.city.model.value);
-        formData.append('detailText', this.tabs.detail.item.detailText.model);
-        formData.append('included', this.tabs.detail.item.included.model);
-        formData.append('excluded', this.tabs.detail.item.excluded.model);
-        formData.append('groupSize', this.tabs.main.item.groupSize.model);
-        formData.append('price', this.tabs.main.item.price.model);
-        formData.append('time', this.tabs.main.item.time.model);
-        formData.append('type', this.tabs.main.item.type.model);
         formData.append('title', this.tabs.metaTags.item.title.model);
         formData.append('description', this.tabs.metaTags.item.description.model);
         formData.append('h1', this.tabs.metaTags.item.h1.model);
@@ -365,7 +296,7 @@
         formData.append('lang', this.tabs.section.item.lang.model.value);
         formData.append('name', this.tabs.main.item.name.model);
 
-        this.$axios.post(`/admin/api/updateexcursion/${this.exc.id}`, formData)
+        this.$axios.post(`/admin/api/updatecity/${this.city.id}`, formData)
           .then(res => {
             this.isSend = true;
             this.msg = res.data
@@ -406,6 +337,7 @@
           this.images.main.image = file
         }
         if (event.target.name === 'galery') {
+
           const file = event.target.files;
 
           for (let i = 0; i < file.length; i++) {
@@ -414,10 +346,10 @@
           }
         }
       },
-      deleteExcursion() {
-        let accept = confirm(`Удалить ${this.exc.name}?`);
+      deleteCity() {
+        let accept = confirm(`Удалить ${this.city.name}?`);
         if (accept) {
-          this.$axios.post(`/admin/api/deleteexcursion/${this.exc.id}`)
+          this.$axios.post(`/admin/api/deletecity/${this.city.id}`)
             .then(() => {
               console.log('deleted')
             })

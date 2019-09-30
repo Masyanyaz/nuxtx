@@ -1,28 +1,65 @@
 {
+  "Excursion": {
+    "ExcursionHeader": {
+
+    }
+  },
+  "City": {
+
+  },
+  "Footer": {
+
+  },
   "Navbar": {
-    "activities": "frActivities",
-    "destinations": "frDestinations",
-    "faq": "frFAQ",
-    "aboutUs": "frAbout us",
-    "contact": "frContact",
-    "new": "frAd new",
+    "activities": "Activities",
+    "destinations": "Destinations",
+    "faq": "FAQ",
+    "aboutUs": "About us",
+    "contact": "Contact",
+    "new": "Ad new",
     "english": "English",
     "french": "French"
   },
-  "home": {
-    "title": "Home fr",
-    "topDestinations": "frTop Destinations",
-    "introduction": "Ceci est un texte d'introduction en Français."
+  "index": {
+    "title": "Home",
+    "description": "Home des",
+    "h1": "Unusual excursions from locals",
+    "topDestinations": "Top Destinations"
+  },
+  "faq": {
+    "title": "Home",
+    "description": "",
+    "h1": "",
+    "items": {
+      "1": {
+
+      },
+      "2": {
+
+      },
+      "3": {
+
+      },
+      "4": {
+
+      }
+    }
   },
   "about": {
-    "title": "À propos",
-    "introduction": "Cette page est faite pour vous donner plus d'informations."
+    "title": "Home",
+    "description": "",
+    "h1": ""
+  },
+  "contact": {
+    "title": "Home",
+    "description": "",
+    "h1": ""
   },
   "excursionAddNew": {
     "tabs": {
-      "language": "Французский",
+      "language": "Английский",
       "city": {
-        "spb": "saint-petersbourg"
+        "spb": "saint-petersburg"
       }
     }
   }

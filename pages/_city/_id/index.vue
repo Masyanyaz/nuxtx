@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-card-actions v-if="isUserloggedIn">
+      <v-spacer></v-spacer>
+      <ExcursionEdit :exc="exc" :cities="cities"></ExcursionEdit>
+    </v-card-actions>
     <v-container fluid class="pl-0 pr-0">
       <v-layout>
         <v-flex xs12>
@@ -32,7 +36,7 @@
             <ExcursionHeader :exc="exc"/>
 
             <h2>Overview</h2>
-            <div v-html="exc.detailText" />
+            <div v-html="exc.detailText"/>
             <hr>
 
             <h2>Included/Exclude</h2>
@@ -80,7 +84,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <Form class="form" />
+      <Form class="form"/>
     </div>
     <v-container>
       <v-layout row>
@@ -116,6 +120,14 @@
       let exc = await store.getters['excursion/excByUrl'](params.id)
       return {exc}
     },
+    async fetch({store}) {
+      if (store.getters['city/cities'].length === 0) {
+        const url = {
+          language: store.state.locale
+        };
+        await store.dispatch('city/fetchCities', url)
+      }
+    },
     data() {
       return {
         title: 'asd',
@@ -137,9 +149,15 @@
       ExcursionEdit,
       Form
     },
-    computed: mapGetters({
-      excursions: 'excursion/excursions',
-    }),
+    computed: {
+      isUserloggedIn() {
+        return this.$store.getters['user/isUserloggedIn']
+      },
+      ...mapGetters({
+        excursions: 'excursion/excursions',
+        cities: 'city/cities'
+      })
+    },
   }
 </script>
 

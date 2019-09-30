@@ -30,8 +30,7 @@
                   primary-title
                 >
                   <div style="text-align: center">
-                    <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{exc.name}}</h3>
-                    <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{exc.id}}</p>
+                    <h3 class="headline mb-0 pb-5" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{exc.name}}</h3>
                   </div>
                 </v-card-title>
               </v-img>

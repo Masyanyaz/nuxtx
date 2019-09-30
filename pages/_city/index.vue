@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-card-actions v-if="isUserloggedIn">
+      <v-spacer></v-spacer>
+      <CityEdit :city="city"></CityEdit>
+    </v-card-actions>
     <v-container fluid class="pl-0 pr-0">
       <v-layout row>
         <v-flex xs12>
@@ -7,7 +11,7 @@
             :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top"
           >
-            <div class="welcome-top__text">{{city.title}}</div>
+            <div class="welcome-top__text">{{city.name}}</div>
             <v-btn
               v-if="city.galery"
               text
@@ -28,7 +32,7 @@
                 column
                 active-class="green lighten-1"
               >
-                <v-chip filter v-for="tag in tags" :key="tag" :value="tag">
+                <v-chip filter v-for="tag in filterList" :key="tag" :value="tag">
                   {{ tag }}
                 </v-chip>
               </v-chip-group>
@@ -48,6 +52,7 @@
   import {mapGetters} from 'vuex'
   import ExcursionCards from "../../components/Excursion/ExcursionCards";
   import Galery from "../../components/Galery";
+  import CityEdit from "../../components/City/CityEdit";
 
   export default {
     async asyncData({store, params, error}) {
@@ -68,11 +73,14 @@
       return {
         showGalery: false,
         filter: [],
-        tags: [
-          'foot',
-          'car',
-        ],
+        filterList: [],
       }
+    },
+    created() {
+      let arr = this.excursions.map(a => {
+        return a.type
+      })
+      this.filterList = Array.from(new Set(arr))
     },
     head() {
       return {
@@ -84,9 +92,13 @@
     },
     components: {
       ExcursionCards,
-      Galery
+      Galery,
+      CityEdit
     },
     computed: {
+      isUserloggedIn() {
+        return this.$store.getters['user/isUserloggedIn']
+      },
       filtered() {
         if (this.filter.length === 0) return this.excursions
         return this.excursions.filter(item => {

@@ -16,7 +16,7 @@
             slot-scope="{ hover }"
             :class="`elevation-${hover ? 16 : 2}`"
             class="pointer"
-            :to="$store.state.locale === 'en' ? city.url : $store.state.locale + '/' + city.url"
+            :to="$store.state.locale === 'en' ? city.url : '/' + $store.state.locale + '/' + city.url"
           >
             <v-img
               :src="city.previewImage"
@@ -29,8 +29,7 @@
                 primary-title
               >
                 <div style="text-align: center">
-                  <h3 class="headline mb-0" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{city.name}}</h3>
-                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">{{city.id}}</p>
+                  <h3 class="headline mb-0 pb-5" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{city.name}}</h3>
                 </div>
               </v-card-title>
             </v-img>
