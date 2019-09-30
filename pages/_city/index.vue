@@ -4,10 +4,35 @@
       <v-layout row>
         <v-flex xs12>
           <div
-            :style="{background: 'url(' + city.imageSrc + ') no-repeat 50% 15% /cover'}"
+            :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top"
           >
             <div class="welcome-top__text">{{city.title}}</div>
+            <v-btn
+              v-if="city.galery"
+              text
+              @click="showGalery = !showGalery"
+              style="font-size: calc(12px + 2 * ((100vw) / 600));"
+            >
+              <v-icon>insert_photo</v-icon>
+              More photo
+            </v-btn>
+            <div v-if="showGalery" class="galery align-center justify-center d-flex" @click.self="showGalery =
+            !showGalery">
+              <Galery :items="city.galery" style="max-width: 60%; max-height: 400px; position: absolute;"/>
+            </div>
+            <div class="filter">
+              <v-chip-group
+                multiple
+                v-model="filter"
+                column
+                active-class="green lighten-1"
+              >
+                <v-chip filter v-for="tag in tags" :key="tag" :value="tag">
+                  {{ tag }}
+                </v-chip>
+              </v-chip-group>
+            </div>
           </div>
         </v-flex>
       </v-layout>
@@ -15,8 +40,6 @@
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       Excursion
     </h2>
-    Foot: <input type="checkbox" value="foot" v-model="filter">
-    Car: <input type="checkbox" value="car" v-model="filter">
     <ExcursionCards :excursions="filtered"/>
   </div>
 </template>
@@ -24,6 +47,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import ExcursionCards from "../../components/Excursion/ExcursionCards";
+  import Galery from "../../components/Galery";
 
   export default {
     async asyncData({store, params, error}) {
@@ -42,7 +66,12 @@
     },
     data() {
       return {
-        filter: []
+        showGalery: false,
+        filter: [],
+        tags: [
+          'foot',
+          'car',
+        ],
       }
     },
     head() {
@@ -54,11 +83,12 @@
       }
     },
     components: {
-      ExcursionCards
+      ExcursionCards,
+      Galery
     },
     computed: {
       filtered() {
-        if(this.filter.length === 0) return this.excursions
+        if (this.filter.length === 0) return this.excursions
         return this.excursions.filter(item => {
           return this.filter.includes(item.type)
         })
@@ -109,5 +139,27 @@
       -ms-transform: translateY(-50%);
       transform: translateY(-50%);
     }
+
+    .filter {
+      position: absolute;
+      top: 70%;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
+
+  .galery {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto
+  }
+
+
 </style>

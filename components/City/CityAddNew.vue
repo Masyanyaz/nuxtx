@@ -69,27 +69,81 @@
         <v-layout row mb-3>
           <v-flex xs12>
             <v-btn
-              @click="triggerUpload"
+              @click="$refs.previewImage.click()"
               class="warning"
             >
-              Upload
+              Upload preview
               <v-icon right dark>cloud_upload</v-icon>
             </v-btn>
             <input
-              ref="fileInput"
-              name="file"
+              ref="previewImage"
+              name="previewImage"
               type="file"
               @change="onFileChange"
               style="display: none;"
               accept="image/*">
           </v-flex>
         </v-layout>
-        <v-layout row>
+        <v-layout row v-if="images.preview.src">
           <v-flex xs12>
             <img
               height="100px"
-              :src="imageSrc"
-              v-if="imageSrc">
+              :src="images.preview.src">
+          </v-flex>
+        </v-layout>
+        <v-layout row mb-3>
+          <v-flex xs12>
+            <v-btn
+              @click="$refs.mainImage.click()"
+              class="warning"
+            >
+              Upload
+              <v-icon right dark>cloud_upload</v-icon>
+            </v-btn>
+            <input
+              ref="mainImage"
+              name="mainImage"
+              type="file"
+              @change="onFileChange"
+              style="display: none;"
+              accept="image/*">
+          </v-flex>
+        </v-layout>
+        <v-layout row v-if="images.main.src">
+          <v-flex xs12>
+            <img
+              height="100px"
+              :src="images.main.src">
+          </v-flex>
+        </v-layout>
+
+        <v-layout row mb-3>
+          <v-flex xs12>
+            <v-btn
+              @click="$refs.galery.click()"
+              class="warning"
+            >
+              Upload galery
+              <v-icon right dark>cloud_upload</v-icon>
+            </v-btn>
+            <input
+              ref="galery"
+              name="galery"
+              type="file"
+              multiple
+              @change="onFileChange"
+              style="display: none;"
+              accept="image/*">
+          </v-flex>
+        </v-layout>
+        <v-layout row v-if="images.galery.src">
+          <v-flex xs12>
+            <img
+              class="mr-3"
+              v-for="(img, i) in images.galery.src"
+              :key="i"
+              height="100px"
+              :src="img">
           </v-flex>
         </v-layout>
         <v-layout row>
@@ -97,7 +151,7 @@
             <v-spacer></v-spacer>
             <v-btn
               :loading="loading"
-              :disabled="!valid || !image || loading"
+              :disabled="!valid || !images.preview.image || !images.main.image || loading"
               class="success"
               @click="createAd"
             >Create ad
@@ -120,11 +174,23 @@
   export default {
     data() {
       return {
+        images: {
+          preview: {
+            image: null,
+            src: ''
+          },
+          main: {
+            image: null,
+            src: ''
+          },
+          galery: {
+            image: [],
+            src: []
+          },
+        },
         valid: false,
-        image: null,
         isSend: false,
         msg: '',
-        imageSrc: '',
         tab: null,
         tabs: {
           main: {
@@ -194,19 +260,19 @@
     methods: {
       createAd() {
         let formData = new FormData();
-        formData.append('file', this.image);
+        formData.append('previewImage', this.images.preview.image);
+        formData.append('mainImage', this.images.main.image);
+        this.images.galery.image.forEach(img => {
+          formData.append('galery', img);
+        })
         formData.append('title', this.tabs.metaTags.item.title.model);
-        formData.append('description',this.tabs.metaTags.item.description.model);
+        formData.append('description', this.tabs.metaTags.item.description.model);
         formData.append('h1', this.tabs.metaTags.item.h1.model);
         formData.append('url', this.tabs.main.item.url.model);
         formData.append('lang', this.tabs.section.item.lang.model.value);
         formData.append('name', this.tabs.main.item.name.model);
 
-        this.$axios.post('/api/addcity', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+        this.$axios.post('/admin/api/addcity', formData)
           .then(res => {
             this.$refs.form.reset();
             this.isSend = true;
@@ -216,39 +282,44 @@
             this.isSend = true;
             this.msg = e
           })
-        // if (this.$refs.form.validate()) {
-        //   const ad = {
-        //     h1: this.tabs.metaTags.item.h1.model,
-        //     name: this.tabs.main.item.name.model,
-        //     url: this.tabs.main.item.url.model,
-        //     title: this.tabs.metaTags.item.title.model,
-        //     description: this.tabs.metaTags.item.description.model,
-        //     language: this.tabs.section.item.language.model,
-        //     image: this.image
-        //   }
-        //
-        //   this.$store.dispatch('city/createCity')
-        //     .then(() => {
-        //       this.$router.push('/admin')
-        //     })
-        //     .catch((e) => {
-        //       console.log(e)
-        //     })
-        // }
       },
-      triggerUpload() {
-        this.$refs.fileInput.click()
+      fileReader(file, name) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.images[name].src = reader.result
+        };
+        reader.readAsDataURL(file);
+      },
+      fileReaderGalery(file, name) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.images[name].src.push(reader.result)
+        };
+        reader.readAsDataURL(file);
       },
       onFileChange(event) {
-        const file = event.target.files[0]
+        if (event.target.name === 'previewImage') {
+          const file = event.target.files[0];
 
-        const reader = new FileReader()
+          this.fileReader(file, 'preview')
 
-        reader.onload = e => {
-          this.imageSrc = reader.result
+          this.images.preview.image = file
         }
-        reader.readAsDataURL(file)
-        this.image = file
+        if (event.target.name === 'mainImage') {
+          const file = event.target.files[0];
+
+          this.fileReader(file, 'main')
+
+          this.images.main.image = file
+        }
+        if (event.target.name === 'galery') {
+          const file = event.target.files;
+
+          for (let i = 0; i < file.length; i++) {
+            this.fileReaderGalery(file[i], 'galery')
+            this.images.galery.image.push(file[i]);
+          }
+        }
       }
     }
   }

@@ -53,13 +53,13 @@ export const actions = {
 
     // const image = payload.image
     //
-      await this.$axios.post('/api/addcity')
-        .then((data) => {
-          commit('createCity', data.data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
+    await this.$axios.post('/api/addcity')
+      .then((data) => {
+        commit('createCity', data.data)
+      })
+      .catch(e => {
+        console.log(e)
+      })
 
     //   const newCity = new City(
     //     payload.h1,
@@ -87,34 +87,23 @@ export const actions = {
     //         imageSrc
     //       })
     //     })
-      // commit('setError', error.message)
-      // commit('setLoading', false)
+    // commit('setError', error.message)
+    // commit('setLoading', false)
   },
   async fetchCities({commit, $axios}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
 
-    // const results = []
-
-      await this.$axios.get(`/api/getcities/${payload.language}`)
-        .then((data) => {
-          commit('loadCities', data.data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-      // const ref = await db.collection(`language/${payload.language}/cities`)
-      // await ref.get().then((querySnapshot) => {
-      //   querySnapshot.forEach((doc) => {
-      //     results.push(doc.data())
-      //   });
-      //
-      //   commit('loadCities', results)
-      // }).catch(function (error) {
-      //   console.log("Error getting document:", error);
-      // });
-      // commit('setError', error.message)
-      // commit('setLoading', false)
+    await this.$axios.get(`/admin/api/getcities/${payload.language}`)
+      .then((data) => {
+        commit('loadCities', data.data)
+        commit('shared/setLoading', false, {root: true})
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
   },
   async updateCity({commit}, payload) {
     // commit('clearError')

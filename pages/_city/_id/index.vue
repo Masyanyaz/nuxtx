@@ -4,22 +4,24 @@
       <v-layout>
         <v-flex xs12>
           <div
-            :style="{background: 'url(' + exc.imageSrc + ') no-repeat 50% 15% /cover'}"
+            :style="{background: 'url(' + exc.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top">
             <div class="welcome-top__text">{{exc.name}}</div>
-<!--            <v-btn-->
-<!--              text-->
-<!--              @click="showGalery = !showGalery"-->
-<!--              style="font-size: calc(12px + 2 * ((100vw) / 600));"-->
-<!--            >-->
-<!--              <v-icon>insert_photo</v-icon>-->
-<!--              More photo-->
-<!--            </v-btn>-->
+            <v-btn
+              v-if="exc.galery"
+              text
+              @click="showGalery = !showGalery"
+              style="font-size: calc(12px + 2 * ((100vw) / 600));"
+            >
+              <v-icon>insert_photo</v-icon>
+              More photo
+            </v-btn>
           </div>
-<!--          <div v-if="showGalery" class="galery align-center justify-center d-flex" @click.self="showGalery =-->
-<!--            !showGalery">-->
-<!--            <ExcursionGalery style="max-width: 60%; max-height: 400px; position: absolute;"/>-->
-<!--          </div>-->
+          <div v-if="showGalery" class="galery align-center justify-center d-flex"
+               @click.self="showGalery =
+            !showGalery">
+            <Galery :items="exc.galery" style="max-width: 60%; max-height: 400px; position: absolute;"/>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -94,7 +96,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import ExcursionHeader from '@/components/Excursion/ExcursionHeader'
-  import ExcursionGalery from '@/components/Excursion/ExcursionGalery'
+  import Galery from '@/components/Galery'
   import ExcursionEdit from '@/components/Excursion/ExcursionEdit'
   import ExcursionCards from "@/components/Excursion/ExcursionCards";
   import Form from "@/components/Form";
@@ -131,7 +133,7 @@
     components: {
       ExcursionCards,
       ExcursionHeader,
-      ExcursionGalery,
+      Galery,
       ExcursionEdit,
       Form
     },

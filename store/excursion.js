@@ -105,28 +105,19 @@ export const actions = {
     }
   },
   async fetchExcursions({commit}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
+    await this.$axios.get(`/admin/api/getexcursion/${payload.language}/${payload.city}`)
+      .then((data) => {
+        commit('loadExcursions', data.data)
+        commit('shared/setLoading', false, {root: true})
 
-      // if (payload.city === undefined) {
-      //   await this.$axios.get('/api/getexcursion')
-      //     .then((data) => {
-      //       commit('loadExcursions', data.data)
-      //     })
-      //     .catch(e => {
-      //       console.log(e)
-      //     })
-      // } else {
-      await this.$axios.get(`/api/getexcursion/${payload.language}/${payload.city}`)
-        .then((data) => {
-          commit('loadExcursions', data.data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-      // }
-      //   // commit('setError', error.message)
-      //   // commit('setLoading', false)
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
   },
   async updateExcursion({commit}, payload) {
     // commit('clearError')

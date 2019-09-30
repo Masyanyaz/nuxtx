@@ -1,4 +1,5 @@
 <template>
+
   <div class="footer">
     <div class="footer-item">
       <span class="footer-top-element">Need help?</span>
@@ -51,38 +52,60 @@
       <span class="footer-top-element-border"/>
       <div class="footer-item-list">
         <span>Language</span>
-        <select class="footer-select">
-          <option>English</option>
-          <option>Francais</option>
-        </select>
+          <div class="footer-select">
+            <v-btn
+              text
+              :to="switchLocalePath('en')"
+              @click="switchLanguage"
+            >
+              English
+            </v-btn>
+            <v-btn
+              text
+              :to="switchLocalePath('fr')"
+              @click="switchLanguage"
+            >
+              Français
+            </v-btn>
+          </div>
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script>
   export default {
+    methods: {
+      switchLanguage () {
+        setTimeout(() => {
+          location.reload();
+        }, 1000)
+      }
+    },
     name: "Footer"
   }
 </script>
 
 <style scoped lang="scss">
+
   .footer {
     display: flex;
     justify-content: space-between;
     margin-top: 50px;
+    margin-left: 10%;
 
     &-item {
       width: 25%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
 
       &-list {
         display: flex;
         flex-direction: column;
-        width: 40%;
         padding-top: 20px;
 
         span {
@@ -95,11 +118,9 @@
     &-top-element {
       display: block;
       padding-bottom: 20px;
-      /* border-bottom: 1px solid #ebebeb;*/
-      width: 40%;
 
       &-border {
-        width: 40%;
+        width: 30%;
         border-bottom: 1px solid #ebebeb;
         display: block;
       }
@@ -109,7 +130,6 @@
       display: flex;
       flex-direction: column;
       margin-top: 20px;
-      width: 40%;
       border-left: 2px solid #5191fa;
       padding-left: 10px;
 
@@ -124,11 +144,10 @@
     }
 
     &-select {
-      border-style: solid;
-      border-radius: 2px;
-      border-color: #ebebeb;
-      padding: 3px;
-      margin-left: -2px;
+      display: flex;
+      flex-direction: column;
     }
   }
+
+
 </style>

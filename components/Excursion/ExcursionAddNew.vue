@@ -66,65 +66,92 @@
             </v-tabs-items>
           </v-tabs>
         </v-form>
-        <!--        <v-layout row mb-3>-->
-        <!--          <v-flex xs12>-->
-        <!--            <v-btn-->
-        <!--              @click="triggerUpload"-->
-        <!--              class="warning"-->
-        <!--            >-->
-        <!--              Upload-->
-        <!--              <v-icon right dark>cloud_upload</v-icon>-->
-        <!--            </v-btn>-->
-        <!--            <input-->
-        <!--              ref="fileInput"-->
-        <!--              type="file"-->
-        <!--              @change="onFileChange"-->
-        <!--              style="display: none;"-->
-        <!--              accept="image/*">-->
-        <!--          </v-flex>-->
-        <!--        </v-layout>-->
-        <!--        <v-layout row>-->
-        <!--          <v-flex xs12>-->
-        <!--            <img-->
-        <!--              height="100px"-->
-        <!--              :src="imageSrc"-->
-        <!--              v-if="imageSrc">-->
-        <!--          </v-flex>-->
-        <!--        </v-layout>-->
-        <!--        <v-layout row mb-3>-->
-        <!--          <v-flex xs12>-->
-        <!--            <v-btn-->
-        <!--              @click="galeryUpload"-->
-        <!--              class="warning"-->
-        <!--            >-->
-        <!--              Upload-->
-        <!--              <v-icon right dark>cloud_upload</v-icon>-->
-        <!--            </v-btn>-->
-        <!--            <input-->
-        <!--              ref="galeryInput"-->
-        <!--              type="file"-->
-        <!--              @change="onGaleryChange"-->
-        <!--              style="display: none;"-->
-        <!--              accept="image/*"-->
-        <!--              multiple>-->
-        <!--          </v-flex>-->
-        <!--        </v-layout>-->
-        <!--        {{images}}-->
-        <!--        <v-layout row>-->
-        <!--          <v-flex xs12>-->
-        <!--            <img-->
-        <!--              class="mr-3"-->
-        <!--              height="100px"-->
-        <!--              v-for="item in galerySrc" v-if="galerySrc" :key="item"-->
-        <!--              :src="item">-->
-        <!--          </v-flex>-->
-        <!--        </v-layout>-->
+        <v-layout row mb-3>
+          <v-flex xs12>
+            <v-btn
+              @click="$refs.previewImage.click()"
+              class="warning"
+            >
+              Upload preview
+              <v-icon right dark>cloud_upload</v-icon>
+            </v-btn>
+            <input
+              ref="previewImage"
+              name="previewImage"
+              type="file"
+              @change="onFileChange"
+              style="display: none;"
+              accept="image/*">
+          </v-flex>
+        </v-layout>
+        <v-layout row v-if="images.preview.src">
+          <v-flex xs12>
+            <img
+              height="100px"
+              :src="images.preview.src">
+          </v-flex>
+        </v-layout>
+        <v-layout row mb-3>
+          <v-flex xs12>
+            <v-btn
+              @click="$refs.mainImage.click()"
+              class="warning"
+            >
+              Upload
+              <v-icon right dark>cloud_upload</v-icon>
+            </v-btn>
+            <input
+              ref="mainImage"
+              name="mainImage"
+              type="file"
+              @change="onFileChange"
+              style="display: none;"
+              accept="image/*">
+          </v-flex>
+        </v-layout>
+        <v-layout row v-if="images.main.src">
+          <v-flex xs12>
+            <img
+              height="100px"
+              :src="images.main.src">
+          </v-flex>
+        </v-layout>
+
+        <v-layout row mb-3>
+          <v-flex xs12>
+            <v-btn
+              @click="$refs.galery.click()"
+              class="warning"
+            >
+              Upload galery
+              <v-icon right dark>cloud_upload</v-icon>
+            </v-btn>
+            <input
+              ref="galery"
+              name="galery"
+              type="file"
+              multiple
+              @change="onFileChange"
+              style="display: none;"
+              accept="image/*">
+          </v-flex>
+        </v-layout>
+        <v-layout row v-if="images.galery.src">
+          <v-flex xs12>
+            <img
+              class="mr-3"
+              v-for="(img, i) in images.galery.src"
+              :key="i"
+              height="100px"
+              :src="img">
+          </v-flex>
+        </v-layout>
         <v-layout row>
           <v-flex xs12>
             <v-spacer></v-spacer>
             <v-btn
               :loading="loading"
-              :disabled="!valid || image || loading"
+              :disabled="!valid || !images.preview.image || !images.main.image || loading"
               class="success"
               @click="createAd"
             >Create ad
@@ -148,14 +175,23 @@
     props: ['cities'],
     data() {
       return {
-        promo: false,
+        images: {
+          preview: {
+            image: null,
+            src: ''
+          },
+          main: {
+            image: null,
+            src: ''
+          },
+          galery: {
+            image: [],
+            src: []
+          },
+        },
         valid: false,
-        galerySrc: [],
-        image: null,
         isSend: false,
         msg: '',
-        images: [],
-        imageSrc: '',
         tab: null,
         tabs: {
           main: {
@@ -268,24 +304,7 @@
                 rules: v => !!v || 'Is required'
               }
             }
-          },
-          photoGalery: {
-            headerName: 'Фотографии',
-            item: {
-              previewImageSrc: {
-                itemName: 'previewImageSrc',
-                model: '',
-                required: true,
-                rules: v => !!v || 'Is required'
-              },
-              imageSrc: {
-                itemName: 'imageSrc',
-                model: '',
-                required: true,
-                rules: v => !!v || 'Is required'
-              },
-            }
-          },
+          }
         },
       }
     },
@@ -302,25 +321,29 @@
     },
     methods: {
       createAd() {
-        this.$axios.post('/api/addexcursion', {
-          city: this.tabs.section.item.city.model.url,
-          city_id: this.tabs.section.item.city.model.value,
-          title: this.tabs.metaTags.item.title.model,
-          description: this.tabs.metaTags.item.description.model,
-          h1: this.tabs.metaTags.item.h1.model,
-          url: this.tabs.main.item.url.model,
-          lang: this.tabs.section.item.lang.model.value,
-          name: this.tabs.main.item.name.model,
-          detailText: this.tabs.detail.item.detailText.model,
-          included: this.tabs.detail.item.included.model,
-          excluded: this.tabs.detail.item.excluded.model,
-          groupSize: this.tabs.main.item.groupSize.model,
-          price: this.tabs.main.item.price.model,
-          time: this.tabs.main.item.time.model,
-          type: this.tabs.main.item.type.model,
-          previewImageSrc: this.tabs.photoGalery.item.previewImageSrc.model,
-          imageSrc: this.tabs.photoGalery.item.imageSrc.model,
+        let formData = new FormData();
+        formData.append('previewImage', this.images.preview.image);
+        formData.append('mainImage', this.images.main.image);
+        this.images.galery.image.forEach(img => {
+          formData.append('galery', img);
         })
+        formData.append('city', this.tabs.section.item.city.model.url);
+        formData.append('city_id', this.tabs.section.item.city.model.value);
+        formData.append('detailText', this.tabs.detail.item.detailText.model);
+        formData.append('included', this.tabs.detail.item.included.model);
+        formData.append('excluded', this.tabs.detail.item.excluded.model);
+        formData.append('groupSize', this.tabs.main.item.groupSize.model);
+        formData.append('price', this.tabs.main.item.price.model);
+        formData.append('time', this.tabs.main.item.time.model);
+        formData.append('type', this.tabs.main.item.type.model);
+        formData.append('title', this.tabs.metaTags.item.title.model);
+        formData.append('description', this.tabs.metaTags.item.description.model);
+        formData.append('h1', this.tabs.metaTags.item.h1.model);
+        formData.append('url', this.tabs.main.item.url.model);
+        formData.append('lang', this.tabs.section.item.lang.model.value);
+        formData.append('name', this.tabs.main.item.name.model);
+
+        this.$axios.post('/admin/api/addexcursion', formData)
           .then(res => {
             this.$refs.form.reset();
             this.isSend = true;
@@ -331,34 +354,44 @@
             this.msg = e
           })
       },
-      triggerUpload() {
-        this.$refs.fileInput.click()
+      fileReader(file, name) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.images[name].src = reader.result
+        };
+        reader.readAsDataURL(file);
       },
-      galeryUpload() {
-        this.$refs.galeryInput.click()
+      fileReaderGalery(file, name) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.images[name].src.push(reader.result)
+        };
+        reader.readAsDataURL(file);
       },
       onFileChange(event) {
-        const file = event.target.files[0]
+        if (event.target.name === 'previewImage') {
+          const file = event.target.files[0];
 
-        const reader = new FileReader()
+          this.fileReader(file, 'preview')
 
-        reader.onload = e => {
-          this.imageSrc = reader.result
+          this.images.preview.image = file
         }
-        reader.readAsDataURL(file)
-        this.image = file
-      },
-      // onGaleryChange(event) {
-      //   const file = event.target.files[0]
-      //
-      //   const reader = new FileReader()
-      //
-      //   reader.onload = e => {
-      //     this.galerySrc.push(reader.result)
-      //   }
-      //   reader.readAsDataURL(file)
-      //   this.images.push(file)
-      // },
+        if (event.target.name === 'mainImage') {
+          const file = event.target.files[0];
+
+          this.fileReader(file, 'main')
+
+          this.images.main.image = file
+        }
+        if (event.target.name === 'galery') {
+          const file = event.target.files;
+
+          for (let i = 0; i < file.length; i++) {
+            this.fileReaderGalery(file[i], 'galery')
+            this.images.galery.image.push(file[i]);
+          }
+        }
+      }
     }
   }
 </script>

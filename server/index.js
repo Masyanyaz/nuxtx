@@ -13,33 +13,8 @@ app.use(bodyParser.json());
 
 app.use(upload());
 
-// // create db
-// app.get('/createdb', (req, res) => {
-//   let sql = 'CREATE DATABASE cities';
-//   db.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.sendStatus(200)
-//   })
-// });
-//
-// create table
-app.get('/api', (req, res) => {
-  res.send('hello')
-});
-app.get('/api/createtable', (req, res) => {
-  let sql = 'CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body varchar(255), PRIMARY KEY(id))';
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.sendStatus(200)
-  })
-});
-
-app.post('/api/ccc', (req, res) => {
-  console.log(req.files);
-});
-
-// post 1
-app.post('/api/addcity', (req, res) => {
+// add city
+app.post('/admin/api/addcity', (req, res) => {
   let city = {
     title: req.body.title,
     description: req.body.description,
@@ -48,21 +23,34 @@ app.post('/api/addcity', (req, res) => {
     lang: req.body.lang,
     name: req.body.name,
   };
-  let file = req.files.file;
-  let filename = file.name;
-  let fileExt = filename.slice(filename.lastIndexOf('.'));
-  filename = `${city.name}${fileExt}`;
-  let path = `/image/${city.lang}/${city.url}/`;
-  let filePath = path + filename;
-  fs.mkdirSync('./static' + path, {recursive: true}, e => {
-    throw e;
-  });
-  file.mv('./static' + filePath, e => {
-    if(e) console.log(e)
-  });
-  city.previewImageSrc = filePath;
-  city.imageSrc = filePath;
-  console.log(city);
+
+  const renameAndMove = (name, i = '') => {
+    let gal = name === 'galery' ? 'galery/' : '';
+    let file = name === 'galery' ? req.files[name][i] : req.files[name];
+    name = name.replace('Image', '');
+    let filename = file.name;
+    let fileExt = filename.slice(filename.lastIndexOf('.'));
+    filename = `${name}-${city.name}${i}${fileExt}`;
+    let path = `/image/${city.lang}/${city.url}/${gal}`;
+    let filePath = path + filename;
+    fs.mkdirSync('./static' + path, {recursive: true}, err => {
+      throw err;
+    });
+    file.mv('./static' + filePath, err => {
+      if (err) throw err;
+    });
+    return filePath;
+  }
+
+  let galery = [];
+
+  for (let i = 0; i < req.files.galery.length; i++) {
+    galery.push(renameAndMove('galery', `${i}`));
+  };
+
+  city.previewImage = renameAndMove('previewImage');
+  city.mainImage = renameAndMove('mainImage');
+  city.galery = JSON.stringify(galery);
 
   let sql = 'INSERT INTO cities SET ?';
   let query = db.query(sql, city, (err, result) => {
@@ -71,8 +59,8 @@ app.post('/api/addcity', (req, res) => {
   });
 });
 
-app.post('/api/addexcursion', (req, res) => {
-  console.log(req.body)
+// add excursion
+app.post('/admin/api/addexcursion', (req, res) => {
   let exc = {
     city: req.body.city,
     city_id: req.body.city_id,
@@ -89,9 +77,36 @@ app.post('/api/addexcursion', (req, res) => {
     price: req.body.price,
     time: req.body.time,
     type: req.body.type,
-    previewImageSrc: req.body.previewImageSrc,
-    imageSrc: req.body.imageSrc,
   };
+
+  const renameAndMove = (name, i = '') => {
+    let gal = name === 'galery' ? 'galery/' : '';
+    let file = name === 'galery' ? req.files[name][i] : req.files[name];
+    name = name.replace('Image', '');
+    let filename = file.name;
+    let fileExt = filename.slice(filename.lastIndexOf('.'));
+    filename = `${name}-${exc.name}${i}${fileExt}`;
+    let path = `/image/${exc.lang}/${exc.city}/${exc.url}/${gal}`;
+    let filePath = path + filename;
+    fs.mkdirSync('./static' + path, {recursive: true}, err => {
+      throw err;
+    });
+    file.mv('./static' + filePath, err => {
+      if (err) throw err;
+    });
+    return filePath;
+  }
+
+  let galery = [];
+
+  for (let i = 0; i < req.files.galery.length; i++) {
+    galery.push(renameAndMove('galery', `${i}`));
+  };
+
+  exc.previewImage = renameAndMove('previewImage');
+  exc.mainImage = renameAndMove('mainImage');
+  exc.galery = JSON.stringify(galery);
+
   let sql = 'INSERT INTO excursion SET ?';
   let query = db.query(sql, exc, (err, result) => {
     if (err) throw err;
@@ -99,48 +114,31 @@ app.post('/api/addexcursion', (req, res) => {
   });
 });
 
-app.get('/api/addpost2', (req, res) => {
-  let post = {title: 'post 2', body: 'this body post 2'};
-  let sql = 'INSERT INTO posts SET ?';
-  let query = db.query(sql, post, (err, result) => {
-    if (err) throw err;
-    res.sendStatus(200)
-  });
-});
-
-//get posts
-app.get('/api/getcities', (req, res) => {
-  let sql = 'SELECT * FROM cities';
-  let query = db.query(sql,(err, result) => {
-    if (err) throw err;
-    res.send(result)
-  });
-});
-
-app.get('/api/getcities/:id', (req, res) => {
+// get cities
+app.get('/admin/api/getcities/:id', (req, res) => {
   let sql = `SELECT * FROM cities WHERE lang = '${req.params.id}'`;
-  let query = db.query(sql,(err, result) => {
+  let query = db.query(sql, (err, result) => {
     if (err) throw err;
+    result.forEach(city => {
+      city.galery ? city.galery = JSON.parse(city.galery) : false
+    })
     res.send(result)
   });
 });
 
-app.get('/api/getexcursion', (req, res) => {
-  let sql = 'SELECT * FROM excursion';
-  let query = db.query(sql,(err, result) => {
-    if (err) throw err;
-    res.send(result)
-  });
-});
-
-app.get('/api/getexcursion/:lang/:id', (req, res) => {
+// get excursion
+app.get('/admin/api/getexcursion/:lang/:id', (req, res) => {
   let sql = `SELECT * FROM excursion WHERE city = '${req.params.id}' AND lang = '${req.params.lang}'`;
-  let query = db.query(sql,(err, result) => {
+  let query = db.query(sql, (err, result) => {
     if (err) throw err;
+    result.forEach(exc => {
+      exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = ''
+    })
     res.send(result)
   });
 });
 
+// send form
 app.post('/send', (req, res) => {
   const output = `
     <p>Name: ${req.body.name}</p>
@@ -175,10 +173,6 @@ app.post('/send', (req, res) => {
   main().catch(console.error);
   res.send('Form submitted')
 });
-
-
-
-// import api from './api'
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js');
