@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 27 2019 г., 11:20
+-- Время создания: Сен 30 2019 г., 13:31
 -- Версия сервера: 10.3.13-MariaDB
 -- Версия PHP: 7.1.22
 
@@ -33,23 +33,13 @@ CREATE TABLE `cities` (
   `title` text DEFAULT '',
   `description` text DEFAULT '',
   `h1` text DEFAULT '',
+  `galery` text DEFAULT '',
   `url` text DEFAULT '',
   `lang` text DEFAULT '',
   `name` text DEFAULT '',
-  `previewImageSrc` text DEFAULT '',
-  `imageSrc` text DEFAULT ''
+  `previewImage` text DEFAULT '',
+  `mainImage` text DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `cities`
---
-
-INSERT INTO `cities` (`id`, `title`, `description`, `h1`, `url`, `lang`, `name`, `previewImageSrc`, `imageSrc`) VALUES
-(1, 'spb', 'spb', 'spb', 'spb', 'en', 'spb', '/image/spb/autour-de-l-amiraute.jpg', '/image/spb/autour-de-l-amiraute.jpg'),
-(2, 'msc', 'msc', 'msc', 'msc', 'fr', 'msc', '/image/msc/galleria-tretyakov.jpg', '/image/msc/galleria-tretyakov.jpg'),
-(3, 'sdfsd', 'dfgd', 'fgdfg', 'nov', 'en', 'ssadas', '/image/msc/galleria-tretyakov.jpg', '/image/msc/galleria-tretyakov.jpg'),
-(29, 'Novgorod title', 'Novgorod desc', 'Novgorod h1', 'novgorod', 'fr', 'Novgorod', '/image/msc/galleria-tretyakov.jpg', '/image/msc/galleria-tretyakov.jpg'),
-(35, 'fsdf', 'sdf', 'sdfsd', 'sdfsdf', 'en', 'dsfsdf', '/image/msc/galleria-tretyakov.jpg', '/image/msc/galleria-tretyakov.jpg');
 
 -- --------------------------------------------------------
 
@@ -74,19 +64,10 @@ CREATE TABLE `excursion` (
   `price` text NOT NULL,
   `time` text NOT NULL,
   `type` text NOT NULL,
-  `imageSrc` text NOT NULL,
-  `previewImageSrc` text NOT NULL
+  `mainImage` text NOT NULL,
+  `previewImage` text NOT NULL,
+  `galery` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `excursion`
---
-
-INSERT INTO `excursion` (`id`, `city_id`, `city`, `lang`, `url`, `h1`, `title`, `description`, `name`, `detailText`, `included`, `excluded`, `groupSize`, `price`, `time`, `type`, `imageSrc`, `previewImageSrc`) VALUES
-(1, 1, 'spb', 'en', 'banya', 'banya', 'banya', 'sdasd', 'banya', 'banaasd', 'ssdfsd', 'asd\nasd\n345', '6', '7', '8', 'foot', '/image/spb/autour-de-l-amiraute.jpg', '/image/spb/autour-de-l-amiraute.jpg'),
-(2, 2, 'msc', 'fr', '3', 'jh', 'sdfsd', 'jh', 'j', 'hj', 'kjkjk', 'h', 'jh', 'jkjkj', 'kj', 'kjk', '/image/spb/autour-de-l-amiraute.jpg', '/image/spb/autour-de-l-amiraute.jpg'),
-(3, 1, 'spb', 'en', 'banyea', 'banysdfsda', 'sdfsdfcvb', 'sdasd', 'sdfsdf', 'banaasd', 'ssdfsd', 'asdads', '6', '7', '8', 'car', '/image/spb/autour-de-l-amiraute.jpg', '/image/spb/autour-de-l-amiraute.jpg'),
-(8, 1, 'spb', 'en', 'petergof', 'petergof h1', 'petergof title', 'petergof desc', 'petergof', '<p>asfasdf</p>\r\n<b>asdasd</b>', '1231\r\n454\r\n6\r\ndfgdgdfgdfgdgf\r\ndf', '4345\r\n3\r\n24', '6', '2', '3', 'foot', '/image/msc/galleria-tretyakov.jpg', '/image/msc/galleria-tretyakov.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -113,13 +94,13 @@ ALTER TABLE `excursion`
 -- AUTO_INCREMENT для таблицы `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT для таблицы `excursion`
 --
 ALTER TABLE `excursion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
