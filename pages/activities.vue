@@ -18,6 +18,12 @@
         ]
       }
     },
+    nuxtI18n: {
+      paths: {
+        en: '/activities',
+        fr: '/activities'
+      }
+    }
   }
 </script>
 

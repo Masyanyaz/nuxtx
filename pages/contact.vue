@@ -27,7 +27,7 @@
     nuxtI18n: {
       paths: {
         en: '/contact',
-        fr: '/contactfr',
+        fr: '/contact',
       }
     }
   }

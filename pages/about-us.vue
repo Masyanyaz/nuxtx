@@ -26,6 +26,12 @@
         ]
       }
     },
+    nuxtI18n: {
+      paths: {
+        en: '/about-us',
+        fr: '/about-us'
+      }
+    }
   }
 </script>
 

@@ -36,7 +36,7 @@
     nuxtI18n: {
       paths: {
         en: '/faq',
-        fr: '/faqfr',
+        fr: '/faq',
       }
     }
   }

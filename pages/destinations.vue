@@ -18,6 +18,12 @@
         ]
       }
     },
+    nuxtI18n: {
+      paths: {
+        en: '/destination',
+        fr: '/destination'
+      }
+    }
   }
 </script>
 

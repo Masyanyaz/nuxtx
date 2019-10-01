@@ -50,9 +50,9 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import ExcursionCards from "../../components/Excursion/ExcursionCards";
-  import Galery from "../../components/Galery";
-  import CityEdit from "../../components/City/CityEdit";
+  import ExcursionCards from "~/components/Excursion/ExcursionCards";
+  import Galery from "~/components/Galery";
+  import CityEdit from "~/components/City/CityEdit";
 
   export default {
     async asyncData({store, params, error}) {
