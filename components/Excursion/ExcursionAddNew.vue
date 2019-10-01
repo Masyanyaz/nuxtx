@@ -269,13 +269,14 @@
                 model: '',
                 required: false,
                 textarea: true,
-                rules: v => !!v || 'Is required'
+                rules: false
               },
               excluded: {
                 itemName: 'excluded',
                 model: '',
                 required: false,
                 textarea: true,
+                rules: false
               }
             }
           },

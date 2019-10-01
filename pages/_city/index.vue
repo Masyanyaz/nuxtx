@@ -63,9 +63,7 @@
       };
       await store.dispatch('excursion/fetchExcursions', url)
       await store.dispatch('city/fetchCities', url)
-      if (store.getters['city/cityByUrl'](params.city) === undefined) {
-        error({statusCode: 404})
-      }
+
       let city = await store.getters['city/cityByUrl'](params.city)
       return {city}
     },
