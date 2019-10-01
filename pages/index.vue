@@ -49,12 +49,6 @@
     }),
     components: {
       CityCards
-    },
-    nuxtI18n: {
-      paths: {
-        en: '/',
-        fr: '/'
-      }
     }
   }
 </script>
