@@ -51,9 +51,9 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios'
   ],
-  // serverMiddleware: [
-  //   '~server/index'
-  // ],
+  serverMiddleware: [
+    '~server/index'
+  ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
