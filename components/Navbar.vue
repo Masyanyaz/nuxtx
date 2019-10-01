@@ -31,7 +31,7 @@
         <nuxt-link
           exact
           class="mr-5"
-          :to="`/`"
+          :to="$i18n.path('')"
         >
           Excursion
         </nuxt-link>
@@ -82,7 +82,7 @@
       },
       links() {
         return [
-          {title: 'asd', icon: 'keyboard_arrow_down', url: 'activities'},
+          {title: this.$t('Navbar.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
           {title: 'asd', icon: 'keyboard_arrow_down', url: 'destinations'},
           {title: 'asd', url: 'faq'},
           {title: 'asd', url: 'about-us'},
