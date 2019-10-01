@@ -3,13 +3,15 @@ import Cookieparser from 'cookieparser'
 
 export const state = () => ({
   locales: ['en', 'fr'],
-  locale: 'fr',
+  locale: 'en',
   city: ''
 })
 
 export const mutations = {
   setLang (state, payload) {
-    state.locale = payload
+    if (state.locales.includes(payload)) {
+      state.locale = payload
+    }
   },
   setCity (state, payload) {
     state.city = payload
