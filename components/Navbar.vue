@@ -31,7 +31,7 @@
         <nuxt-link
           exact
           class="mr-5"
-          :to="localePath('index')"
+          :to="localePath({path: `/`})"
         >
           Excursion
         </nuxt-link>
@@ -41,7 +41,7 @@
           text
           v-for="(link, i) in links"
           :key="i"
-          :to="localePath(link.url)"
+          :to="localePath({path: `/${link.url}`})"
         >
           {{link.title}}
           <v-icon>{{link.icon}}</v-icon>
