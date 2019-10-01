@@ -18,7 +18,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import CityCards from "../components/City/CityCards";
+  import CityCards from "~/components/City/CityCards";
 
   export default {
     async fetch({store}) {
