@@ -88,6 +88,6 @@ module.exports = {
     lazy: true,
     langDir: 'locales/',
     strategy: 'prefix_except_default',
-    defaultLocale: 'fr'
+    defaultLocale: 'en'
   }
 }
