@@ -2,6 +2,7 @@ import JWTDecode from 'jwt-decode'
 import Cookieparser from 'cookieparser'
 
 export const state = () => ({
+  locales: ['en', 'fr'],
   locale: 'en',
   city: ''
 })

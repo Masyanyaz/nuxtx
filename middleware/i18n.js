@@ -1,37 +1,21 @@
-import { DEFAULT_LOCALE, LOCALES } from '~~/config'
-
-/**
- * i18n middleware - Handles lang switching and redirections to default lang
- * Inspired by Nuxt.js i18n example: https://nuxtjs.org/examples/i18n
- * @param  {Object} options.app       Vue app
- * @param  {Object} options.store     Vuex store
- * @param  {Object} options.route     Current route
- * @param  {Function} options.error     Error function
- * @param  {Function} options.redirect  Redirect function
- * @param  {Boolean} options.hotReload True if middleware was called by hotreload
- * @return {void}
- */
-export default function ({ app, store, route, error, redirect, hotReload }) {
-  // Check if middleware called from hot-reloading, ignore
-  if (hotReload) return
+export default function ({ isHMR, app, store, route, params, error, redirect }) {
+  const defaultLocale = app.i18n.fallbackLocale
+  // If middleware is called from hot module replacement, ignore it
+  if (isHMR) { return }
   // Get locale from params
-  let locale = DEFAULT_LOCALE
-  LOCALES.forEach(l => {
-    const regexp = new RegExp(`^/${l.code}/`)
-    if (route.path.match(regexp)) {
-      locale = l.code
-    }
-  })
-  if (LOCALES.findIndex(l => l.code === locale) === -1) {
-    return error({ message: 'Page not found.', statusCode: 404 })
+  const locale = params.lang || defaultLocale
+  if (!store.state.locales.includes(locale)) {
+    return error({ message: 'This page could not be found.', statusCode: 404 })
   }
-  if (locale === store.state.i18n.currentLocale) return
   // Set locale
-  store.dispatch('i18n/setLocale', { locale })
-  app.i18n.locale = locale
-  // If route is /<DEFAULT_LOCALE>/... -> redirect to /...
-  if (locale === DEFAULT_LOCALE && route.fullPath.indexOf(`/${DEFAULT_LOCALE}`) === 0) {
-    const regexp = new RegExp(`^/${DEFAULT_LOCALE}/`)
-    return redirect(route.fullPath.replace(regexp, '/'))
+  store.commit('SET_LANG', locale)
+  app.i18n.locale = store.state.locale
+  // If route is /<defaultLocale>/... -> redirect to /...
+  if (locale === defaultLocale && route.fullPath.indexOf('/' + defaultLocale) === 0) {
+    const toReplace = '^/' + defaultLocale + (route.fullPath.indexOf('/' + defaultLocale + '/') === 0 ? '/' : '')
+    const re = new RegExp(toReplace)
+    return redirect(
+      route.fullPath.replace(re, '/')
+    )
   }
 }

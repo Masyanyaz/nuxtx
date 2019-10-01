@@ -79,5 +79,15 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  i18n: {
+    locales: [
+      { code: 'en', iso: 'en-US', file: 'en.js', name: 'English'},
+      { code: 'fr', iso: 'fr-FR', file: 'fr.js', name: 'Français'},
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en'
   }
 }
