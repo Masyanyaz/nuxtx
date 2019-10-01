@@ -2,7 +2,7 @@
   <v-container grid-list-lg>
     <v-layout row wrap>
       <v-flex>
-        <h1>FAQ</h1>
+        <h1>{{$t('faq.title')}}</h1>
         <v-expansion-panels multiple>
           <v-expansion-panel
             v-for="(item,i) in 5"
@@ -27,9 +27,9 @@
   export default {
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('faq.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('faq.description')}
         ]
       }
     },
