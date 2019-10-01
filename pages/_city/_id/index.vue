@@ -39,48 +39,52 @@
             <div v-html="exc.detailText"/>
             <hr>
 
-            <h2>Included/Exclude</h2>
-            <div class="d-flex justify-space-between included">
-              <div
-                class="d-flex justify-start align-start included-item"
-                style="flex-direction: column"
-              >
+            <div v-if="exc.included || exc.excluded">
+              <h2>Included/Exclude</h2>
+              <div class="d-flex justify-space-between included">
                 <div
-                  class="d-flex align-center"
-                  v-for="(incl, i) in exc.included.split('\n')"
+                  v-if="exc.included"
+                  class="d-flex justify-start align-start included-item"
+                  style="flex-direction: column"
                 >
-                  <v-icon
-                    style="color: rgb(46, 204, 113)"
-                    left
-                  >done
-                  </v-icon>
-                  <span
-                    :key="i"
-                    v-text="incl"
-                  />
+                  <div
+                    class="d-flex align-center"
+                    v-for="(incl, i) in exc.included.split('\n')"
+                  >
+                    <v-icon
+                      style="color: rgb(46, 204, 113)"
+                      left
+                    >done
+                    </v-icon>
+                    <span
+                      :key="i"
+                      v-text="incl"
+                    />
+                  </div>
+                </div>
+                <div
+                  v-if="exc.excluded"
+                  class="d-flex justify-start align-start included-item"
+                  style="flex-direction: column"
+                >
+                  <div
+                    class="d-flex align-center"
+                    v-for="(excl, i) in exc.excluded.split('\n')"
+                  >
+                    <v-icon
+                      style="color: rgb(250, 86, 54)"
+                      left
+                    >clear
+                    </v-icon>
+                    <span
+                      :key="i"
+                      v-text="excl"
+                    />
+                  </div>
                 </div>
               </div>
-              <div
-                class="d-flex justify-start align-start included-item"
-                style="flex-direction: column"
-              >
-                <div
-                  class="d-flex align-center"
-                  v-for="(excl, i) in exc.excluded.split('\n')"
-                >
-                  <v-icon
-                    style="color: rgb(250, 86, 54)"
-                    left
-                  >clear
-                  </v-icon>
-                  <span
-                    :key="i"
-                    v-text="excl"
-                  />
-                </div>
-              </div>
+              <hr>
             </div>
-            <hr>
           </v-flex>
         </v-layout>
       </v-container>
@@ -93,7 +97,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <ExcursionCards :excursions="excursions"/>
+    <ExcursionCards :excursions="filtered"/>
   </div>
 </template>
 
@@ -152,6 +156,11 @@
     computed: {
       isUserloggedIn() {
         return this.$store.getters['user/isUserloggedIn']
+      },
+      filtered() {
+        return this.excursions.filter(item => {
+          return item.type === this.exc.type && item.url !== this.exc.url
+        })
       },
       ...mapGetters({
         excursions: 'excursion/excursions',

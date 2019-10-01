@@ -292,7 +292,7 @@
                 model: this.exc.included,
                 required: false,
                 textarea: true,
-                rules: v => !!v || 'Is required'
+                rules: false
               },
               excluded: {
                 itemName: 'excluded',
