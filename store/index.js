@@ -3,7 +3,7 @@ import Cookieparser from 'cookieparser'
 
 export const state = () => ({
   locales: ['en', 'fr'],
-  locale: 'en',
+  locale: 'fr',
   city: ''
 })
 
