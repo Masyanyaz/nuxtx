@@ -16,7 +16,7 @@ export default {
     topDestinations: "Top Destinations",
   },
   faq: {
-    title: "faq fr",
+    title: "faq en",
     description: "",
     h1: "",
     items: {

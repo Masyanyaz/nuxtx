@@ -36,7 +36,7 @@ module.exports = {
 
 
   router: {
-    middleware: ['authenticated', 'i18n']
+    middleware: ['authenticated']
   },
   /*
   ** Nuxt.js dev-modules
