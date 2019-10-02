@@ -32,12 +32,6 @@
           {hid: 'description', name: 'description', content: this.$t('faq.description')}
         ]
       }
-    },
-    nuxtI18n: {
-      paths: {
-        en: '/faq',
-        fr: '/faq',
-      }
     }
   }
 </script>

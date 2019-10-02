@@ -82,7 +82,6 @@
                   </div>
                 </div>
               </div>
-              <hr>
             </div>
           </v-flex>
         </v-layout>
@@ -92,6 +91,7 @@
     <v-container v-if="filtered.length !== 0">
       <v-layout row>
         <v-flex xs12>
+          <hr>
           <h2 class="d-flex justify-center">You might also like</h2>
         </v-flex>
       </v-layout>

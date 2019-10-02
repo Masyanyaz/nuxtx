@@ -23,12 +23,6 @@
           {hid: 'description', name: 'description', content: this.$t('index.description')}
         ]
       }
-    },
-    nuxtI18n: {
-      paths: {
-        en: '/contact',
-        fr: '/contact',
-      }
     }
   }
 </script>

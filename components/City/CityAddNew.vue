@@ -277,6 +277,20 @@
         this.$axios.post('/admin/api/addcity', formData)
           .then(res => {
             this.$refs.form.reset();
+            this.images = {
+              preview: {
+                image: null,
+                  src: ''
+              },
+              main: {
+                image: null,
+                  src: ''
+              },
+              galery: {
+                image: [],
+                  src: []
+              },
+            };
             this.isSend = true;
             this.msg = res.data
           })

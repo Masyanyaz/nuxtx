@@ -1,7 +1,10 @@
 {
   "Excursion": {
     "ExcursionHeader": {
-
+      "duration": "Duration",
+      "groupSize": "Group Size",
+      "language": "Language",
+      "price": "Price"
     }
   },
   "City": {
@@ -9,6 +12,22 @@
   },
   "Footer": {
 
+  },
+  "Form": {
+    "header": "ONLINE ORDER FORM",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "accept": "Do you agree?",
+    "send": "Book now",
+    "rules": {
+      "name": "Name is required",
+      "email": {
+        "req": "E-mail is required",
+        "valid": "E-mail must be valid"
+      },
+      "accept": "You must agree to continue!"
+    }
   },
   "Navbar": {
     "activities": "Activities",
@@ -25,6 +44,9 @@
     "description": "Home des",
     "h1": "Unusual excursions from locals",
     "topDestinations": "Top Destinations"
+  },
+  "_city": {
+    "excursion": "Excursion"
   },
   "faq": {
     "title": "faq fr",

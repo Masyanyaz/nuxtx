@@ -17,12 +17,6 @@
           {hid: 'description', name: 'description', content: this.$t('index.description')}
         ]
       }
-    },
-    nuxtI18n: {
-      paths: {
-        en: '/activities',
-        fr: '/activities'
-      }
     }
   }
 </script>

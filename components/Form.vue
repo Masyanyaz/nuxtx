@@ -1,7 +1,7 @@
 <template>
   <v-card class="elevation-12" style="width: 270px; max-height: 475px; height: auto;">
     <v-toolbar dark color="primary" class="d-flex justify-center">
-      <v-toolbar-title>ONLINE ORDER FORM</v-toolbar-title>
+      <v-toolbar-title>{{$t('Form.header')}}</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
       <v-form
@@ -11,9 +11,9 @@
       >
         <v-text-field
           v-model="form.name"
-          :rules="[v => !!v || 'Name is required']"
+          :rules="[v => !!v || `${$t('Form.rules.name')}`]"
           name="name"
-          label="Name"
+          :label="$t('Form.name')"
           type="text"
           required
         ></v-text-field>
@@ -21,22 +21,22 @@
           v-model="form.email"
           :rules="emailRules"
           name="email"
-          label="Email"
+          :label="$t('Form.email')"
           type="email"
           required
         ></v-text-field>
         <v-textarea
           v-model="form.message"
           name="message"
-          label="Message"
+          :label="$t('Form.message')"
           type="text"
           rows="3"
         ></v-textarea>
         <v-checkbox
           style="margin-top: 0"
           v-model="checkbox"
-          :rules="[v => !!v || 'You must agree to continue!']"
-          label="Do you agree?"
+          :rules="[v => !!v || `${$t('Form.rules.accept')}`]"
+          :label="$t('Form.accept')"
           required
         ></v-checkbox>
         <div
@@ -54,7 +54,7 @@
         @click="onSubmit"
         :disabled="!valid"
         color="primary"
-      >Book now
+      >{{$t('Form.send')}}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -74,8 +74,8 @@
         msg: '',
         valid: false,
         emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+/.test(v) || 'E-mail must be valid'
+          v => !!v || `${this.$t('Form.rules.email.req')}`,
+          v => /.+@.+/.test(v) || `${this.$t('Form.rules.email.valid')}`
         ]
       }
     },
@@ -94,7 +94,6 @@
             this.isSend = true;
             this.msg = e
           })
-        // form.submit()
       }
     }
   }

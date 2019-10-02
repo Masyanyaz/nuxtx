@@ -3,28 +3,28 @@
         <div class="excursion-head-item">
             <v-icon class="exc-head">alarm</v-icon>
             <div class="excursion-head-item-cont">
-                <span class="qqq">Duration</span>
+                <span class="qqq">{{$t('Excursion.ExcursionHeader.duration')}}</span>
                 <span class="www">{{exc.time}}</span>
             </div>
         </div>
         <div class="excursion-head-item">
             <v-icon class="exc-head">group</v-icon>
             <div class="excursion-head-item-cont">
-                <span class="qqq">Group Size</span>
+                <span class="qqq">{{$t('Excursion.ExcursionHeader.groupSize')}}</span>
                 <span class="www">{{exc.groupSize}}</span>
             </div>
         </div>
         <div class="excursion-head-item">
             <v-icon class="exc-head">language</v-icon>
             <div class="excursion-head-item-cont">
-                <span class="qqq">Language</span>
-                <span class="www">English</span>
+                <span class="qqq">{{$t('Excursion.ExcursionHeader.language')}}</span>
+                <span class="www">Français</span>
             </div>
         </div>
         <div class="excursion-head-item">
             <v-icon class="exc-head">euro_symbol</v-icon>
             <div class="excursion-head-item-cont">
-                <span class="qqq">Price</span>
+                <span class="qqq">{{$t('Excursion.ExcursionHeader.price')}}</span>
                 <span class="www">{{exc.price}}</span>
             </div>
         </div>
