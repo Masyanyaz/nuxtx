@@ -8,18 +8,18 @@ module.exports = {
   head: {
     title: process.env.npm_package_name || '',
     meta: [
-      {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
   ** Customize the progress-bar color
   */
-  loading: {color: '#bababa'},
+  loading: { color: '#bababa' },
   /*
   ** Global CSS
   */
@@ -49,17 +49,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    ['nuxt-i18n', {
-      strategy: 'prefix_and_default',
-      locales: [
-        {code: 'en', iso: 'en-US', file: 'en.js', name: 'English'},
-        {code: 'fr', iso: 'fr-FR', file: 'fr.js', name: 'Français'},
-      ],
-      lazy: true,
-      langDir: 'locales/',
-      defaultLocale: 'en'
-    }]
+    '@nuxtjs/axios'
   ],
   // serverMiddleware: [
   //   '~server/index'
@@ -68,7 +58,8 @@ module.exports = {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
+  axios: {
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -85,7 +76,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
+    extend (config, ctx) {
     }
   }
 }

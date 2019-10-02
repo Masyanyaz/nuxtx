@@ -31,7 +31,7 @@
         <nuxt-link
           exact
           class="mr-5"
-          :to="localePath({path: `/`})"
+          :to="$i18n.path('')"
         >
           Excursion
         </nuxt-link>
@@ -41,7 +41,7 @@
           text
           v-for="(link, i) in links"
           :key="i"
-          :to="localePath(link.url)"
+          :to="$i18n.path(`${link.url}`)"
         >
           {{link.title}}
           <v-icon>{{link.icon}}</v-icon>
@@ -49,7 +49,7 @@
         <v-btn
           text
           v-if="isUserloggedIn"
-          :to="localePath('admin')"
+          to="/admin"
         >
           Ad new
         </v-btn>
@@ -83,10 +83,10 @@
       links() {
         return [
           {title: this.$t('Navbar.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
-          {title: this.$t('Navbar.destinations'), icon: 'keyboard_arrow_down', url: 'destinations'},
-          {title: this.$t('Navbar.faq'), url: 'faq'},
-          {title: this.$t('Navbar.aboutUs'), url: 'about-us'},
-          {title: this.$t('Navbar.contact'), url: 'contact'},
+          {title: 'asd', icon: 'keyboard_arrow_down', url: 'destinations'},
+          {title: 'asd', url: 'faq'},
+          {title: 'asd', url: 'about-us'},
+          {title: 'asd', url: 'contact'},
         ]
       }
     },

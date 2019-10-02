@@ -16,7 +16,7 @@
               slot-scope="{ hover }"
               :class="`elevation-${hover ? 16 : 2}`"
               class="pointer"
-              :to="localePath({path: `/${exc.city}/${exc.url}`})"
+              :to="$i18n.path(`${exc.city}/${exc.url}`)"
             >
               <v-img
                 :src="exc.previewImage"
