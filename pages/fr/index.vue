@@ -10,7 +10,7 @@
       </v-layout>
     </v-container>
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      dfgdfg
+      frfrfr
     </h2>
     <CityCards :cities="cities"/>
   </div>
