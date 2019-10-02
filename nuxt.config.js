@@ -51,13 +51,13 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     ['nuxt-i18n', {
+      strategy: 'prefix_and_default',
       locales: [
         {code: 'en', iso: 'en-US', file: 'en.js', name: 'English'},
         {code: 'fr', iso: 'fr-FR', file: 'fr.js', name: 'Français'},
       ],
       lazy: true,
       langDir: 'locales/',
-      strategy: 'prefix_except_default',
       defaultLocale: 'en'
     }]
   ],
