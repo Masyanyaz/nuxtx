@@ -1,53 +1,17 @@
-<!--<template>
-  <div class="d-flex" style="max-width: 600px; flex-wrap: wrap">
-    <div class="d-flex header-first">
-      <div class="d-flex align-center justify-center">
-        <v-icon class="fill-height mr-2">alarm</v-icon>
-        <div class="d-flex mr-4" style="flex-direction: column; width: 80px;">
-          <b>Duration</b>
-          <span>{{exc.time}} hours</span>
-        </div>
-      </div>
-      <div class="d-flex align-center justify-center">
-        <v-icon class="fill-height mr-2">group</v-icon>
-        <div class="d-flex mr-4" style="flex-direction: column; width: 80px;">
-          <b>Group Size</b>
-          <span>{{exc.groupSize}} peoples</span>
-        </div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="d-flex align-center justify-center">
-        <v-icon class="fill-height mr-2">language</v-icon>
-        <div class="d-flex mr-4" style="flex-direction: column; width: 80px;">
-          <b>Language</b>
-          <span>English</span>
-        </div>
-      </div>
-      <div class="d-flex align-center justify-center">
-        <v-icon class="fill-height mr-2">euro_symbol</v-icon>
-        <div class="d-flex mr-4" style="flex-direction: column; width: 80px;">
-          <b>Price</b>
-          <span>{{exc.price}} €</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>-->
 <template>
     <div class="excursion-head">
         <div class="excursion-head-item">
             <v-icon class="exc-head">alarm</v-icon>
             <div class="excursion-head-item-cont">
                 <span class="qqq">Duration</span>
-                <span class="www">{{exc.time}} hours</span>
+                <span class="www">{{exc.time}}</span>
             </div>
         </div>
         <div class="excursion-head-item">
             <v-icon class="exc-head">group</v-icon>
             <div class="excursion-head-item-cont">
                 <span class="qqq">Group Size</span>
-                <span class="www">{{exc.groupSize}} peoples</span>
+                <span class="www">{{exc.groupSize}}</span>
             </div>
         </div>
         <div class="excursion-head-item">
@@ -61,7 +25,7 @@
             <v-icon class="exc-head">euro_symbol</v-icon>
             <div class="excursion-head-item-cont">
                 <span class="qqq">Price</span>
-                <span class="www">{{exc.price}} €</span>
+                <span class="www">{{exc.price}}</span>
             </div>
         </div>
     </div>

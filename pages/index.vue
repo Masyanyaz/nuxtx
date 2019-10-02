@@ -21,7 +21,7 @@
   import CityCards from "~/components/City/CityCards";
 
   export default {
-    async fetch({store}) {
+    async fetch({store, redirect}) {
       if (store.getters['city/cities'].length === 0) {
         const url = {
           language: store.state.locale

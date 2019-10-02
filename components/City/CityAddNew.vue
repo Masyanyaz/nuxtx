@@ -254,9 +254,11 @@
         },
       }
     },
-    computed: mapGetters({
-      loading: 'shared/loading'
-    }),
+    computed: {
+      ...mapGetters({
+        loading: 'shared/loading'
+      })
+    },
     methods: {
       createAd() {
         let formData = new FormData();

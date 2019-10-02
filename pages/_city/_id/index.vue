@@ -22,8 +22,7 @@
             </v-btn>
           </div>
           <div v-if="showGalery" class="galery align-center justify-center d-flex"
-               @click.self="showGalery =
-            !showGalery">
+               @click.self="showGalery = !showGalery">
             <Galery :items="exc.galery" style="max-width: 60%; max-height: 400px; position: absolute;"/>
           </div>
         </v-flex>
@@ -37,9 +36,9 @@
 
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
-            <hr>
 
             <div v-if="exc.included || exc.excluded">
+              <hr>
               <h2>Included/Exclude</h2>
               <div class="d-flex justify-space-between included">
                 <div
