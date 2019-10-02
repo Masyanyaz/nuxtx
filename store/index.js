@@ -9,9 +9,7 @@ export const state = () => ({
 
 export const mutations = {
   setLang (state, payload) {
-    if (state.locales.includes(payload)) {
-      state.locale = payload
-    }
+    state.locale = payload
   },
   setCity (state, payload) {
     state.city = payload

@@ -55,14 +55,14 @@
           <div class="footer-select">
             <v-btn
               text
-              to="/en"
+              :to="switchLocalePath('en')"
               @click="switchLanguage"
             >
               English
             </v-btn>
             <v-btn
               text
-              to="/fr"
+              :to="switchLocalePath('fr')"
               @click="switchLanguage"
             >
               Français
@@ -80,7 +80,6 @@
     methods: {
       switchLanguage () {
         setTimeout(() => {
-          this.$store.state.locale = 'fr'
           location.reload();
         }, 1000)
       }

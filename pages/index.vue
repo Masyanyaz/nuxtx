@@ -4,13 +4,13 @@
       <v-layout>
         <v-flex xs12>
           <div class="welcome-top">
-            <div class="welcome-top__text"><span>ertert</span></div>
+            <div class="welcome-top__text"><span>{{$t('index.h1')}}</span></div>
           </div>
         </v-flex>
       </v-layout>
     </v-container>
     <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      dfgdfg
+      {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
   </div>
@@ -36,9 +36,9 @@
     },
     head() {
       return {
-        title: 'sdf',
+        title: this.$t('index.title'),
         meta: [
-          {hid: 'description', name: 'description', content: 'sdfsd'}
+          {hid: 'description', name: 'description', content: this.$t('index.description')}
         ]
       }
     },
