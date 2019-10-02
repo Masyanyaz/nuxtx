@@ -23,7 +23,6 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
     )
   }
 
-
   const user = store.getters['user/user'];
   const blockedRoute = /\/admin\/*/g;
 

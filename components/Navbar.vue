@@ -41,7 +41,7 @@
           text
           v-for="(link, i) in links"
           :key="i"
-          :to="localePath({path: `/${link.url}`})"
+          :to="localePath(link.url)"
         >
           {{link.title}}
           <v-icon>{{link.icon}}</v-icon>
