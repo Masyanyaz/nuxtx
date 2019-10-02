@@ -1,5 +1,5 @@
 <template>
-  <v-card class="elevation-12" style="width: 270px; max-height: 450px;">
+  <v-card class="elevation-12" style="width: 270px; max-height: 475px; height: auto;">
     <v-toolbar dark color="primary" class="d-flex justify-center">
       <v-toolbar-title>ONLINE ORDER FORM</v-toolbar-title>
     </v-toolbar>
