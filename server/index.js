@@ -16,12 +16,12 @@ app.use(upload());
 // add city
 app.post('/admin/api/addcity', (req, res) => {
   let city = {
-    title: req.body.title,
-    description: req.body.description,
-    h1: req.body.h1,
-    url: req.body.url,
+    title: req.body.title.trim(),
+    description: req.body.description.trim(),
+    h1: req.body.h1.trim(),
+    url: req.body.url.trim(),
     lang: req.body.lang,
-    name: req.body.name,
+    name: req.body.name.trim(),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -43,11 +43,11 @@ app.post('/admin/api/addcity', (req, res) => {
   }
 
   let galery = [];
-
-  for (let i = 0; i < req.files.galery.length; i++) {
-    galery.push(renameAndMove('galery', `${i}`));
+  if (req.files.galery) {
+    for (let i = 0; i < req.files.galery.length; i++) {
+      galery.push(renameAndMove('galery', `${i}`));
+    };
   }
-  ;
 
   city.previewImage = renameAndMove('previewImage');
   city.mainImage = renameAndMove('mainImage');
@@ -63,12 +63,12 @@ app.post('/admin/api/addcity', (req, res) => {
 // update city
 app.post('/admin/api/updatecity/:id', (req, res) => {
   let city = {
-    title: req.body.title,
-    description: req.body.description,
-    h1: req.body.h1,
-    url: req.body.url,
+    title: req.body.title.trim(),
+    description: req.body.description.trim(),
+    h1: req.body.h1.trim(),
+    url: req.body.url.trim(),
     lang: req.body.lang,
-    name: req.body.name,
+    name: req.body.name.trim(),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -91,10 +91,11 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
 
   let galery = [];
 
-  for (let i = 0; i < req.files.galery.length; i++) {
-    galery.push(renameAndMove('galery', `${i}`));
+  if (req.files.galery) {
+    for (let i = 0; i < req.files.galery.length; i++) {
+      galery.push(renameAndMove('galery', `${i}`));
+    };
   }
-  ;
 
   city.previewImage = renameAndMove('previewImage');
   city.mainImage = renameAndMove('mainImage');
@@ -110,7 +111,7 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
 // delete city
 app.post('/admin/api/deletecity/:id', (req, res) => {
   let sql = `DELETE FROM cities WHERE id = '${req.params.id}'`;
-  let query = db.query(sql,(err, result) => {
+  let query = db.query(sql, (err, result) => {
     if (err) throw err;
     res.send('City deleted')
   });
@@ -121,19 +122,19 @@ app.post('/admin/api/addexcursion', (req, res) => {
   let exc = {
     city: req.body.city,
     city_id: req.body.city_id,
-    title: req.body.title,
-    description: req.body.description,
-    h1: req.body.h1,
-    url: req.body.url,
+    title: req.body.title.trim(),
+    description: req.body.description.trim(),
+    h1: req.body.h1.trim(),
+    url: req.body.url.trim(),
     lang: req.body.lang,
-    name: req.body.name,
+    name: req.body.name.trim(),
     detailText: req.body.detailText,
     included: req.body.included,
     excluded: req.body.excluded,
-    groupSize: req.body.groupSize,
-    price: req.body.price,
-    time: req.body.time,
-    type: req.body.type,
+    groupSize: req.body.groupSize.trim(),
+    price: req.body.price.trim(),
+    time: req.body.time.trim(),
+    type: req.body.type.trim(),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -156,10 +157,11 @@ app.post('/admin/api/addexcursion', (req, res) => {
 
   let galery = [];
 
-  for (let i = 0; i < req.files.galery.length; i++) {
-    galery.push(renameAndMove('galery', `${i}`));
+  if (req.files.galery) {
+    for (let i = 0; i < req.files.galery.length; i++) {
+      galery.push(renameAndMove('galery', `${i}`));
+    };
   }
-  ;
 
   exc.previewImage = renameAndMove('previewImage');
   exc.mainImage = renameAndMove('mainImage');
@@ -177,19 +179,19 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
   let exc = {
     city: req.body.city,
     city_id: req.body.city_id,
-    title: req.body.title,
-    description: req.body.description,
-    h1: req.body.h1,
-    url: req.body.url,
+    title: req.body.title.trim(),
+    description: req.body.description.trim(),
+    h1: req.body.h1.trim(),
+    url: req.body.url.trim(),
     lang: req.body.lang,
-    name: req.body.name,
+    name: req.body.name.trim(),
     detailText: req.body.detailText,
     included: req.body.included,
     excluded: req.body.excluded,
-    groupSize: req.body.groupSize,
-    price: req.body.price,
-    time: req.body.time,
-    type: req.body.type,
+    groupSize: req.body.groupSize.trim(),
+    price: req.body.price.trim(),
+    time: req.body.time.trim(),
+    type: req.body.type.trim(),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -212,17 +214,18 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
 
   let galery = [];
 
-  for (let i = 0; i < req.files.galery.length; i++) {
-    galery.push(renameAndMove('galery', `${i}`));
+  if (req.files.galery) {
+    for (let i = 0; i < req.files.galery.length; i++) {
+      galery.push(renameAndMove('galery', `${i}`));
+    };
   }
-  ;
 
   exc.previewImage = renameAndMove('previewImage');
   exc.mainImage = renameAndMove('mainImage');
   exc.galery = JSON.stringify(galery);
 
   let sql = `UPDATE excursion SET ? WHERE id = '${req.params.id}'`;
-  let query = db.query(sql, exc,(err, result) => {
+  let query = db.query(sql, exc, (err, result) => {
     if (err) throw err;
     res.send('Excursion updated');
   });
@@ -230,8 +233,8 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
 
 // delete excursion
 app.post('/admin/api/deleteexcursion/:id', (req, res) => {
-    let sql = `DELETE FROM excursion WHERE id = '${req.params.id}'`;
-  let query = db.query(sql,(err, result) => {
+  let sql = `DELETE FROM excursion WHERE id = '${req.params.id}'`;
+  let query = db.query(sql, (err, result) => {
     if (err) throw err;
     res.send('Excursion deleted');
   });

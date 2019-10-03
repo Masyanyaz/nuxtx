@@ -326,6 +326,7 @@
         }
         if (event.target.name === 'galery') {
           const file = event.target.files;
+          if (file.length === 0) return;
 
           for (let i = 0; i < file.length; i++) {
             this.fileReaderGalery(file[i], 'galery')

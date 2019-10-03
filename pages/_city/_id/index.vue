@@ -37,12 +37,12 @@
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
 
-            <div v-if="exc.included || exc.excluded">
+            <div v-if="exc.included !== undefined || exc.excluded !== undefined">
               <hr>
               <h2>Included/Exclude</h2>
               <div class="d-flex justify-space-between included">
                 <div
-                  v-if="exc.included"
+                  v-if="exc.included !== undefined"
                   class="d-flex justify-start align-start included-item"
                   style="flex-direction: column"
                 >
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div
-                  v-if="exc.excluded"
+                  v-if="exc.excluded !== undefined"
                   class="d-flex justify-start align-start included-item"
                   style="flex-direction: column"
                 >
