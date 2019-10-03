@@ -157,9 +157,9 @@
             >Create ad
             </v-btn>
             <div
-              v-if="isSend"
+              v-if="error"
             >
-              {{msg}}
+              {{error}}
             </div>
           </v-flex>
         </v-layout>
@@ -189,8 +189,6 @@
           },
         },
         valid: false,
-        isSend: false,
-        msg: '',
         tab: null,
         tabs: {
           main: {
@@ -256,11 +254,12 @@
     },
     computed: {
       ...mapGetters({
-        loading: 'shared/loading'
+        loading: 'shared/loading',
+        error: 'shared/error',
       })
     },
     methods: {
-      createAd() {
+      async createAd() {
         let formData = new FormData();
         formData.append('previewImage', this.images.preview.image);
         formData.append('mainImage', this.images.main.image);
@@ -274,30 +273,27 @@
         formData.append('lang', this.tabs.section.item.lang.model.value);
         formData.append('name', this.tabs.main.item.name.model);
 
-        this.$axios.post('/admin/api/addcity', formData)
-          .then(res => {
-            this.$refs.form.reset();
-            this.images = {
-              preview: {
-                image: null,
-                  src: ''
-              },
-              main: {
-                image: null,
-                  src: ''
-              },
-              galery: {
-                image: [],
-                  src: []
-              },
-            };
-            this.isSend = true;
-            this.msg = res.data
-          })
-          .catch(e => {
-            this.isSend = true;
-            this.msg = e
-          })
+        await this.$store.dispatch('city/createCity', formData)
+        try {
+          this.$refs.form.reset();
+          this.images = {
+            preview: {
+              image: null,
+              src: ''
+            },
+            main: {
+              image: null,
+              src: ''
+            },
+            galery: {
+              image: [],
+              src: []
+            },
+          };
+        }
+        catch (e) {
+          throw e;
+        }
       },
       fileReader(file, name) {
         const reader = new FileReader();

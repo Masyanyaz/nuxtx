@@ -67,7 +67,7 @@
   .welcome-top {
     position: relative;
     height: 390px;
-    background: url(https://res-5.cloudinary.com/account-travel/image/upload/c_scale,w_auto/c_limit,w_1600/dpr_2/v1/article/183/xcover-landing2.c980ea.jpg.pagespeed.ic.NTuKy7Y2oV.jpg) no-repeat 50% 15% / cover;
+    background: url('/image/home/noel-garanti.jpg') no-repeat 50% 15% / cover;
 
     &:before {
       content: "";

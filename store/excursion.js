@@ -56,53 +56,20 @@ export const mutations = {
 
 export const actions = {
 
-  async createExcursion({commit, getters}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
+  async createExcursion({commit}, payload) {
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
 
-    const image = payload.image
-
-    try {
-      const newExcursion = new Excursion(
-        payload.h1,
-        payload.price,
-        payload.time,
-        payload.groupSize,
-        payload.type,
-        payload.detailText,
-        payload.included.split('\n'),
-        payload.excluded.split('\n'),
-        payload.name,
-        payload.url,
-        payload.title,
-        payload.description,
-        payload.city,
-        payload.language,
-        '',
-        payload.dataCreated
-      )
-
-      const ref = await db.collection(`language/${newExcursion.language}/cities/${newExcursion.city}/excursion`).doc(newExcursion.url)
-      ref.set(Object.assign({}, newExcursion))
-
-      const imageExt = image.name.slice(image.name.lastIndexOf('.'))
-
-      const fileData = await fb.storage().ref(`language/${newExcursion.language}/${newExcursion.url}.${imageExt}`).put(image)
-      const imageSrc = await fileData.ref.getDownloadURL()
-
-      ref.update({imageSrc})
-        .then(() => {
-          // commit('setLoading', false)
-          commit('createExcursion', {
-            ...newExcursion,
-            imageSrc
-          })
-        })
-    } catch (error) {
-      // commit('setError', error.message)
-      // commit('setLoading', false)
-      throw error
-    }
+    await this.$axios.post('/admin/api/addexcursion', payload)
+      .then(res => {
+        commit('shared/setError', res.data, {root: true})
+        commit('shared/setLoading', false, {root: true})
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
   },
   async fetchExcursions({commit}, payload) {
     commit('shared/clearError', null, {root: true})

@@ -47,48 +47,20 @@ export const mutations = {
 }
 
 export const actions = {
-  async createCity({commit, getters}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
+  async createCity({commit}, payload) {
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
 
-    // const image = payload.image
-    //
-    await this.$axios.post('/api/addcity')
-      .then((data) => {
-        commit('createCity', data.data)
+    await this.$axios.post('/admin/api/addcity', payload)
+      .then(res => {
+        commit('shared/setError', res.data, {root: true})
+        commit('shared/setLoading', false, {root: true})
       })
       .catch(e => {
-        console.log(e)
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
       })
-
-    //   const newCity = new City(
-    //     payload.h1,
-    //     payload.name,
-    //     payload.url,
-    //     payload.title,
-    //     payload.description,
-    //     payload.language,
-    //     '',
-    //     payload.dataCreated
-    //   )
-    //   const ref = await db.collection(`language/${newCity.language}/cities`).doc(newCity.url)
-    //   ref.set(Object.assign({}, newCity))
-    //
-    //   const imageExt = image.name.slice(image.name.lastIndexOf('.'))
-    //
-    //   const fileData = await fb.storage().ref(`language/${newCity.language}/${newCity.url}.${imageExt}`).put(image)
-    //   const imageSrc = await fileData.ref.getDownloadURL()
-    //
-    //   ref.update({imageSrc})
-    //     .then(() => {
-    //       // commit('setLoading', false)
-    //       commit('createCity', {
-    //         ...newCity,
-    //         imageSrc
-    //       })
-    //     })
-    // commit('setError', error.message)
-    // commit('setLoading', false)
   },
   async fetchCities({commit, $axios}, payload) {
     commit('shared/clearError', null, {root: true})
