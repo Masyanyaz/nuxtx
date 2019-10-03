@@ -129,8 +129,8 @@ app.post('/admin/api/addexcursion', (req, res) => {
     lang: req.body.lang,
     name: req.body.name.trim(),
     detailText: req.body.detailText,
-    included: req.body.included,
-    excluded: req.body.excluded,
+    included: JSON.stringify(req.body.included.split('\n')),
+    excluded: JSON.stringify(req.body.excluded.split('\n')),
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
@@ -186,8 +186,8 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
     lang: req.body.lang,
     name: req.body.name.trim(),
     detailText: req.body.detailText,
-    included: req.body.included,
-    excluded: req.body.excluded,
+    included: JSON.stringify(req.body.included.split('\n')),
+    excluded: JSON.stringify(req.body.excluded.split('\n')),
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
@@ -259,7 +259,9 @@ app.get('/admin/api/getexcursion/:lang/:id', (req, res) => {
     if (err) throw err;
     result.forEach(exc => {
       exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
-      exc.type ? exc.type = JSON.parse(exc.type) : exc.type = ''
+      exc.type ? exc.type = JSON.parse(exc.type) : exc.type = '';
+      exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
+      exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
     })
     res.send(result)
   });

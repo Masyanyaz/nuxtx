@@ -37,18 +37,18 @@
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
 
-            <div v-if="exc.included !== undefined || exc.excluded !== undefined">
+            <div v-if="exc.included || exc.excluded">
               <hr>
               <h2>Included/Exclude</h2>
               <div class="d-flex justify-space-between included">
                 <div
-                  v-if="exc.included !== undefined"
+                  v-if="exc.included"
                   class="d-flex justify-start align-start included-item"
                   style="flex-direction: column"
                 >
                   <div
                     class="d-flex align-center"
-                    v-for="(incl, i) in exc.included.split('\n')"
+                    v-for="(incl, i) in exc.included"
                   >
                     <v-icon
                       style="color: rgb(46, 204, 113)"
@@ -62,13 +62,13 @@
                   </div>
                 </div>
                 <div
-                  v-if="exc.excluded !== undefined"
+                  v-if="exc.excluded"
                   class="d-flex justify-start align-start included-item"
                   style="flex-direction: column"
                 >
                   <div
                     class="d-flex align-center"
-                    v-for="(excl, i) in exc.excluded.split('\n')"
+                    v-for="(excl, i) in exc.excluded"
                   >
                     <v-icon
                       style="color: rgb(250, 86, 54)"
