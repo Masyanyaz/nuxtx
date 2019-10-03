@@ -49,7 +49,7 @@
         <v-btn
           text
           v-if="isUserloggedIn"
-          to="/admin"
+          :to="$i18n.path('admin')"
         >
           Ad new
         </v-btn>

@@ -23,7 +23,7 @@
           </div>
           <div v-if="showGalery" class="galery align-center justify-center d-flex"
                @click.self="showGalery = !showGalery">
-            <Galery :items="exc.galery" style="max-width: 60%; max-height: 400px; position: absolute;"/>
+            <Galery :items="exc.galery" style="max-width: 60%; height: 440px; position: absolute;"/>
           </div>
         </v-flex>
       </v-layout>

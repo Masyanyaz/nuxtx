@@ -23,7 +23,7 @@
             </v-btn>
             <div v-if="showGalery" class="galery align-center justify-center d-flex" @click.self="showGalery =
             !showGalery">
-              <Galery :items="city.galery" style="max-width: 60%; max-height: 400px; position: absolute;"/>
+              <Galery :items="city.galery" style="max-width: 60%; height: 440px; position: absolute;"/>
             </div>
             <div class="filter">
               <v-chip-group
@@ -62,7 +62,9 @@
         city: params.city
       };
       await store.dispatch('excursion/fetchExcursions', url)
-      await store.dispatch('city/fetchCities', url)
+      if (store.getters['city/cities'].length === 0) {
+        await store.dispatch('city/fetchCities', url)
+      }
       if (store.getters['city/cityByUrl'](params.city) === undefined) {
         error({statusCode: 404})
       }
