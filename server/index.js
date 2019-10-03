@@ -134,7 +134,7 @@ app.post('/admin/api/addexcursion', (req, res) => {
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
-    type: req.body.type.trim(),
+    type: JSON.stringify(req.body.type.trim().split(' ')),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -191,7 +191,7 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
-    type: req.body.type.trim(),
+    type: JSON.stringify(req.body.type.trim().split(' ')),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -258,7 +258,8 @@ app.get('/admin/api/getexcursion/:lang/:id', (req, res) => {
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(exc => {
-      exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = ''
+      exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
+      exc.type ? exc.type = JSON.parse(exc.type) : exc.type = ''
     })
     res.send(result)
   });

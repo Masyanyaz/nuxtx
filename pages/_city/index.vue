@@ -32,7 +32,7 @@
                 column
                 active-class="green lighten-1"
               >
-                <v-chip filter v-for="tag in filterList" :key="tag" :value="tag">
+                <v-chip filter v-for="(tag, i) in filterList" :key="i" :value="tag">
                   {{ tag }}
                 </v-chip>
               </v-chip-group>
@@ -79,8 +79,11 @@
       }
     },
     created() {
-      let arr = this.excursions.map(a => {
-        return a.type
+      let arr = []
+      this.excursions.forEach(a => {
+        a.type.forEach(r => {
+          arr.push(r)
+        })
       })
       this.filterList = Array.from(new Set(arr))
     },
@@ -103,9 +106,13 @@
       },
       filtered() {
         if (this.filter.length === 0) return this.excursions
-        return this.excursions.filter(item => {
-          return this.filter.includes(item.type)
+        let arr = []
+        this.excursions.forEach(a => {
+          a.type.forEach(r => {
+            this.filter.includes(r) ? arr.push(a) : false
+          })
         })
+        return Array.from(new Set(arr))
       },
       ...mapGetters({
         excursions: 'excursion/excursions',
