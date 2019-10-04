@@ -55,7 +55,9 @@
   import CityEdit from "~/components/City/CityEdit";
 
   export default {
-    async asyncData({store, params, error}) {
+    async asyncData({store, params, error, route}) {
+      let filter = Object.values(route.query) || [];
+
       // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
         language: store.state.locale,
@@ -69,12 +71,11 @@
         error({statusCode: 404})
       }
       let city = await store.getters['city/cityByUrl'](params.city)
-      return {city}
+      return {city, filter}
     },
     data() {
       return {
         showGalery: false,
-        filter: [],
         filterList: [],
       }
     },
@@ -105,13 +106,17 @@
         return this.$store.getters['user/isUserloggedIn']
       },
       filtered() {
-        if (this.filter.length === 0) return this.excursions
+        if (this.filter.length === 0) {
+          this.$router.push({path: this.$route.path, query: '' })
+          return this.excursions
+        }
         let arr = []
         this.excursions.forEach(a => {
           a.type.forEach(r => {
             this.filter.includes(r) ? arr.push(a) : false
           })
         })
+        this.$router.push({path: this.$route.path, query: this.filter })
         return Array.from(new Set(arr))
       },
       ...mapGetters({
