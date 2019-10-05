@@ -289,14 +289,14 @@
               },
               included: {
                 itemName: 'included',
-                model: this.exc.included,
+                model: this.arrayToString('included'),
                 required: false,
                 textarea: true,
                 rules: false
               },
               excluded: {
                 itemName: 'excluded',
-                model: this.exc.excluded,
+                model: this.arrayToString('excluded'),
                 required: false,
                 textarea: true,
                 rules: false
@@ -342,6 +342,14 @@
       })
     },
     methods: {
+      arrayToString(name) {
+        if(!this.exc[name]) return '';
+        let str = '';
+        this.exc[name].forEach((a, i, arr) => {
+          str += i !== arr.length - 1 ? a + '\n' : a
+        });
+        return str
+      },
       updatedExcursion() {
         let formData = new FormData();
         formData.append('previewImage', this.images.preview.image);

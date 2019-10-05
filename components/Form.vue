@@ -1,7 +1,7 @@
 <template>
-  <v-card class="elevation-12" style="width: 270px; max-height: 475px; height: auto;">
+  <v-card class="elevation-12 ml-5" style="width: 270px; max-height: 475px; height: auto;">
     <v-toolbar dark color="primary" class="d-flex justify-center">
-      <v-toolbar-title>{{$t('Form.header')}}</v-toolbar-title>
+      <v-toolbar-title style="font-size: 24px;"><span style="font-size: 14px;">from</span> €{{exc.price}}</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
       <v-form
@@ -50,7 +50,7 @@
       class="d-flex justify-center"
     >
       <v-btn
-        width="200px"
+        width="150px"
         @click="onSubmit"
         :disabled="!valid"
         color="primary"
@@ -62,6 +62,7 @@
 
 <script>
   export default {
+    props: ['exc'],
     data() {
       return {
         checkbox: false,

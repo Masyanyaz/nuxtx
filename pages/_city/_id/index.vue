@@ -15,7 +15,8 @@
               v-if="exc.galery"
               text
               @click="showGalery = !showGalery"
-              style="font-size: calc(12px + 2 * ((100vw) / 600));"
+              style="font-size: calc(12px + 2 * ((100vw) / 600)); color: #ffffff; position: absolute; bottom: 5px;
+              right: 10px;"
             >
               <v-icon>insert_photo</v-icon>
               More photo
@@ -37,8 +38,7 @@
             <h2>Overview</h2>
             <div v-html="exc.detailText"/>
 
-            <div v-if="exc.included || exc.excluded">
-              <hr>
+            <div v-if="exc.included || exc.excluded" class="hr">
               <h2>Included/Exclude</h2>
               <div class="d-flex justify-space-between included">
                 <div
@@ -86,12 +86,11 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <Form class="form"/>
+      <Form class="form" :exc="exc" :scroll.passive="autoScrollForm"/>
     </div>
-    <v-container v-if="filtered.length !== 0">
+    <v-container v-if="filtered.length !== 0" class="hr">
       <v-layout row>
         <v-flex xs12>
-          <hr>
           <h2 class="d-flex justify-center">You might also like</h2>
         </v-flex>
       </v-layout>
@@ -157,15 +156,27 @@
         return this.$store.getters['user/isUserloggedIn']
       },
       filtered() {
-        return this.excursions.filter(item => {
-          return item.type === this.exc.type && item.url !== this.exc.url
-        })
+        let arr = [];
+        this.excursions.forEach(a => {
+          a.type.forEach(r => {
+            this.exc.type.includes(r) ? arr.push(a) : false
+          })
+        });
+        return arr
       },
       ...mapGetters({
         excursions: 'excursion/excursions',
         cities: 'city/cities'
       })
     },
+    methods: {
+      autoScrollForm(e) {
+        console.log(e)
+      }
+    },
+    beforeUpdate() {
+      console.log('asd')
+    }
   }
 </script>
 
@@ -244,5 +255,10 @@
     @media (max-width: 960px) {
       display: none;
     }
+  }
+
+  .hr {
+    border-top: 2px solid #D7DCE3;
+    margin-top: 25px;
   }
 </style>

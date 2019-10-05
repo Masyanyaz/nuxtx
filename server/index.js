@@ -134,7 +134,7 @@ app.post('/admin/api/addexcursion', (req, res) => {
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
-    type: JSON.stringify(req.body.type.trim().split(' ')),
+    type: JSON.stringify(req.body.type.trim().split(',')),
   };
 
   const renameAndMove = (name, i = '') => {
@@ -191,7 +191,7 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
-    type: JSON.stringify(req.body.type.trim().split(' ')),
+    type: JSON.stringify(req.body.type.trim().split(',')),
   };
 
   const renameAndMove = (name, i = '') => {
