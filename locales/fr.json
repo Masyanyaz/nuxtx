@@ -30,11 +30,11 @@
     }
   },
   "Navbar": {
-    "activities": "Activities",
-    "destinations": "Destinations",
+    "activities": "Экскурсии",
+    "destinations": "Города",
     "faq": "FAQ",
-    "aboutUs": "About us",
-    "contact": "Contact",
+    "aboutUs": "О нас",
+    "contact": "Контакты",
     "new": "Ad new",
     "english": "English",
     "french": "French"
@@ -42,7 +42,7 @@
   "index": {
     "title": "Home",
     "description": "Home des",
-    "h1": "Unusual excursions from locals",
+    "h1": "Экскурсии по городам России",
     "topDestinations": "Top Destinations"
   },
   "_city": {

@@ -10,7 +10,7 @@
           <div
             :style="{background: 'url(' + exc.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top">
-            <div class="welcome-top__text">{{exc.name}}</div>
+            <div class="welcome-top__text">{{exc.h1}}</div>
             <v-btn
               v-if="exc.galery"
               text

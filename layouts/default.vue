@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="main-color">
     <Navbar />
     <nuxt />
     <Footer />
@@ -22,3 +22,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .main-color {
+    color: #2a3f54;
+  }
+</style>

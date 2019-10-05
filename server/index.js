@@ -241,8 +241,8 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 });
 
 // get cities
-app.get('/admin/api/getcities/:id', (req, res) => {
-  let sql = `SELECT * FROM cities WHERE lang = '${req.params.id}'`;
+app.get('/admin/api/getcities/:lang', (req, res) => {
+  let sql = `SELECT * FROM cities WHERE lang = '${req.params.lang}'`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(city => {
@@ -251,10 +251,17 @@ app.get('/admin/api/getcities/:id', (req, res) => {
     res.send(result)
   });
 });
+app.get('/admin/api/getcities', (req, res) => {
+  let sql = `SELECT id, url, name FROM cities`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
 
 // get excursion
-app.get('/admin/api/getexcursion/:lang/:id', (req, res) => {
-  let sql = `SELECT * FROM excursion WHERE city = '${req.params.id}' AND lang = '${req.params.lang}'`;
+app.get('/admin/api/getexcursion/:lang/:city', (req, res) => {
+  let sql = `SELECT * FROM excursion WHERE city = '${req.params.city}' AND lang = '${req.params.lang}'`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(exc => {
@@ -263,6 +270,14 @@ app.get('/admin/api/getexcursion/:lang/:id', (req, res) => {
       exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
       exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
     })
+    res.send(result)
+  });
+});
+
+app.get('/admin/api/getexcursion', (req, res) => {
+  let sql = `SELECT id, url FROM excursion`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
     res.send(result)
   });
 });

@@ -9,7 +9,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center mt-4 mb-4" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
@@ -87,7 +87,7 @@
       text-align: center;
       font-weight: 900;
       color: #fff;
-      font-size: calc(20px + 2 * ((100vw) / 100));
+      font-size: calc(40px + 2 * ((100vw) / 100));
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%);

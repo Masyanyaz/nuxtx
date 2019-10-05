@@ -11,12 +11,13 @@
             :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top"
           >
-            <div class="welcome-top__text">{{city.name}}</div>
+            <div class="welcome-top__text">{{city.h1}}</div>
             <v-btn
               v-if="city.galery"
               text
               @click="showGalery = !showGalery"
-              style="font-size: calc(12px + 2 * ((100vw) / 600));"
+              style="font-size: calc(12px + 2 * ((100vw) / 600)); color: #ffffff; position: absolute; bottom: 5px;
+              right: 10px;"
             >
               <v-icon>insert_photo</v-icon>
               More photo
@@ -41,7 +42,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <h2 class="d-flex justify-center" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center mt-4 mb-4" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('_city.excursion')}}
     </h2>
     <ExcursionCards :excursions="filtered"/>

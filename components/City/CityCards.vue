@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!loading">
-  <v-container grid-list-lg>
+  <div v-if="!loading" style="margin: 0 30px;">
+  <v-container grid-list-lg class="container">
     <v-layout row wrap>
       <v-flex
         xs12
@@ -29,7 +29,9 @@
                 primary-title
               >
                 <div style="text-align: center">
-                  <h3 class="headline mb-0 pb-5" style="font-size: calc(15px + 2 * ((100vw) / 300));">{{city.name}}</h3>
+                  <h3 class="headline mb-0 pb-5"
+                      style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: bold; text-shadow: 1px 1px #000;">{{city
+                    .name}}</h3>
                 </div>
               </v-card-title>
             </v-img>
@@ -66,6 +68,8 @@
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .container {
+    padding: 12px 4%;
+  }
 </style>

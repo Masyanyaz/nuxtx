@@ -15,7 +15,6 @@
         >
           <v-list-item-content>
             <v-list-item-title>{{ link.title }}
-              <v-icon>{{link.icon}}</v-icon>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -33,7 +32,7 @@
           class="mr-5"
           :to="$i18n.path('')"
         >
-          Excursion
+          <img src="/logo.svg" alt="" style="margin-bottom: -7px;" />
         </nuxt-link>
       </v-toolbar-title>
       <v-toolbar-items class="d-none d-md-flex">
@@ -44,7 +43,6 @@
           :to="$i18n.path(`${link.url}`)"
         >
           {{link.title}}
-          <v-icon>{{link.icon}}</v-icon>
         </v-btn>
         <v-btn
           text
@@ -84,7 +82,6 @@
         return [
           {title: this.$t('Navbar.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
           {title: this.$t('Navbar.destinations'), icon: 'keyboard_arrow_down', url: 'destinations'},
-          {title: this.$t('Navbar.faq'), url: 'faq'},
           {title: this.$t('Navbar.aboutUs'), url: 'about-us'},
           {title: this.$t('Navbar.contact'), url: 'contact'},
         ]
