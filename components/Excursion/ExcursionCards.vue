@@ -8,8 +8,8 @@
           md4
           lg3
           xl2
-          v-for="exc in excursions"
-          :key="exc.id"
+          v-for="(exc, i) in excursions"
+          :key="i"
         >
           <v-hover>
             <v-card
@@ -29,10 +29,10 @@
                   primary-title
                 >
                   <div style="text-align: center">
-                    <h3 class="headline mb-0 pb-5"
-                        style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: bold; text-shadow: 1px 1px #000;">
-                      {{exc
-                      .name}}</h3>
+                    <h3 class="headline mb-0 pb-5" style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight:
+                    bold; text-shadow: 1px 1px #000;">
+                      {{exc.name}}
+                    </h3>
                   </div>
                 </v-card-title>
               </v-img>

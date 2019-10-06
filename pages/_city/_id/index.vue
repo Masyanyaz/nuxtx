@@ -86,10 +86,12 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <Form class="form" :exc="exc" :scroll.passive="autoScrollForm"/>
+      <div class="d-none d-md-block fix-stop" style="width: 410px;">
+        <Form class="form" :exc="exc"/>
+      </div>
     </div>
-    <v-container v-if="filtered.length !== 0" class="hr">
-      <v-layout row>
+    <v-container class="hr">
+      <v-layout row v-if="filtered.length !== 0">
         <v-flex xs12>
           <h2 class="d-flex justify-center">You might also like</h2>
         </v-flex>
@@ -170,17 +172,57 @@
       })
     },
     methods: {
-      autoScrollForm(e) {
-        console.log(e)
+      autoScrollForm() {
+        let form = document.querySelector('.form');
+        let fixStop = document.querySelector('.fix-stop');
+        let heightFixStop = null;
+        if (!heightFixStop) heightFixStop = fixStop.getBoundingClientRect().height;
+
+        if (heightFixStop <= 560) return false;
+
+        if (pageYOffset <= 500) {
+          form.classList.remove('fix');
+        }
+        if (pageYOffset >= 500 && pageYOffset <= heightFixStop + 60) {
+          form.classList.remove('abs');
+          form.style.top = '0';
+          form.classList.add('fix');
+        }
+        if (pageYOffset >= heightFixStop + 60) {
+          form.classList.remove('fix');
+          form.classList.add('abs');
+          form.style.top = `${heightFixStop + 60}px`
+        }
+
       }
     },
-    beforeUpdate() {
-      console.log('asd')
+    created() {
+      if (process.browser) {
+        if (window.innerWidth >= 960) {
+          window.addEventListener('scroll', this.autoScrollForm)
+        }
+      }
+    },
+    beforeDestroy() {
+      if (process.browser) {
+        window.removeEventListener('scroll', this.autoScrollForm)
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
+  .fix {
+    position: fixed;
+    top: 0;
+    right: 5%;
+  }
+
+  .abs {
+    position: absolute;
+    right: 5%;
+  }
+
   h2 {
     margin-top: 25px;
     margin-bottom: 5px;
@@ -251,10 +293,6 @@
 
   .form {
     margin-top: 12px;
-
-    @media (max-width: 960px) {
-      display: none;
-    }
   }
 
   .hr {

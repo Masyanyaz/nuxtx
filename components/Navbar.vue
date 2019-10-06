@@ -21,7 +21,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar dense>
+    <v-app-bar dense>
       <v-app-bar-nav-icon
         class="d-flex d-md-none"
         @click.stop="drawer = !drawer"
@@ -60,7 +60,7 @@
           Logout
         </v-btn>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-app-bar>
   </div>
 </template>
 
