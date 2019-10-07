@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-actions v-if="isUserloggedIn" style="position: absolute; z-index: 9999999; top: 0; right: 0;">
+    <v-card-actions v-if="isUserloggedIn" style="position: absolute; top: 0; right: 0;">
       <v-spacer></v-spacer>
       <CityEdit :city="city"></CityEdit>
     </v-card-actions>
