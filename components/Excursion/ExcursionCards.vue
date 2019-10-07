@@ -20,11 +20,11 @@
             >
               <div class="d-flex justify-center align-center" style="overflow: hidden; position: relative;">
                 <img v-lazy="exc.previewImage" alt="" height="200" width="100%">
-                <span style="position: absolute; bottom: 0; right: 5px; color: #ffffff;">{{exc.time}}</span>
+                <span style="position: absolute; bottom: 0; right: 5px; color: #ffffff; text-shadow: 1px 1px #000;">{{exc.time}}</span>
               </div>
               <v-card-title
                 class="fill-height align-start justify-start pt-2 pl-5 pr-5"
-                style="height: 160px;"
+                style="height: 160px; word-break: normal"
                 primary-title
               >
                 <div class="d-flex flex-column fill-height justify-space-between">
