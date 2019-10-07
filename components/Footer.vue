@@ -52,22 +52,23 @@
       <span class="footer-top-element-border"/>
       <div class="footer-item-list">
         <span>Язык</span>
-          <div class="footer-select">
-<!--            <v-btn-->
-<!--              text-->
-<!--              to="/en"-->
-<!--              @click="switchLanguage"-->
-<!--            >-->
-<!--              English-->
-<!--            </v-btn>-->
-            <v-btn
-              text
-              to="/fr"
-              @click="switchLanguage"
-            >
-              Français
-            </v-btn>
-          </div>
+        <div class="footer-select">
+          <!--            <v-btn-->
+          <!--              text-->
+          <!--              to="/en"-->
+          <!--              @click="switchLanguage"-->
+          <!--            >-->
+          <!--              English-->
+          <!--            </v-btn>-->
+          <v-btn
+            class="pl-0 pr-0"
+            text
+            to="/fr"
+            @click="switchLanguage"
+          >
+            Français
+          </v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -76,7 +77,7 @@
 <script>
   export default {
     methods: {
-      switchLanguage () {
+      switchLanguage() {
         setTimeout(() => {
           location.reload();
         }, 1000)
@@ -91,15 +92,21 @@
   .footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
-    margin-left: 10%;
+    width: 80%;
+    margin: 50px auto 0;
+    flex-wrap: wrap;
+    max-width: 1000px;
+
+    @media(max-width: 600px) {
+      width: 90%;
+    }
 
     &-item {
-      width: 25%;
+      /*width: 25%;*/
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
+      /*justify-content: flex-start;*/
+      /*align-items: flex-start;*/
 
       &-list {
         display: flex;
