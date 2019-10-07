@@ -1,5 +1,5 @@
 <template>
-  <v-card class="elevation-12 ml-5 d-none d-md-block" style="width: 270px; max-height: 475px; height: auto;">
+  <v-card class="elevation-12 d-none d-md-block" style="width: 270px; max-height: 475px; height: auto;">
     <v-toolbar dark color="primary" class="d-flex pl-3">
       <v-toolbar-title style="font-size: 24px;">
         <span style="font-size: 14px;" class="mr-2">from</span>

@@ -86,7 +86,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <div class="d-none d-md-block fix-stop" style="width: 410px;">
+      <div class="d-none d-md-block fix-stop ml-5" style="width: 270px; min-width: 270px;">
         <Form class="form" :exc="exc"/>
       </div>
     </div>
