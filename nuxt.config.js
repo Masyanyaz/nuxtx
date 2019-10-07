@@ -37,6 +37,7 @@ module.exports = {
 
 
   router: {
+    prefetchLinks: false,
     middleware: ['authenticated']
   },
   /*

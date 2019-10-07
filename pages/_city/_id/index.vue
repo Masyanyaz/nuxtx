@@ -1,16 +1,15 @@
 <template>
   <div>
-    <v-card-actions v-if="isUserloggedIn">
+    <v-card-actions v-if="isUserloggedIn" style="position: absolute; z-index: 9999999; top: 0; right: 0;">
       <v-spacer></v-spacer>
       <ExcursionEdit :exc="exc" :cities="cities"></ExcursionEdit>
     </v-card-actions>
-    <v-container fluid class="pl-0 pr-0">
       <v-layout>
         <v-flex xs12>
           <div
             :style="{background: 'url(' + exc.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top">
-            <h1 class="welcome-top__text">{{exc.h1}}</h1>
+<!--            <h1 class="welcome-top__text">{{exc.h1}}</h1>-->
             <v-btn
               v-if="exc.galery"
               text
@@ -28,11 +27,11 @@
           </div>
         </v-flex>
       </v-layout>
-    </v-container>
-    <div style="margin: 0 5%; display: flex; flex-direction: row">
+    <div style="margin: 60px 5% 0; display: flex;">
       <v-container>
         <v-layout>
           <v-flex xs12>
+            <h1>{{exc.h1}}</h1>
             <ExcursionHeader :exc="exc"/>
 
             <h2>Overview</h2>
@@ -176,22 +175,22 @@
         let form = document.querySelector('.form');
         let fixStop = document.querySelector('.fix-stop');
         let heightFixStop = null;
-        if (!heightFixStop) heightFixStop = fixStop.getBoundingClientRect().height;
+        if (!heightFixStop) heightFixStop = fixStop.getBoundingClientRect().height + 175;
 
-        if (heightFixStop <= 560) return false;
+        if (heightFixStop <= 700) return false;
 
-        if (pageYOffset <= 500) {
+        if (pageYOffset <= 600) {
           form.classList.remove('fix');
         }
-        if (pageYOffset >= 500 && pageYOffset <= heightFixStop + 60) {
+        if (pageYOffset >= 600 && pageYOffset <= heightFixStop) {
           form.classList.remove('abs');
           form.style.top = '0';
           form.classList.add('fix');
         }
-        if (pageYOffset >= heightFixStop + 60) {
+        if (pageYOffset >= heightFixStop) {
           form.classList.remove('fix');
           form.classList.add('abs');
-          form.style.top = `${heightFixStop + 60}px`
+          form.style.top = `${heightFixStop}px`
         }
 
       }
@@ -216,6 +215,7 @@
     position: fixed;
     top: 0;
     right: 5%;
+    margin-top: 12px;
   }
 
   .abs {
@@ -223,9 +223,18 @@
     right: 5%;
   }
 
+  h3 {
+    margin-bottom: 10px;
+  }
+
   h2 {
     margin-top: 25px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 30px;
   }
 
   .car-link {
@@ -238,47 +247,6 @@
     position: absolute;
   }
 
-  .welcome-top {
-    position: relative;
-    height: 390px;
-    background: url(https://res-5.cloudinary.com/account-travel/image/upload/c_scale,w_auto/c_limit,w_1600/dpr_2/v1/article/183/xcover-landing2.c980ea.jpg.pagespeed.ic.NTuKy7Y2oV.jpg) no-repeat 50% 15% / cover;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, .3);
-    }
-
-    &__text {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-weight: 900;
-      color: #fff;
-      font-size: calc(20px + 2 * ((100vw) / 100));
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-    }
-  }
-
-  .galery {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.3);
-    margin: 0 auto
-  }
-
   .included {
     max-width: 600px;
 
@@ -289,10 +257,6 @@
     @media (max-width: 600px) {
       flex-direction: column;
     }
-  }
-
-  .form {
-    margin-top: 12px;
   }
 
   .hr {

@@ -1,6 +1,7 @@
 <template>
-  <v-card class="elevation-12 d-none d-md-block" style="width: 270px; max-height: 475px; height: auto;">
-    <v-toolbar dark color="primary" class="d-flex pl-3">
+  <v-card class="d-none d-md-block" style="width: 270px; max-height: 475px; height: auto; border: 1px solid #D7DCE3;
+  box-shadow: none; border-radius: 0 0 5px 5px">
+    <v-toolbar dark color="#5191FA" class="d-flex pl-2" style="box-shadow: none;">
       <v-toolbar-title style="font-size: 24px;">
         <span style="font-size: 14px;" class="mr-2">from</span>
         €{{exc.price}}
@@ -36,7 +37,7 @@
           rows="3"
         ></v-textarea>
         <v-checkbox
-          style="margin-top: 0"
+          class="mt-0"
           v-model="checkbox"
           :rules="[v => !!v || `${$t('Form.rules.accept')}`]"
           :label="$t('Form.accept')"
@@ -53,10 +54,12 @@
       class="d-flex justify-center"
     >
       <v-btn
-        width="150px"
+        style="font-size: 14px;"
+        class="mb-5"
+        width="220px"
         @click="onSubmit"
         :disabled="!valid"
-        color="primary"
+        color="#5191FA"
       >{{$t('Form.send')}}
       </v-btn>
     </v-card-actions>

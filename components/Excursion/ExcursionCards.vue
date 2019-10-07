@@ -19,21 +19,22 @@
               :to="$i18n.path(`${exc.city}/${exc.url}`)"
             >
               <div class="d-flex justify-center align-center" style="overflow: hidden; position: relative;">
-                <img v-lazy="exc.previewImage" alt="" height="200px">
+                <img v-lazy="exc.previewImage" alt="" height="200" width="100%">
                 <span style="position: absolute; bottom: 0; right: 5px; color: #ffffff;">{{exc.time}}</span>
               </div>
               <v-card-title
-                class="fill-height align-end justify-start pt-2 pl-5 pr-5"
+                class="fill-height align-start justify-start pt-2 pl-5 pr-5"
+                style="height: 160px;"
                 primary-title
               >
-                <div class="d-flex flex-column">
-                  <h3 class="headline mb-1" style="font-size: calc(13px + 2 * ((100vw) / 300));">
+                <div class="d-flex flex-column fill-height justify-space-between">
+                  <h3 class="headline mb-1">
                     {{exc.name}}
                   </h3>
-                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">
+                  <p style="font-size: calc(8px + 2 * ((100vw) / 300));">
                     from
-                    <span style="font-size: calc(16px + 2 * ((100vw) / 300)); font-weight: bold;">
-                    {{exc.price}}
+                    <span style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: bold;">
+                    €{{exc.price}}
                     </span>
                   </p>
                 </div>
