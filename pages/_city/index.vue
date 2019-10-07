@@ -11,7 +11,7 @@
             :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
             class="welcome-top"
           >
-            <div class="welcome-top__text">{{city.h1}}</div>
+            <h1 class="welcome-top__text">{{city.h1}}</h1>
             <v-btn
               v-if="city.galery"
               text

@@ -18,24 +18,26 @@
               class="pointer"
               :to="$i18n.path(`${exc.city}/${exc.url}`)"
             >
-              <v-img
-                :src="exc.previewImage"
-                class="white--text"
-                height="200px"
-                aspect-ratio="3"
+              <div class="d-flex justify-center align-center" style="overflow: hidden; position: relative;">
+                <img v-lazy="exc.previewImage" alt="" height="200px">
+                <span style="position: absolute; bottom: 0; right: 5px; color: #ffffff;">{{exc.time}}</span>
+              </div>
+              <v-card-title
+                class="fill-height align-end justify-start pt-2 pl-5 pr-5"
+                primary-title
               >
-                <v-card-title
-                  class="fill-height align-end justify-center pa-0"
-                  primary-title
-                >
-                  <div style="text-align: center">
-                    <h3 class="headline mb-0 pb-5" style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight:
-                    bold; text-shadow: 1px 1px #000;">
-                      {{exc.name}}
-                    </h3>
-                  </div>
-                </v-card-title>
-              </v-img>
+                <div class="d-flex flex-column">
+                  <h3 class="headline mb-1" style="font-size: calc(13px + 2 * ((100vw) / 300));">
+                    {{exc.name}}
+                  </h3>
+                  <p style="font-size: calc(9px + 2 * ((100vw) / 300));">
+                    from
+                    <span style="font-size: calc(16px + 2 * ((100vw) / 300)); font-weight: bold;">
+                    {{exc.price}}
+                    </span>
+                  </p>
+                </div>
+              </v-card-title>
             </v-card>
           </v-hover>
         </v-flex>

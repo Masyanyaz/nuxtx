@@ -31,7 +31,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/firebase.js',
-    '~/plugins/i18n.js'
+    '~/plugins/i18n.js',
+    "~/plugins/vue-lazyload"
   ],
 
 

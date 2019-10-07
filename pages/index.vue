@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs12>
           <div class="welcome-top">
-            <div class="welcome-top__text"><span>{{$t('index.h1')}}</span></div>
+            <h1 class="welcome-top__text">{{$t('index.h1')}}</h1>
           </div>
         </v-flex>
       </v-layout>
