@@ -161,7 +161,7 @@
         let arr = [];
         this.excursions.forEach(a => {
           a.type.forEach(r => {
-            this.exc.type.includes(r) ? arr.push(a) : false
+            this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
           })
         });
         return arr
