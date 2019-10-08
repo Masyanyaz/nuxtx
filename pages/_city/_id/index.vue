@@ -160,14 +160,11 @@
       filtered() {
         let arr = [];
         this.excursions.forEach((a, i) => {
-          if (i > this.numberOfWidth) {
-            return false
-          }
           a.type.forEach(r => {
             this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
           })
         });
-        return arr
+        return arr.slice(0, this.numberOfWidth)
       },
       ...mapGetters({
         excursions: 'excursion/excursions',
