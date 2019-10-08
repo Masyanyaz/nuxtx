@@ -41,7 +41,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <h2 class="d-flex justify-center mt-4 mb-4" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('_city.excursion')}}
     </h2>
     <ExcursionCards :excursions="filtered"/>

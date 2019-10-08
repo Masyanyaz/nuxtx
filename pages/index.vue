@@ -1,13 +1,13 @@
 <template>
   <div>
-      <v-layout>
-        <v-flex xs12>
-          <div class="welcome-top">
-            <h1 class="welcome-top__text">{{$t('index.h1')}}</h1>
-          </div>
-        </v-flex>
-      </v-layout>
-    <h2 class="d-flex justify-center mt-4 mb-4" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <v-layout>
+      <v-flex xs12>
+        <div class="welcome-top">
+          <h1 class="welcome-top__text">{{$t('index.h1')}}</h1>
+        </div>
+      </v-flex>
+    </v-layout>
+    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
@@ -28,9 +28,7 @@
       }
     },
     data() {
-      return {
-
-      }
+      return {}
     },
     head() {
       return {

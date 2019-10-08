@@ -68,7 +68,24 @@ module.exports = {
   */
   vuetify: {
     defaultAssets: {
-      icons: 'md'
+      icons: 'md',
+      font: {
+        family: 'Poppins'
+      }
+    },
+    theme: {
+      themes: {
+        light: {
+          primary: '#000'
+        }
+      }
+    },
+    options: {
+      minifyTheme: function (css) {
+        return process.env.NODE_ENV === 'production'
+          ? css.replace(/[\r\n|\r|\n]/g, '')
+          : css
+      },
     }
   },
   /*

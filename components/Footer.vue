@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="footer">
+    <div class="footer container">
       <div class="footer-item">
         <span class="footer-top-element">Нужна помощь?</span>
         <span class="footer-top-element-border"/>
@@ -72,9 +72,8 @@
         </div>
       </div>
     </div>
-    <footer style="border-top: 1px solid #EAEEF3;">
-      <div class="d-flex justify-space-between align-center" style="height: 100px;
-      width: 80%; margin: 0 auto; max-width: 1000px;">
+    <footer style="border-top: 1px solid #EAEEF3;" class="container">
+      <div class="d-flex justify-space-between align-center" style="padding: 0 7%;">
         <div>
           Copyright © 2019 by
         </div>
@@ -100,25 +99,26 @@
 </script>
 
 <style scoped lang="scss">
+  .container {
+    margin: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
 
   .footer {
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    margin: 50px auto;
+    padding: 0 7%;
+    margin: 50px 0;
     flex-wrap: wrap;
-    max-width: 1000px;
 
     @media(max-width: 600px) {
       width: 90%;
     }
 
     &-item {
-      /*width: 25%;*/
       display: flex;
       flex-direction: column;
-      /*justify-content: flex-start;*/
-      /*align-items: flex-start;*/
 
       &-list {
         display: flex;
@@ -127,7 +127,7 @@
 
         span {
           margin-bottom: 25px;
-          font-size: 14px;
+          font-size: 16px;
         }
       }
     }
@@ -136,7 +136,7 @@
       display: block;
       padding-bottom: 20px;
       text-transform: uppercase;
-      font-size: 14px;
+      font-size: 16px;
 
       &-border {
         width: 30%;
@@ -154,7 +154,7 @@
       margin-bottom: 15px;
 
       &-small {
-        font-size: 13px;
+        font-size: 14px;
       }
 
       &-bold {

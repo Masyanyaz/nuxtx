@@ -1,10 +1,14 @@
 <template>
   <v-app class="main-color">
-    <Navbar />
+    <Navbar/>
+
     <v-container fluid class="pl-0 pr-0 pt-0">
-    <nuxt />
+
+      <nuxt/>
+
     </v-container>
-    <Footer />
+    <Footer/>
+
   </v-app>
 </template>
 
@@ -12,17 +16,17 @@
   import Navbar from '@/components/Navbar'
   import Footer from '@/components/Footer'
 
-export default {
-  data () {
-    return {
-      title: 'asda'
+  export default {
+    data() {
+      return {
+        title: 'asda'
+      }
+    },
+    components: {
+      Navbar,
+      Footer
     }
-  },
-  components: {
-    Navbar,
-    Footer
   }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -21,12 +21,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3;">
+    <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3;"
+               class="container d-flex align-center ml-0">
       <v-app-bar-nav-icon
         class="d-flex d-md-none"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>
         <nuxt-link
           exact
           class="mr-5"
@@ -34,8 +34,7 @@
         >
           <img src="/logo.svg" alt="" style="margin-bottom: -7px;" />
         </nuxt-link>
-      </v-toolbar-title>
-      <v-toolbar-items class="d-none d-md-flex">
+      <v-toolbar-items class="d-none d-md-flex pl-0 pr-0">
         <v-btn
           text
           v-for="(link, i) in links"
@@ -97,6 +96,14 @@
 </script>
 
 <style scoped lang="scss">
+  .container {
+    padding: 12px 7%;
+
+    @media (max-width: 960px) {
+      padding: 0;
+    }
+  }
+
   a {
     text-decoration: none;
     color: #000;

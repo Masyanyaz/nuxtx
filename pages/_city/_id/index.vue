@@ -4,29 +4,29 @@
       <v-spacer></v-spacer>
       <ExcursionEdit :exc="exc" :cities="cities"></ExcursionEdit>
     </v-card-actions>
-      <v-layout>
-        <v-flex xs12>
-          <div
-            :style="{background: 'url(' + exc.mainImage + ') no-repeat 50% 15% /cover'}"
-            class="welcome-top">
-<!--            <h1 class="welcome-top__text">{{exc.h1}}</h1>-->
-            <v-btn
-              v-if="exc.galery"
-              text
-              @click="showGalery = !showGalery"
-              style="font-size: calc(12px + 2 * ((100vw) / 600)); color: #ffffff; position: absolute; bottom: 5px;
+    <v-layout>
+      <v-flex xs12>
+        <div
+          :style="{background: 'url(' + exc.mainImage + ') no-repeat 50% 15% /cover'}"
+          class="welcome-top">
+          <!--            <h1 class="welcome-top__text">{{exc.h1}}</h1>-->
+          <v-btn
+            v-if="exc.galery"
+            text
+            @click="showGalery = !showGalery"
+            style="font-size: calc(12px + 2 * ((100vw) / 600)); color: #ffffff; position: absolute; bottom: 5px;
               right: 10px;"
-            >
-              <v-icon>insert_photo</v-icon>
-              More photo
-            </v-btn>
-          </div>
-          <div v-if="showGalery" class="galery align-center justify-center d-flex"
-               @click.self="showGalery = !showGalery">
-            <Galery :items="exc.galery" style="max-width: 60%; height: 440px; position: absolute;"/>
-          </div>
-        </v-flex>
-      </v-layout>
+          >
+            <v-icon>insert_photo</v-icon>
+            More photo
+          </v-btn>
+        </div>
+        <div v-if="showGalery" class="galery align-center justify-center d-flex"
+             @click.self="showGalery = !showGalery">
+          <Galery :items="exc.galery" style="max-width: 60%; height: 440px; position: absolute;"/>
+        </div>
+      </v-flex>
+    </v-layout>
     <div style="margin: 60px 5% 0; display: flex;">
       <v-container>
         <v-layout>
@@ -134,7 +134,8 @@
     data() {
       return {
         title: 'asd',
-        showGalery: false
+        showGalery: false,
+        numberOfWidth: null
       }
     },
     head() {
@@ -158,7 +159,10 @@
       },
       filtered() {
         let arr = [];
-        this.excursions.forEach(a => {
+        this.excursions.forEach((a, i) => {
+          if (i > this.numberOfWidth) {
+            return false
+          }
           a.type.forEach(r => {
             this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
           })
@@ -193,13 +197,29 @@
           form.style.top = `${heightFixStop}px`
         }
 
-      }
+      },
+      sizeWindow() {
+        let width = window.innerWidth;
+        switch (true) {
+          case width > 1904:
+            return 6;
+          case width > 1264 && width < 1904:
+            return 4;
+          case width > 960 && width < 1264:
+            return 3;
+          case width > 600 && width < 960:
+            return 2;
+          case width < 600:
+            return 1;
+        }
+      },
     },
     created() {
       if (process.browser) {
         if (window.innerWidth >= 960) {
           window.addEventListener('scroll', this.autoScrollForm)
         }
+        this.numberOfWidth = this.sizeWindow()
       }
     },
     beforeDestroy() {
@@ -211,6 +231,12 @@
 </script>
 
 <style scoped lang="scss">
+  .welcome-top {
+    &:before {
+      background: none;
+    }
+  }
+
   .fix {
     position: fixed;
     top: 0;
@@ -221,10 +247,6 @@
   .abs {
     position: absolute;
     right: 5%;
-  }
-
-  h3 {
-    margin-bottom: 10px;
   }
 
   h2 {
