@@ -118,7 +118,7 @@
       </div>
     </div>
     <v-container class="hr">
-      <v-layout row v-if="filtered.length !== 0">
+      <v-layout row  v-if="filtered">
         <v-flex xs12>
           <h2 class="d-flex justify-center">You might also like</h2>
         </v-flex>
