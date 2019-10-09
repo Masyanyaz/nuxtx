@@ -63,9 +63,9 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import ExcursionCards from "~/components/Excursion/ExcursionCards";
-  import Galery from "~/components/Galery";
-  import CityEdit from "~/components/City/CityEdit";
+  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
+  // const Galery = () => import("~/components/Galery");
+  const CityEdit = () => import("~/components/City/CityEdit");
 
   export default {
     async asyncData({store, params, error, route}) {
@@ -111,7 +111,7 @@
     },
     components: {
       ExcursionCards,
-      Galery,
+      // Galery,
       CityEdit
     },
     computed: {
