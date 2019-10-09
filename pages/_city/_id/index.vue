@@ -130,11 +130,11 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import ExcursionHeader from '~/components/Excursion/ExcursionHeader'
-  import Galery from '~/components/Galery'
-  import ExcursionEdit from '~/components/Excursion/ExcursionEdit'
-  import ExcursionCards from "~/components/Excursion/ExcursionCards";
-  import Form from "~/components/Form";
+  const ExcursionHeader = () => import('~/components/Excursion/ExcursionHeader')
+  const Galery = () => import('~/components/Galery')
+  const ExcursionEdit = () => import('~/components/Excursion/ExcursionEdit')
+  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards")
+  const Form = () => import("~/components/Form")
 
   export default {
     async asyncData({store, params, error}) {

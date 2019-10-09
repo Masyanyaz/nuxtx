@@ -15,15 +15,12 @@
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">Следуйте за нами</span>
           <div>
-            <img class="alignnone wp-image-7794 size-full"
-                 src="https://travelhotel.wpengine.com/wp-content/uploads/2018/12/ico_facebook_footer.png" alt=""
-                 width="21" height="25" style="margin-right:10px; ">
-            <img class="alignnone wp-image-7795 size-full"
-                 src="https://travelhotel.wpengine.com/wp-content/uploads/2018/12/ico_twitter_footer.png" alt=""
-                 width="32" height="24" style="margin-right:10px;">
-            <img class="alignnone wp-image-7796 size-full"
-                 src="https://travelhotel.wpengine.com/wp-content/uploads/2018/12/ico_instagram_footer.png" alt=""
-                 width="24" height="22">
+            <img
+              v-for="(src, i) in socials"
+              :key="i"
+              v-lazy="src"
+              alt=""
+              style="margin-right:10px; ">
           </div>
         </div>
       </div>
@@ -78,7 +75,7 @@
           Copyright © 2019 by
         </div>
         <div>
-          <img src="/image/footer/1.svg" alt="">
+          <img v-lazy="paySrc" alt="">
         </div>
       </div>
     </footer>
@@ -87,6 +84,16 @@
 
 <script>
   export default {
+    data() {
+      return {
+        socials: [
+          '/image/footer/ico_facebook_footer.png',
+          '/image/footer/ico_instagram_footer.png',
+          '/image/footer/ico_twitter_footer.png',
+        ],
+        paySrc: '/image/footer/1.svg'
+      }
+    },
     methods: {
       switchLanguage() {
         setTimeout(() => {

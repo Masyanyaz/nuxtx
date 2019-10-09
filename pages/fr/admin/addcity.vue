@@ -1,14 +1,4 @@
-<template>
-  <CityAddNew />
-</template>
-
 <script>
-  import CityAddNew from '@/components/City/CityAddNew'
-
-  export default {
-    components: {
-      CityAddNew
-    }
-  }
-
+  import AddCity from '~/pages/admin/addcity'
+  export default AddCity
 </script>

@@ -50,8 +50,6 @@
 </template>
 
 <script>
-  // import AlertErrorMsg from '@/components/AlertErrorMsg'
-
   export default {
     data() {
       return {
@@ -100,8 +98,5 @@
         this.$store.dispatch('shared/setError', 'Please log in to access this page.')
       }
     },
-    components: {
-      // AlertErrorMsg
-    }
   }
 </script>

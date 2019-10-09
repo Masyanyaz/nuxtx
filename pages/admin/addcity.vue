@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import CityAddNew from '@/components/City/CityAddNew'
+  const CityAddNew = () => import('@/components/City/CityAddNew')
 
   export default {
     components: {

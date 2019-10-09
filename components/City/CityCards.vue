@@ -28,7 +28,7 @@
                     {{city.name}}
                   </h3>
                   <span
-                    style="font-size: calc(10px + 2 * ((100vw) / 300));text-shadow: 1px 1px #000;"
+                    style="font-size: calc(10px + 2 * ((100vw) / 400));text-shadow: 1px 1px #000;"
                   >
                     {{city.excCount}} excursions
                   </span>

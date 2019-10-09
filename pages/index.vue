@@ -16,10 +16,10 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import CityCards from "~/components/City/CityCards";
+  const CityCards = () => import("~/components/City/CityCards")
 
   export default {
-    async fetch({store, redirect}) {
+    async fetch({store}) {
       if (store.getters['city/cities'].length === 0) {
         const url = {
           language: store.state.locale
