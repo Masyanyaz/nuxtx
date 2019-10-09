@@ -81,6 +81,13 @@ module.exports = {
         }
       }
     },
+    options: {
+      minifyTheme: function (css) {
+        return process.env.NODE_ENV === 'production'
+          ? css.replace(/[\r\n|\r|\n]/g, '')
+          : css
+      },
+    },
     treeShake: true
   },
   /*

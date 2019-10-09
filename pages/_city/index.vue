@@ -11,7 +11,7 @@
           class="welcome-top"
         >
           <h1 class="welcome-top__text">{{city.h1}}</h1>
-          <div class="filter">
+          <div class="filter pl-4 pr-4">
             <v-chip-group
               multiple
               v-model="filter"
@@ -35,12 +35,13 @@
 
 <script>
   import {mapGetters} from 'vuex'
+
   const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
   const CityEdit = () => import("~/components/City/CityEdit");
 
   export default {
     async asyncData({store, params, error, route}) {
-      let filter = Object.values(route.query) || [];
+      let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
 
       // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
@@ -90,7 +91,7 @@
       },
       filtered() {
         if (this.filter.length === 0) {
-          this.$router.push({path: this.$route.path, query: ''})
+          this.$router.push({query: ''})
           return this.excursions
         }
         let arr = []
@@ -98,14 +99,15 @@
           a.type.forEach(r => {
             this.filter.includes(r) ? arr.push(a) : false
           })
-        })
-        this.$router.push({path: this.$route.path, query: this.filter})
+        });
+        this.$router.push({query: JSON.parse(JSON.stringify(this.filter).replace('é', 'e'))})
         return Array.from(new Set(arr))
       },
+
       ...mapGetters({
         excursions: 'excursion/excursions',
       })
-    },
+    }
   }
 </script>
 
