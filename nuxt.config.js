@@ -68,7 +68,6 @@ module.exports = {
   */
   vuetify: {
     defaultAssets: {
-      icons: 'md',
       font: {
         family: 'Poppins'
       }

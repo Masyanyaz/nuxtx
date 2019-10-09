@@ -55,7 +55,6 @@
           v-if="isUserloggedIn"
           @click="onLogout"
         >
-          <v-icon left>exit_to_app</v-icon>
           Logout
         </v-btn>
       </v-toolbar-items>

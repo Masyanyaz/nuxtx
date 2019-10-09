@@ -93,7 +93,6 @@
                   class="warning"
                 >
                   Upload preview
-                  <v-icon right dark>cloud_upload</v-icon>
                 </v-btn>
                 <input
                   ref="previewImage"
@@ -118,7 +117,6 @@
                   class="warning"
                 >
                   Upload
-                  <v-icon right dark>cloud_upload</v-icon>
                 </v-btn>
                 <input
                   ref="mainImage"
@@ -144,7 +142,6 @@
                   class="warning"
                 >
                   Upload galery
-                  <v-icon right dark>cloud_upload</v-icon>
                 </v-btn>
                 <input
                   ref="galery"

@@ -242,12 +242,17 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 
 // get cities
 app.get('/admin/api/getcities/:lang', (req, res) => {
-  let sql = `SELECT * FROM cities WHERE lang = '${req.params.lang}'`;
+  let sql =  `SELECT cities.*, COUNT(*) AS excCount
+              FROM cities
+              LEFT JOIN excursion
+              ON cities.id = excursion.city_id
+              WHERE cities.lang = '${req.params.lang}'
+              GROUP BY cities.id`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(city => {
       city.galery ? city.galery = JSON.parse(city.galery) : false
-    })
+    });
     res.send(result)
   });
 });

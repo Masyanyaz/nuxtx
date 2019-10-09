@@ -23,10 +23,15 @@
                 <img v-lazy="city.previewImage" alt="" height="350" :class="{cardHover : hover}"
                      style="transition: all .3s;">
                 <div style="text-align: center; position: absolute; color: #ffffff; bottom: 10%;">
-                  <h3 class="headline mb-0 pb-5"
+                  <h3 class="headline mb-0 pb-0"
                       style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: bold; text-shadow: 1px 1px #000;">
                     {{city.name}}
                   </h3>
+                  <span
+                    style="font-size: calc(10px + 2 * ((100vw) / 300));text-shadow: 1px 1px #000;"
+                  >
+                    {{city.excCount}} excursions
+                  </span>
                 </div>
               </div>
             </v-card>
