@@ -30,6 +30,7 @@
       {{$t('_city.excursion')}}
     </h2>
     <div style="width: 300px;">
+      <v-subheader>Цена</v-subheader>
       <v-card-text>
         <v-range-slider
           v-model="priceFilter.value"
@@ -38,6 +39,19 @@
           thumb-label="always"
           thumb-size="24"
         ></v-range-slider>
+      </v-card-text>
+      <v-subheader>Количество человек</v-subheader>
+      <v-card-text>
+        <v-slider
+          v-model="groupSizeFilter"
+          :max="6"
+          :min="1"
+          step="1"
+          ticks="always"
+          tick-size="4"
+          thumb-label="always"
+          thumb-size="24"
+        ></v-slider>
       </v-card-text>
     </div>
     <ExcursionCards :excursions="filtered"/>
@@ -76,6 +90,7 @@
           max: 100,
           value: []
         },
+        groupSizeFilter: 6,
         showGalery: false,
         filterList: []
       }
@@ -113,12 +128,13 @@
         return this.$store.getters['user/isUserloggedIn']
       },
       filtered() {
-        let arr = []
         if (this.filter.length === 0) {
           this.$router.push({query: ''})
-          return this.excursions
+          return this.excursions.filter(a => a.price >= this.priceFilter.value[0] && a.price <=
+            this.priceFilter.value[1] && a.groupSize == this.groupSizeFilter)
         }
         if (this.filter.length !== 0) {
+          let arr = []
           this.excursions.forEach(a => {
             let is = false
             a.type.forEach(r => {
