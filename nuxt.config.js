@@ -77,7 +77,6 @@ module.exports = {
     theme: {
       themes: {
         light: {
-          primary: '#000'
         }
       }
     },

@@ -242,12 +242,12 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 
 // get cities
 app.get('/admin/api/getcities/:lang', (req, res) => {
-  let sql =  `SELECT cities.*, COUNT(*) AS excCount
-              FROM cities
-              LEFT JOIN excursion
-              ON cities.id = excursion.city_id
-              WHERE cities.lang = '${req.params.lang}'
-              GROUP BY cities.id`
+  let sql = `SELECT cities.*, COUNT(excursion.id) AS excCount 
+             FROM cities 
+             LEFT JOIN excursion 
+             ON cities.id = excursion.city_id
+             WHERE cities.lang = '${req.params.lang}'
+             GROUP BY cities.id`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(city => {
@@ -266,7 +266,15 @@ app.get('/admin/api/getcities', (req, res) => {
 
 // get excursion
 app.get('/admin/api/getexcursion/:lang/:city', (req, res) => {
-  let sql = `SELECT * FROM excursion WHERE city = '${req.params.city}' AND lang = '${req.params.lang}'`;
+  let sql = `SELECT cities.url AS city, excursion.* 
+             FROM cities_exc 
+             LEFT JOIN cities 
+             ON cities.id = cities_exc.city_id 
+             LEFT JOIN excursion 
+             ON cities_exc.exc_id = excursion.id 
+             WHERE cities.url = '${req.params.city}' 
+             AND cities.lang = '${req.params.lang}' 
+             AND excursion.lang = '${req.params.lang}'`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(exc => {

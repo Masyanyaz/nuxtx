@@ -29,6 +29,17 @@
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('_city.excursion')}}
     </h2>
+    <div style="width: 300px;">
+      <v-card-text>
+        <v-range-slider
+          v-model="priceFilter.value"
+          :max="priceFilter.max"
+          :min="priceFilter.min"
+          thumb-label="always"
+          thumb-size="24"
+        ></v-range-slider>
+      </v-card-text>
+    </div>
     <ExcursionCards :excursions="filtered"/>
   </div>
 </template>
@@ -41,8 +52,6 @@
 
   export default {
     async asyncData({store, params, error, route}) {
-      let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
-
       // TODO Сделать условие, чтобы не обращалось каждый раз к бд
       const url = {
         language: store.state.locale,
@@ -56,22 +65,36 @@
         error({statusCode: 404})
       }
       let city = await store.getters['city/cityByUrl'](params.city)
+
+      let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
       return {city, filter}
     },
     data() {
       return {
+        priceFilter: {
+          min: 0,
+          max: 100,
+          value: []
+        },
         showGalery: false,
-        filterList: [],
+        filterList: []
       }
     },
     created() {
       let arr = []
+      let arrPrice = []
       this.excursions.forEach(a => {
         a.type.forEach(r => {
           arr.push(r)
         })
+        arrPrice.push(a.price)
       })
       this.filterList = Array.from(new Set(arr))
+
+      let unicArrPrice = Array.from(new Set(arrPrice))
+      let min = this.priceFilter.min = Math.min(...unicArrPrice)
+      let max = this.priceFilter.max = Math.max(...unicArrPrice)
+      this.priceFilter.value = [min, max]
     },
     head() {
       return {
@@ -90,20 +113,23 @@
         return this.$store.getters['user/isUserloggedIn']
       },
       filtered() {
+        let arr = []
         if (this.filter.length === 0) {
           this.$router.push({query: ''})
           return this.excursions
         }
-        let arr = []
-        this.excursions.forEach(a => {
-          a.type.forEach(r => {
-            this.filter.includes(r) ? arr.push(a) : false
-          })
-        });
-        this.$router.push({query: JSON.parse(JSON.stringify(this.filter).replace('é', 'e'))})
-        return Array.from(new Set(arr))
+        if (this.filter.length !== 0) {
+          this.excursions.forEach(a => {
+            let is = false
+            a.type.forEach(r => {
+              is = this.filter.includes(r)
+            });
+            if (is && a.price >= this.priceFilter.value[0] && a.price <= this.priceFilter.value[1]) arr.push(a)
+          });
+          this.$router.push({query: JSON.parse(JSON.stringify(this.filter).replace('é', 'e'))})
+          return Array.from(new Set(arr))
+        }
       },
-
       ...mapGetters({
         excursions: 'excursion/excursions',
       })

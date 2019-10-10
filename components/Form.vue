@@ -54,7 +54,7 @@
       class="d-flex justify-center"
     >
       <v-btn
-        style="font-size: 14px;"
+        style="font-size: 14px; color: #ffffff"
         class="mb-5"
         width="220px"
         @click="onSubmit"
