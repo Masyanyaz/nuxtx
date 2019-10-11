@@ -13,7 +13,6 @@
           <h1 class="welcome-top__text">{{city.h1}}</h1>
           <div class="filter pl-4 pr-4">
             <v-chip-group
-              multiple
               v-model="filter"
               column
               active-class="green lighten-1"
@@ -41,19 +40,34 @@
         ></v-range-slider>
       </v-card-text>
       <v-subheader>Количество человек</v-subheader>
-      <v-card-text>
-        <v-slider
-          v-model="groupSizeFilter"
-          :max="6"
-          :min="1"
-          step="1"
-          ticks="always"
-          tick-size="4"
-          thumb-label="always"
-          thumb-size="24"
-        ></v-slider>
-      </v-card-text>
+      <div class="d-flex align-center ml-5">
+        <span @click="groupSizeFilter !== 0 ? groupSizeFilter-- : 0" class="pointer" style="cursor: pointer;">-
+        </span>
+        <div style="border-radius: 100%; width: 25px; height: 25px; color: #ffffff;"
+             class="primary d-flex justify-center align-center mr-3 ml-3">
+          {{groupSizeFilter}}
+        </div>
+        <span @click="groupSizeFilter !== 6 ? groupSizeFilter++ : 6" class="pointer" style="cursor: pointer;">+</span>
+      </div>
+      <v-subheader>Время</v-subheader>
+      <div>
+        <input type="checkbox" class="ml-5" id="1" v-model="timeFilter" value="3">
+        <label for="1">0-3</label>
+      </div>
+      <div>
+        <input type="checkbox" class="ml-5" id="2" v-model="timeFilter" value="3-5">
+        <label for="2">3-5</label>
+      </div>
+      <div>
+        <input type="checkbox" class="ml-5" id="3" v-model="timeFilter" value="5-7">
+        <label for="3">5-7</label>
+      </div>
+      <div>
+        <input type="checkbox" class="ml-5" id="4" v-model="timeFilter" value="7">
+        <label for="4">Full day 7+</label>
+      </div>
     </div>
+    {{timeFilter}}
     <ExcursionCards :excursions="filtered"/>
   </div>
 </template>
@@ -80,8 +94,8 @@
       }
       let city = await store.getters['city/cityByUrl'](params.city)
 
-      let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
-      return {city, filter}
+      // let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
+      return {city}
     },
     data() {
       return {
@@ -91,6 +105,8 @@
           value: []
         },
         groupSizeFilter: 6,
+        timeFilter: [],
+        filter: '',
         showGalery: false,
         filterList: []
       }
@@ -102,6 +118,7 @@
         a.type.forEach(r => {
           arr.push(r)
         })
+        a.timeGroup = this.timeGroup(a.time)
         arrPrice.push(a.price)
       })
       this.filterList = Array.from(new Set(arr))
@@ -131,9 +148,10 @@
         if (this.filter.length === 0) {
           this.$router.push({query: ''})
           return this.excursions.filter(a => a.price >= this.priceFilter.value[0] && a.price <=
-            this.priceFilter.value[1] && a.groupSize == this.groupSizeFilter)
+            this.priceFilter.value[1] )
+            // && a.groupSize == this.groupSizeFilter && this.timeFilter.includes(a.timeGroup)
         }
-        if (this.filter.length !== 0) {
+        if (this.filter.length === 0) {
           let arr = []
           this.excursions.forEach(a => {
             let is = false
@@ -149,6 +167,17 @@
       ...mapGetters({
         excursions: 'excursion/excursions',
       })
+    },
+    methods: {
+      timeGroup(time) {
+        let t = time.split(' ')[0]
+        let t1 = t.split('-')[0]
+        let t2 = t.split('-')[1]
+        if (t1 <= 3) return "0-3";
+        if (t1 >= 3 && t1 <= 5) return "3-5";
+        if (t1 >= 5 && t1 <= 7) return "5-7";
+        if (t1 >= 7) return "7";
+      }
     }
   }
 </script>
