@@ -6,21 +6,26 @@
         <span class="footer-top-element-border"/>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">Позвоните нам</span>
-          <span class="footer-social-elements-bold">+00222445678</span>
+          <span class="footer-social-elements-bold">+33(0)184883357</span>
         </div>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">Напишите нам</span>
-          <span class="footer-social-elements-bold">hello@yoursite.com</span>
+          <span class="footer-social-elements-bold">contact@russieautrement.com</span>
         </div>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">Следуйте за нами</span>
           <div>
-            <img
+            <a
               v-for="(src, i) in socials"
+              :href="src.href"
               :key="i"
-              v-lazy="src"
-              alt=""
-              style="margin-right:10px; ">
+              target="_blank"
+            >
+              <img
+                v-lazy="src.src"
+                alt=""
+                style="margin-right:10px; ">
+            </a>
           </div>
         </div>
       </div>
@@ -39,9 +44,31 @@
         <span class="footer-top-element">Поддержка</span>
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
-          <span>Контакты</span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`contacts`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              Контакты
+            </nuxt-link>
+          </span>
           <span>Юр инфо</span>
-          <span>Политика конфиденциальности</span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`cookies`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              Cookies
+            </nuxt-link>
+          </span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`politique-de-confidentialite`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              Политика конфиденциальности
+            </nuxt-link>
+          </span>
         </div>
       </div>
       <div class="footer-item">
@@ -72,7 +99,7 @@
     <footer style="border-top: 1px solid #EAEEF3;" class="container">
       <div class="d-flex justify-space-between align-center" style="padding: 0 7%;">
         <div>
-          Copyright © 2019 by
+          Copyright © 2019 by Russie Autrement
         </div>
         <div>
           <img v-lazy="paySrc" alt="">
@@ -87,9 +114,9 @@
     data() {
       return {
         socials: [
-          '/image/footer/ico_facebook_footer.png',
-          '/image/footer/ico_instagram_footer.png',
-          '/image/footer/ico_twitter_footer.png',
+          {src: '/image/footer/ico_facebook_footer.png', href: 'https://www.facebook.com/Russieautrement/'},
+          {src: '/image/footer/ico_instagram_footer.png', href: 'https://www.instagram.com/russieautrement/'},
+          {src: '/image/footer/ico_twitter_footer.png', href: 'https://twitter.com/Russie_A_Ltd/'}
         ],
         paySrc: '/image/footer/1.svg'
       }

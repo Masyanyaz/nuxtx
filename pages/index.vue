@@ -8,6 +8,10 @@
       </v-flex>
     </v-layout>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+      Trending Activities
+    </h2>
+    <ExcursionCards :excursions="excursions"/>
+    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
@@ -17,8 +21,19 @@
 <script>
   import {mapGetters} from 'vuex'
   const CityCards = () => import("~/components/City/CityCards")
+  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
 
   export default {
+    async asyncData({store, params, error, route}) {
+      const url = {
+        language: store.state.locale,
+        city: 'saint-petersbourg',
+        order: 'popular',
+        sort: 'desc',
+        limit: 8
+      };
+      await store.dispatch('excursion/fetchExcursions', url)
+    },
     async fetch({store}) {
       if (store.getters['city/cities'].length === 0) {
         const url = {
@@ -41,10 +56,12 @@
     computed: mapGetters({
       loading: 'shared/loading',
       user: 'user/user',
-      cities: 'city/cities'
+      cities: 'city/cities',
+      excursions: 'excursion/excursions',
     }),
     components: {
-      CityCards
+      CityCards,
+      ExcursionCards
     }
   }
 </script>

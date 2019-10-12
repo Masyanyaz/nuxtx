@@ -3,18 +3,18 @@ import 'firebase/database'
 import 'firebase/storage'
 
 export const state = () => ({
-  excursions: []
+  filters: []
 })
 
 export const mutations = {
-  createExcursion(state, payload) {
-    state.excursions.push(payload)
+  createFilter(state, payload) {
+    state.filters.push(payload)
   },
-  loadExcursions(state, payload) {
-    state.excursions = payload
+  loadFilters(state, payload) {
+    state.filters = payload
   },
-  updateExcursion(state, payload) {
-    const exc = state.excursions.find(a => {
+  updateFilter(state, payload) {
+    const exc = state.filters.find(a => {
       return a.id === payload.id
     })
 
@@ -34,7 +34,7 @@ export const mutations = {
 
 export const actions = {
 
-  async createExcursion({commit}, payload) {
+  async createFilter({commit}, payload) {
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
 
@@ -49,17 +49,16 @@ export const actions = {
         throw e;
       })
   },
-  async fetchExcursions({commit}, payload) {
+  async fetchFilters({commit}, payload) {
+console.log('1')
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
-    await this.$axios.get(`/admin/api/getexcursion/${payload.language}/${payload.city}?price_min=
-    ${payload.price_min || 0}&price_max=${payload.price_max || 10000}&group_min=${payload.group_min || 1}&time_min=
-    ${payload.time_min || 0}&time_max=${payload.time_max || 24}&exc_type=${payload.exc_type || '.*'}&order=
-    ${payload.order || 'excursion.id'}&sort=${payload.sort || 'ASC'}&limit=${payload.limit || '50'}`)
+    await this.$axios.get(`/admin/api/getfilterlist/${payload.language}/${payload.city}?price_min=
+    ${payload.price_min||0}&price_max=${payload.price_max||10000}&group_min=${payload.group_min||1}&time_min=
+    ${payload.time_min||0}&time_max=${payload.time_max||24}`)
       .then((data) => {
-        commit('loadExcursions', data.data)
+        commit('loadFilters', data.data)
         commit('shared/setLoading', false, {root: true})
-
       })
       .catch(e => {
         commit('shared/setError', e.message, {root: true})
@@ -84,8 +83,8 @@ export const actions = {
 }
 
 export const getters = {
-  excursions(state) {
-    return state.excursions
+  filters(state) {
+    return state.filters
   },
   excByUrl(state) {
     return excUrl => {

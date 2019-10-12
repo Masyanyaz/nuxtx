@@ -117,14 +117,14 @@
         <Form class="form" :exc="exc"/>
       </div>
     </div>
-    <v-container class="hr">
-      <v-layout row  v-if="filtered">
-        <v-flex xs12>
-          <h2 class="d-flex justify-center">You might also like</h2>
-        </v-flex>
-      </v-layout>
-    </v-container>
-    <ExcursionCards :excursions="filtered"/>
+<!--    <v-container class="hr">-->
+<!--      <v-layout row v-if="filtered">-->
+<!--        <v-flex xs12>-->
+<!--          <h2 class="d-flex justify-center">You might also like</h2>-->
+<!--        </v-flex>-->
+<!--      </v-layout>-->
+<!--    </v-container>-->
+<!--    <ExcursionCards :excursions="filtered"/>-->
   </div>
 </template>
 
@@ -185,15 +185,15 @@
       isUserloggedIn() {
         return this.$store.getters['user/isUserloggedIn']
       },
-      filtered() {
-        let arr = [];
-        this.excursions.forEach((a, i) => {
-          a.type.forEach(r => {
-            this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
-          })
-        });
-        return arr.slice(0, this.numberOfWidth)
-      },
+      // filtered() {
+      //   let arr = [];
+      //   this.excursions.forEach((a, i) => {
+      //     a.type.forEach(r => {
+      //       this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
+      //     })
+      //   });
+      //   return arr.slice(0, this.numberOfWidth)
+      // },
       ...mapGetters({
         excursions: 'excursion/excursions',
         cities: 'city/cities'

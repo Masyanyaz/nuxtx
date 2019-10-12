@@ -242,12 +242,15 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 
 // get cities
 app.get('/admin/api/getcities/:lang', (req, res) => {
-  let sql = `SELECT cities.*, COUNT(excursion.id) AS excCount 
+  let sql = `SELECT cities.*, COUNT(excursion.id) AS excCount, 
+             MIN(excursion.price) AS price_min, MAX(excursion.price) AS price_max, 
+             MIN(excursion.groupSize) AS group_min, MAX(excursion.groupSize) AS group_max
              FROM cities 
-             LEFT JOIN excursion 
+             right JOIN excursion 
              ON cities.id = excursion.city_id
              WHERE cities.lang = '${req.params.lang}'
-             GROUP BY cities.id`
+             GROUP BY cities.id
+             ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(city => {
@@ -266,17 +269,55 @@ app.get('/admin/api/getcities', (req, res) => {
 
 // get excursion
 app.get('/admin/api/getexcursion/:lang/:city', (req, res) => {
-  let sql = `SELECT *
-             FROM excursion
-             WHERE city = '${req.params.city}' 
-             AND lang = '${req.params.lang}'`
+  console.log(req.query)
+  let sql = `SELECT excursion.*, GROUP_CONCAT(DISTINCT exc_type) AS exc_type 
+            FROM exc_category
+            RIGHT JOIN excursion
+            ON excursion.id = exc_category.exc_id
+            WHERE city = '${req.params.city}' 
+            AND lang = '${req.params.lang}' 
+            AND exc_type REGEXP ${req.query.exc_type ? `"${req.query.exc_type}"` : "'.*'"}
+            AND excursion.price >= ${req.query.price_min ? `${req.query.price_min}` : 0} 
+            AND excursion.price <= ${req.query.price_max ? `${req.query.price_max}` : 10000} 
+            AND excursion.groupSize >= ${req.query.group_min ? `${req.query.group_min}` : 1}  
+            AND excursion.groupSize <= ${req.query.group_max ? `${req.query.group_max}` : 10} 
+            AND excursion.time >= ${req.query.time_min ? `${req.query.time_min}` : 0} 
+            AND excursion.time <= ${req.query.time_max ? `${req.query.time_max}` : 24} 
+            GROUP BY excursion.id
+            ORDER BY ${req.query.order ? `${req.query.order}` : 'excursion.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}
+            LIMIT ${req.query.limit || 50}`
   let query = db.query(sql, (err, result) => {
-    if (err) throw err;
+    if (err) console.log(err);
     result.forEach(exc => {
       exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
-      exc.type ? exc.type = JSON.parse(exc.type) : exc.type = '';
+      exc.exc_type = exc.exc_type ? exc.exc_type.split(',') : '';
       exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
       exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
+    })
+    res.send(result)
+  });
+});
+
+// get filter name and count
+app.get('/admin/api/getfilterlist/:lang/:city', (req, res) => {
+  let sql = `SELECT exc_category.exc_type AS exc_type, COUNT(*) as exc_count, GROUP_CONCAT(DISTINCT exc_id) AS exc_id
+            FROM excursion 
+            RIGHT JOIN exc_category
+            ON exc_category.exc_id = excursion.id
+            WHERE excursion.city = '${req.params.city}' 
+            AND excursion.lang = '${req.params.lang}'
+            AND excursion.price >= ${req.query.price_min ? `${req.query.price_min}` : 0} 
+            AND excursion.price <= ${req.query.price_max ? `${req.query.price_max}` : 10000} 
+            AND excursion.groupSize >= ${req.query.group_min ? `${req.query.group_min}` : 1}  
+            AND excursion.groupSize <= ${req.query.group_max ? `${req.query.group_max}` : 10} 
+            AND excursion.time >= ${req.query.time_min ? `${req.query.time_min}` : 0} 
+            AND excursion.time <= ${req.query.time_max ? `${req.query.time_max}` : 24} 
+            GROUP BY exc_category.exc_type
+            ORDER BY ${req.query.order ? `${req.query.order}` : 'exc_category.exc_type'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    result.forEach(f => {
+      f.exc_id = f.exc_id ? f.exc_id.split(',') : '';
     })
     res.send(result)
   });

@@ -81,7 +81,7 @@
           {title: this.$t('Navbar.activities'), icon: 'keyboard_arrow_down', url: 'activities'},
           {title: this.$t('Navbar.destinations'), icon: 'keyboard_arrow_down', url: 'destinations'},
           {title: this.$t('Navbar.aboutUs'), url: 'about-us'},
-          {title: this.$t('Navbar.contact'), url: 'contact'},
+          {title: this.$t('Navbar.contact'), url: this.$t('Navbar.french')},
         ]
       }
     },
