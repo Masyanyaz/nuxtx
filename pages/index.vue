@@ -15,6 +15,11 @@
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
+    <Blog class="mt-10" />
+    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+      Nos Clients Heureux
+    </h2>
+    <Reviews />
   </div>
 </template>
 
@@ -22,28 +27,25 @@
   import {mapGetters} from 'vuex'
   const CityCards = () => import("~/components/City/CityCards")
   const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
+  const Blog = () => import("~/components/Blog");
+  const Reviews = () => import("~/components/Reviews");
 
   export default {
     async asyncData({store, params, error, route}) {
       const url = {
         language: store.state.locale,
-        city: 'saint-petersbourg',
-        order: 'popular',
+        order: 'excursion.popular',
         sort: 'desc',
         limit: 8
       };
       await store.dispatch('excursion/fetchExcursions', url)
-    },
-    async fetch({store}) {
       if (store.getters['city/cities'].length === 0) {
-        const url = {
-          language: store.state.locale
-        };
         await store.dispatch('city/fetchCities', url)
       }
     },
     data() {
-      return {}
+      return {
+      }
     },
     head() {
       return {
@@ -61,7 +63,9 @@
     }),
     components: {
       CityCards,
-      ExcursionCards
+      ExcursionCards,
+      Blog,
+      Reviews
     }
   }
 </script>

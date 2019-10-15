@@ -3,7 +3,8 @@ import 'firebase/database'
 import 'firebase/storage'
 
 export const state = () => ({
-  filters: []
+  filters: [],
+  query: {}
 })
 
 export const mutations = {
@@ -12,6 +13,12 @@ export const mutations = {
   },
   loadFilters(state, payload) {
     state.filters = payload
+  },
+  loadQuery(state, payload) {
+    state.query = payload
+  },
+  deleteQuery(state) {
+    state.query = {}
   },
   updateFilter(state, payload) {
     const exc = state.filters.find(a => {
@@ -33,7 +40,9 @@ export const mutations = {
 }
 
 export const actions = {
-
+  async createQuery({commit}, payload) {
+    commit('loadQuery', payload)
+  },
   async createFilter({commit}, payload) {
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
@@ -50,12 +59,14 @@ export const actions = {
       })
   },
   async fetchFilters({commit}, payload) {
-console.log('1')
+console.log('fetchFilters')
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
-    await this.$axios.get(`/admin/api/getfilterlist/${payload.language}/${payload.city}?price_min=
-    ${payload.price_min||0}&price_max=${payload.price_max||10000}&group_min=${payload.group_min||1}&time_min=
-    ${payload.time_min||0}&time_max=${payload.time_max||24}`)
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    await this.$axios.get(`/admin/api/getfilterlist/${payload.language}${url}`)
       .then((data) => {
         commit('loadFilters', data.data)
         commit('shared/setLoading', false, {root: true})
@@ -86,9 +97,12 @@ export const getters = {
   filters(state) {
     return state.filters
   },
-  excByUrl(state) {
+  query(state) {
+    return state.query
+  },
+  filterByUrl(state) {
     return excUrl => {
-      return state.excursions.find(exc => exc.url === excUrl)
+      return state.filters.find(flt => flt.url === excUrl)
     }
   }
 }

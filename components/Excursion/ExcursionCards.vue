@@ -15,7 +15,7 @@
             <v-card
               slot-scope="{ hover }"
               class="pointer"
-              :to="$i18n.path(`${exc.city}/${exc.url}`)"
+              :to="$i18n.path(`${exc.city_url}/${exc.url}`)"
             >
               <div class="d-flex justify-center align-center" style="overflow: hidden; position: relative;">
                 <img v-lazy="exc.previewImage" alt="" height="200" width="100%" :class="{cardHover : hover}" style="transition: all .3s;">
@@ -44,7 +44,7 @@
                     </g>
                   </g>
                 </svg>
-                  {{exc.time}}
+                  {{exc.time}} heures
                 </span>
               </div>
               <v-card-title

@@ -46,7 +46,8 @@ app.post('/admin/api/addcity', (req, res) => {
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
       galery.push(renameAndMove('galery', `${i}`));
-    };
+    }
+    ;
   }
 
   city.previewImage = renameAndMove('previewImage');
@@ -94,7 +95,8 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
       galery.push(renameAndMove('galery', `${i}`));
-    };
+    }
+    ;
   }
 
   city.previewImage = renameAndMove('previewImage');
@@ -160,7 +162,8 @@ app.post('/admin/api/addexcursion', (req, res) => {
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
       galery.push(renameAndMove('galery', `${i}`));
-    };
+    }
+    ;
   }
 
   exc.previewImage = renameAndMove('previewImage');
@@ -217,7 +220,8 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
       galery.push(renameAndMove('galery', `${i}`));
-    };
+    }
+    ;
   }
 
   exc.previewImage = renameAndMove('previewImage');
@@ -242,15 +246,37 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 
 // get cities
 app.get('/admin/api/getcities/:lang', (req, res) => {
-  let sql = `SELECT cities.*, COUNT(excursion.id) AS excCount, 
-             MIN(excursion.price) AS price_min, MAX(excursion.price) AS price_max, 
-             MIN(excursion.groupSize) AS group_min, MAX(excursion.groupSize) AS group_max
-             FROM cities 
-             right JOIN excursion 
-             ON cities.id = excursion.city_id
-             WHERE cities.lang = '${req.params.lang}'
-             GROUP BY cities.id
-             ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+  let sql = `SELECT cities.name, cities.url, cities.previewImage, COUNT(excursion.id) AS excCount
+            FROM cities
+            LEFT JOIN excursion
+            ON cities.id = excursion.city_id
+            WHERE cities.lang = '${req.params.lang}'
+            GROUP BY cities.id
+            ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+// get city
+app.get('/admin/api/getcity/:lang', (req, res) => {
+  let sql = `SELECT cities.id, cities.url, cities.h1, cities.title, cities.description, cities.mainImage, cities.galery,
+            MIN(excursion.price) AS price_min, MAX(excursion.price) AS price_max, 
+            MIN(excursion.groupSize) AS group_min, MAX(excursion.groupSize) AS group_max,
+            COUNT(excursion.id) AS exc_count
+            FROM cities
+            LEFT JOIN excursion
+            ON cities.id = excursion.city_id
+            WHERE cities.lang = '${req.params.lang}'  
+            AND cities.url = '${req.query.city_url}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND excursion.groupSize <= ${req.query.group_max || 10}
+            AND excursion.time >= ${req.query.time_min || 0}
+            AND excursion.time <= ${req.query.time_max || 24}
+            GROUP BY cities.id`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(city => {
@@ -259,6 +285,7 @@ app.get('/admin/api/getcities/:lang', (req, res) => {
     res.send(result)
   });
 });
+
 app.get('/admin/api/getcities', (req, res) => {
   let sql = `SELECT id, url, name FROM cities`;
   let query = db.query(sql, (err, result) => {
@@ -267,58 +294,97 @@ app.get('/admin/api/getcities', (req, res) => {
   });
 });
 
-// get excursion
-app.get('/admin/api/getexcursion/:lang/:city', (req, res) => {
-  console.log(req.query)
-  let sql = `SELECT excursion.*, GROUP_CONCAT(DISTINCT exc_type) AS exc_type 
-            FROM exc_category
-            RIGHT JOIN excursion
-            ON excursion.id = exc_category.exc_id
-            WHERE city = '${req.params.city}' 
-            AND lang = '${req.params.lang}' 
-            AND exc_type REGEXP ${req.query.exc_type ? `"${req.query.exc_type}"` : "'.*'"}
-            AND excursion.price >= ${req.query.price_min ? `${req.query.price_min}` : 0} 
-            AND excursion.price <= ${req.query.price_max ? `${req.query.price_max}` : 10000} 
-            AND excursion.groupSize >= ${req.query.group_min ? `${req.query.group_min}` : 1}  
-            AND excursion.groupSize <= ${req.query.group_max ? `${req.query.group_max}` : 10} 
-            AND excursion.time >= ${req.query.time_min ? `${req.query.time_min}` : 0} 
-            AND excursion.time <= ${req.query.time_max ? `${req.query.time_max}` : 24} 
-            GROUP BY excursion.id
-            ORDER BY ${req.query.order ? `${req.query.order}` : 'excursion.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}
-            LIMIT ${req.query.limit || 50}`
+app.get('/admin/api/getallurl/:lang', (req, res) => {
+  let sql = `SELECT GROUP_CONCAT(DISTINCT cities.url) AS citiesUrl, GROUP_CONCAT(DISTINCT excursion.url) AS excursionUrl, GROUP_CONCAT(DISTINCT exc_category_data.url) AS categoryUrl
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            WHERE cities.lang = '${req.params.lang}'`;
   let query = db.query(sql, (err, result) => {
-    if (err) console.log(err);
-    result.forEach(exc => {
-      exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
-      exc.exc_type = exc.exc_type ? exc.exc_type.split(',') : '';
-      exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
-      exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
+    if (err) throw err;
+    result.forEach(a => {
+      a.citiesUrl = a.citiesUrl ?  a.citiesUrl.split(',') : ''
+      a.excursionUrl = a.excursionUrl ?  a.excursionUrl.split(',') : ''
+      a.categoryUrl = a.categoryUrl ?  a.categoryUrl.split(',') : ''
     })
     res.send(result)
   });
 });
 
+// get excursions
+app.get('/admin/api/getexcursions/:lang', (req, res) => {
+  let sql = `SELECT excursion.id, excursion.name, cities.url AS city_url, cities.lang, excursion.url, excursion.price, 
+            excursion.time, excursion.previewImage
+            FROM excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            INNER JOIN exc_category_data
+            ON cities.id = excursion.city_id
+            AND exc_category.exc_id = excursion.id
+            AND exc_category_data.id = exc_category.data_id
+            WHERE cities.url REGEXP '${req.query.city_url || '.*'}'
+            AND cities.lang = '${req.params.lang}' 
+            AND exc_category_data.url REGEXP '${req.query.category_url || '.*'}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND excursion.groupSize <= ${req.query.group_max || 10}
+            AND excursion.time >= ${req.query.time_min || 0}
+            AND excursion.time <= ${req.query.time_max || 24}
+            GROUP BY excursion.id
+            ORDER BY ${req.query.order || 'excursion.id'} ${req.query.sort || 'ASC'}
+            LIMIT ${req.query.limit || 100}`
+  let query = db.query(sql, (err, result) => {
+    if (err) console.log(err);
+    res.send(result)
+  });
+});
+
+// get excursion
+app.get('/admin/api/getexcursion/:lang', (req, res) => {
+
+  let sql = `SELECT excursion.id, excursion.url, excursion.name, excursion.h1, excursion.title, excursion.description, excursion.price,
+            excursion.time, excursion.mainImage, excursion.galery, excursion.detailText, excursion.included, excursion.excluded, excursion.groupSize
+            FROM excursion
+            LEFT JOIN cities
+            ON cities.id = excursion.city_id
+            WHERE cities.url = '${req.query.city_url}'
+            AND cities.lang = '${req.params.lang}' 
+            AND excursion.url = '${req.query.exc_url}'`
+  let query = db.query(sql, (err, result) => {
+    if (err) console.log(err);
+    result.forEach(exc => {
+      exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
+      exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
+      exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
+    });
+    res.send(result)
+  });
+});
+
 // get filter name and count
-app.get('/admin/api/getfilterlist/:lang/:city', (req, res) => {
-  let sql = `SELECT exc_category.exc_type AS exc_type, COUNT(*) as exc_count, GROUP_CONCAT(DISTINCT exc_id) AS exc_id
-            FROM excursion 
-            RIGHT JOIN exc_category
-            ON exc_category.exc_id = excursion.id
-            WHERE excursion.city = '${req.params.city}' 
-            AND excursion.lang = '${req.params.lang}'
-            AND excursion.price >= ${req.query.price_min ? `${req.query.price_min}` : 0} 
-            AND excursion.price <= ${req.query.price_max ? `${req.query.price_max}` : 10000} 
-            AND excursion.groupSize >= ${req.query.group_min ? `${req.query.group_min}` : 1}  
-            AND excursion.groupSize <= ${req.query.group_max ? `${req.query.group_max}` : 10} 
-            AND excursion.time >= ${req.query.time_min ? `${req.query.time_min}` : 0} 
-            AND excursion.time <= ${req.query.time_max ? `${req.query.time_max}` : 24} 
-            GROUP BY exc_category.exc_type
-            ORDER BY ${req.query.order ? `${req.query.order}` : 'exc_category.exc_type'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+app.get('/admin/api/getfilterlist/:lang', (req, res) => {
+  let sql = `SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            exc_category_data.title, exc_category_data.description, exc_category_data.previewImage, cities.url AS city_url, COUNT(excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category.data_id = exc_category_data.id
+            WHERE cities.url REGEXP '${req.query.city_url || '.*'}'
+            AND cities.lang = '${req.params.lang}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND excursion.groupSize <= ${req.query.group_max || 10}
+            AND excursion.time >= ${req.query.time_min || 0}
+            AND excursion.time <= ${req.query.time_max || 24}
+            GROUP BY exc_category_data.url
+            ORDER BY ${req.query.order || 'name'} ${req.query.sort || 'ASC'}`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    result.forEach(f => {
-      f.exc_id = f.exc_id ? f.exc_id.split(',') : '';
-    })
     res.send(result)
   });
 });

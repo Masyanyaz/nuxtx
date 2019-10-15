@@ -17,7 +17,8 @@ class City {
 }
 
 export const state = () => ({
-  cities: []
+  cities: [],
+  city: []
 })
 
 export const mutations = {
@@ -27,22 +28,14 @@ export const mutations = {
   loadCities(state, payload) {
     state.cities = payload
   },
+  loadCity(state, payload) {
+    state.city = payload
+  },
   updateCity(state, payload) {
-    const city = state.cities.find(a => {
+    const exc = state.cities.find(a => {
       return a.id === payload.id
     })
-
-    city.h1 = payload.h1
-    city.price = payload.price
-    city.time = payload.time
-    city.groupSize = payload.groupSize
-    city.detailText = payload.detailText
-    city.included = payload.included
-    city.excluded = payload.excluded
-    city.name = payload.name
-    city.url = payload.url
-    city.title = payload.title
-    city.description = payload.description
+    Object.assign(payload, exc)
   }
 }
 
@@ -63,12 +56,33 @@ export const actions = {
       })
   },
   async fetchCities({commit, $axios}, payload) {
+    console.log('fetchCities')
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
 
     await this.$axios.get(`/admin/api/getcities/${payload.language}`)
       .then((data) => {
         commit('loadCities', data.data)
+        commit('shared/setLoading', false, {root: true})
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
+  },
+  async fetchCity({commit, $axios}, payload) {
+    console.log('fetchCity')
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    console.log(url)
+    await this.$axios.get(`/admin/api/getcity/${payload.language}${url}`)
+      .then((data) => {
+        commit('loadCity', data.data)
         commit('shared/setLoading', false, {root: true})
       })
       .catch(e => {
@@ -97,9 +111,12 @@ export const getters = {
   cities(state) {
     return state.cities
   },
+  city(state) {
+    return state.city
+  },
   cityByUrl(state) {
     return cityUrl => {
-      return state.cities.find(city => city.url === cityUrl)
+      return state.city.find(city => city.url === cityUrl)
     }
   }
 }

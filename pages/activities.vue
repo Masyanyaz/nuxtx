@@ -22,8 +22,7 @@
     },
     async asyncData({store}) {
       const url = {
-        language: store.state.locale,
-        city: 'saint-petersbourg',
+        language: store.state.locale
       };
       await store.dispatch('excursion/fetchExcursions', url)
     },

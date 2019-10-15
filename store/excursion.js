@@ -3,7 +3,8 @@ import 'firebase/database'
 import 'firebase/storage'
 
 export const state = () => ({
-  excursions: []
+  excursions: [],
+  excursion: []
 })
 
 export const mutations = {
@@ -12,6 +13,9 @@ export const mutations = {
   },
   loadExcursions(state, payload) {
     state.excursions = payload
+  },
+  loadExcursion(state, payload) {
+    state.excursion = payload
   },
   updateExcursion(state, payload) {
     const exc = state.excursions.find(a => {
@@ -50,14 +54,36 @@ export const actions = {
       })
   },
   async fetchExcursions({commit}, payload) {
+    console.log('fetchExcursions')
     commit('shared/clearError', null, {root: true})
     commit('shared/setLoading', true, {root: true})
-    await this.$axios.get(`/admin/api/getexcursion/${payload.language}/${payload.city}?price_min=
-    ${payload.price_min || 0}&price_max=${payload.price_max || 10000}&group_min=${payload.group_min || 1}&time_min=
-    ${payload.time_min || 0}&time_max=${payload.time_max || 24}&exc_type=${payload.exc_type || '.*'}&order=
-    ${payload.order || 'excursion.id'}&sort=${payload.sort || 'ASC'}&limit=${payload.limit || '50'}`)
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    await this.$axios.get(`/admin/api/getexcursions/${payload.language}${url}`)
       .then((data) => {
         commit('loadExcursions', data.data)
+        commit('shared/setLoading', false, {root: true})
+
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
+  },
+  async fetchExcursion({commit}, payload) {
+    console.log('fetchExcursion')
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    await this.$axios.get(`/admin/api/getexcursion/${payload.language}${url}`)
+      .then((data) => {
+        commit('loadExcursion', data.data)
         commit('shared/setLoading', false, {root: true})
 
       })
@@ -87,9 +113,12 @@ export const getters = {
   excursions(state) {
     return state.excursions
   },
+  excursion(state) {
+    return state.excursion
+  },
   excByUrl(state) {
     return excUrl => {
-      return state.excursions.find(exc => exc.url === excUrl)
+      return state.excursion.find(exc => exc.url === excUrl)
     }
   }
 }
