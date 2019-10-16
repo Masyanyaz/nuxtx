@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 15 2019 г., 17:37
+-- Время создания: Окт 16 2019 г., 18:04
 -- Версия сервера: 10.3.13-MariaDB
 -- Версия PHP: 7.1.22
 
@@ -47,8 +47,7 @@ CREATE TABLE `cities` (
 --
 
 INSERT INTO `cities` (`id`, `title`, `description`, `h1`, `galery`, `url`, `lang`, `name`, `previewImage`, `mainImage`, `popular`) VALUES
-(135, 'Saint-Pétersbourg title', 'Saint-Pétersbourg description', 'Экскурсии в Санкт-Петербурге', '[\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg0.jpg\",\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg1.jpg\"]', 'saint-petersbourg', 'fr', 'Saint-Pétersbourg', '/image/fr/saint-petersbourg/preview-saint-petersbourg.jpg', '/image/fr/saint-petersbourg/main-saint-petersbourg.jpg', NULL),
-(139, 'Saint-Pétersbourg title', 'Saint-Pétersbourg description', 'Экскурсии в Санкт-Петербурге', '[\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg0.jpg\",\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg1.jpg\"]', 'qwe', 'en', 'sdfsdf', '/image/fr/saint-petersbourg/preview-saint-petersbourg.jpg', '/image/fr/saint-petersbourg/main-saint-petersbourg.jpg', NULL);
+(135, 'Saint-Pétersbourg title', 'Saint-Pétersbourg description', 'Visites guidés à St-Pétersbourg', '[\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg0.jpg\",\"/image/fr/saint-petersbourg/galery/galery-saint-petersbourg1.jpg\"]', 'saint-petersbourg', 'fr', 'Saint-Pétersbourg', '/image/fr/saint-petersbourg/preview-saint-petersbourg.jpg', '/image/fr/saint-petersbourg/main-saint-petersbourg.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,8 +179,7 @@ INSERT INTO `exc_category` (`id`, `exc_id`, `data_id`) VALUES
 (37, 49, 3),
 (38, 50, 3),
 (39, 51, 3),
-(42, 52, 3),
-(43, 52, 2);
+(42, 52, 3);
 
 -- --------------------------------------------------------
 
@@ -196,17 +194,19 @@ CREATE TABLE `exc_category_data` (
   `h1` text DEFAULT NULL,
   `title` text DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `previewImage` text DEFAULT NULL
+  `previewImage` text DEFAULT NULL,
+  `popular` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `exc_category_data`
 --
 
-INSERT INTO `exc_category_data` (`id`, `name`, `url`, `h1`, `title`, `description`, `previewImage`) VALUES
-(1, 'Tours de ville', 'tours-de-ville', 'Tours de ville', 'Tours de ville', 'Tours de ville', 'asda'),
-(2, 'Pavlovsk', 'pavlovsk', 'Pavlovsk', 'Pavlovsk', 'Pavlovsk', 'dfgdfg'),
-(3, 'Peterhof', 'petergof', 'Peterhof', 'Peterhof', 'Peterhof', 'wer');
+INSERT INTO `exc_category_data` (`id`, `name`, `url`, `h1`, `title`, `description`, `previewImage`, `popular`) VALUES
+(1, 'Tours de ville', 'tours-de-ville', 'Tours de ville', 'Tours de ville', 'Tours de ville', '/image/fr/saint-petersbourg/eglise-bois-pokrovskaia/preview-eglise-bois-pokrovskaia.jpg', 'true'),
+(2, 'Pavlovsk', 'pavlovsk', 'Pavlovsk', 'Pavlovsk', 'Pavlovsk', '/image/fr/saint-petersbourg/visite-parc-catherine-tsarskoie-selo/preview-visite-parc-catherine-tsarskoie-selo.jpg', 'fasle'),
+(3, 'Peterhof', 'petergof', 'Peterhof', 'Peterhof', 'Peterhof', '/image/fr/saint-petersbourg/musee-appartement-fiodor-dostoievski/preview-musee-appartement-fiodor-dostoievski.jpg', 'true'),
+(4, 'All', 'all', 'All', 'All', 'All', '/image/fr/saint-petersbourg/saint-petersbourg-comme-vous-habitez/preview-saint-petersbourg-comme-vous-habitez.jpg', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -253,19 +253,19 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT для таблицы `excursion`
 --
 ALTER TABLE `excursion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT для таблицы `exc_category`
 --
 ALTER TABLE `exc_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT для таблицы `exc_category_data`
 --
 ALTER TABLE `exc_category_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
