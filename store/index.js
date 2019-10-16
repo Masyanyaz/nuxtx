@@ -20,6 +20,7 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit({commit}, {req}) {
+    commit('filter/loadQuery', req.query)
     if (process.server && process.static) return;
     if (!req.headers.cookie) return;
 

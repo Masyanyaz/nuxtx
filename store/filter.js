@@ -3,6 +3,7 @@ import 'firebase/database'
 import 'firebase/storage'
 
 export const state = () => ({
+  category: [],
   filters: [],
   query: {}
 })
@@ -10,6 +11,9 @@ export const state = () => ({
 export const mutations = {
   createFilter(state, payload) {
     state.filters.push(payload)
+  },
+  loadCategory(state, payload) {
+    state.category = payload
   },
   loadFilters(state, payload) {
     state.filters = payload
@@ -40,6 +44,25 @@ export const mutations = {
 }
 
 export const actions = {
+  async fetchCategory({commit}, payload) {
+    console.log('fetchCategory')
+    commit('shared/clearError', null, {root: true})
+    commit('shared/setLoading', true, {root: true})
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    await this.$axios.get(`/admin/api/getcategorylist/${payload.language}${url.slice(0,-1)}`)
+      .then((data) => {
+        commit('loadCategory', data.data)
+        commit('shared/setLoading', false, {root: true})
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
+  },
   async createQuery({commit}, payload) {
     commit('loadQuery', payload)
   },
@@ -59,21 +82,18 @@ export const actions = {
       })
   },
   async fetchFilters({commit}, payload) {
-console.log('fetchFilters')
+    console.log('fetchFilters')
     commit('shared/clearError', null, {root: true})
-    commit('shared/setLoading', true, {root: true})
     let url = '?'
     for (let key in payload) {
       url += `${key}=${payload[key]}&`
     }
-    await this.$axios.get(`/admin/api/getfilterlist/${payload.language}${url}`)
+    await this.$axios.get(`/admin/api/getfilterlist/${payload.language}${url.slice(0,-1)}`)
       .then((data) => {
         commit('loadFilters', data.data)
-        commit('shared/setLoading', false, {root: true})
       })
       .catch(e => {
         commit('shared/setError', e.message, {root: true})
-        commit('shared/setLoading', false, {root: true})
         throw e;
       })
   },
@@ -94,6 +114,9 @@ console.log('fetchFilters')
 }
 
 export const getters = {
+  category(state) {
+    return state.category
+  },
   filters(state) {
     return state.filters
   },

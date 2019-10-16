@@ -13,7 +13,7 @@
         color="white"
       >
         <v-row
-          class="fill-height"
+          class="fill-height container"
           align="center"
           justify="center"
         >

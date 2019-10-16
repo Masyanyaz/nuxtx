@@ -365,7 +365,28 @@ app.get('/admin/api/getexcursion/:lang', (req, res) => {
 // get filter name and count
 app.get('/admin/api/getfilterlist/:lang', (req, res) => {
   let sql = `SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
-            exc_category_data.title, exc_category_data.description, exc_category_data.previewImage, cities.url AS city_url, COUNT(excursion.id) AS exc_count
+            exc_category_data.title, exc_category_data.description, COUNT(DISTINCT excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category_data.url = 'all'
+            WHERE cities.url REGEXP '${req.query.city_url || '.*'}'
+            AND cities.lang = '${req.params.lang}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND excursion.groupSize <= ${req.query.group_max || 10}
+            AND excursion.time >= ${req.query.time_min || 0}
+            AND excursion.time <= ${req.query.time_max || 24}
+            GROUP BY exc_category_data.url
+            
+            UNION
+            
+            SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            exc_category_data.title, exc_category_data.description, COUNT(excursion.id) AS exc_count
             FROM exc_category_data
             INNER JOIN excursion
             INNER JOIN cities
@@ -381,8 +402,26 @@ app.get('/admin/api/getfilterlist/:lang', (req, res) => {
             AND excursion.groupSize <= ${req.query.group_max || 10}
             AND excursion.time >= ${req.query.time_min || 0}
             AND excursion.time <= ${req.query.time_max || 24}
-            GROUP BY exc_category_data.url
-            ORDER BY ${req.query.order || 'name'} ${req.query.sort || 'ASC'}`
+            GROUP BY exc_category_data.url`
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
+// category list
+app.get('/admin/api/getcategorylist/:lang', (req, res) => {
+  let sql = `SELECT exc_category_data.id ,exc_category_data.name, cities.url AS city_url, exc_category_data.url, exc_category_data.previewImage, COUNT(excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category.data_id = exc_category_data.id
+            WHERE cities.url = '${req.query.city_url}'
+            AND cities.lang = '${req.params.lang}'
+            GROUP BY exc_category_data.url`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result)

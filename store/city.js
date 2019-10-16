@@ -74,20 +74,19 @@ export const actions = {
   async fetchCity({commit, $axios}, payload) {
     console.log('fetchCity')
     commit('shared/clearError', null, {root: true})
-    commit('shared/setLoading', true, {root: true})
+    // commit('shared/setLoading', true, {root: true})
     let url = '?'
     for (let key in payload) {
       url += `${key}=${payload[key]}&`
     }
-    console.log(url)
-    await this.$axios.get(`/admin/api/getcity/${payload.language}${url}`)
+    await this.$axios.get(`/admin/api/getcity/${payload.language}${url.slice(0,-1)}`)
       .then((data) => {
         commit('loadCity', data.data)
-        commit('shared/setLoading', false, {root: true})
+        // commit('shared/setLoading', false, {root: true})
       })
       .catch(e => {
         commit('shared/setError', e.message, {root: true})
-        commit('shared/setLoading', false, {root: true})
+        // commit('shared/setLoading', false, {root: true})
         throw e;
       })
   },

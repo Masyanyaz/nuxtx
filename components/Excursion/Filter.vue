@@ -24,8 +24,8 @@
       <v-card
         style="position: absolute; z-index: 999999;"
         v-if="cardFilter === 1"
-        max-width="344"
-        width="344"
+        max-width="320"
+        width="320"
         outlined
       >
         <v-list-item three-line>
@@ -63,8 +63,8 @@
       <v-card
         style="position: absolute; z-index: 999999; margin-left: 75px;"
         v-if="cardFilter === 2"
-        max-width="344"
-        width="344"
+        max-width="320"
+        width="320"
         outlined
       >
         <v-list-item three-line>
@@ -108,8 +108,8 @@
       <v-card
         style="position: absolute; z-index: 999999; margin-left: 150px;"
         v-if="cardFilter === 3"
-        max-width="344"
-        width="344"
+        max-width="320"
+        width="320"
         outlined
       >
         <v-list-item three-line>
@@ -168,6 +168,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
     props: ['city'],
     data() {
@@ -188,6 +190,17 @@
         }
       }
     },
+    created() {
+      if(Object.keys(this.query).length !== 0) {
+        this.groupSizeFilter = this.query.group_min;
+        this.priceFilter.value = [this.query.price_min, this.query.price_max];
+      }
+    },
+    computed: {
+      ...mapGetters({
+        query: 'filter/query'
+      })
+    },
     methods: {
       async isFiltered() {
         this.cardFilter = null;
@@ -200,17 +213,21 @@
           group_min: this.groupSizeFilter,
           time_min: Math.min(...timeArr) != 'Infinity' ? Math.min(...timeArr) : 0,
           time_max: Math.max(...timeArr) != '-Infinity' ? Math.max(...timeArr) : 24,
-          category_url: this.$route.params.id ? this.$route.params.id : '.*'
+          category_url: !this.$route.params.id ? '.*' : this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
         }
         await this.$store.dispatch('filter/fetchFilters', url)
         await this.$store.dispatch('excursion/fetchExcursions', url)
         await this.$store.dispatch('filter/createQuery', url)
         let query = this.$store.getters['filter/query']
+        console.log(query)
 
         this.$router.push({
           query: {
-            price_min: url.price_min, price_max: url.price_max, group_min: url.group_min,
-            time_min: url.time_min, time_max: url.time_max, category_url: url.category_url
+            price_min: query.price_min || this.$route.query.price_min,
+            price_max: query.price_max || this.$route.query.price_max,
+            group_min: query.group_min || this.$route.query.group_min,
+            time_min: query.time_min || this.$route.query.time_min,
+            time_max: query.time_max || this.$route.query.time_max
           }
         })
       },
@@ -220,7 +237,7 @@
         const url = {
           language: this.$store.state.locale,
           city_url: this.$route.params.city,
-          category_url: this.$route.params.id ? this.$route.params.id : '.*'
+          category_url: !this.$route.params.id ? '.*' : this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
         }
         await this.$store.dispatch('city/fetchCity', url)
         await this.$store.dispatch('filter/fetchFilters', url)

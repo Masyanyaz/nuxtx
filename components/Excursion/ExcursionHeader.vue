@@ -27,8 +27,8 @@
           </g>
         </svg>
         <div class="excursion-head-item-cont">
-          <span class="qqq">{{$t('Excursion.ExcursionHeader.duration')}}</span>
-          <span class="www">{{exc.time}}</span>
+          <span class="qqq">{{$t('Excursion.ExcursionHeader.duration.title')}}</span>
+          <span class="www">{{exc.time}} {{$t('Excursion.ExcursionHeader.duration.hours')}}</span>
         </div>
       </div>
       <div class="excursion-head-item">
@@ -63,8 +63,8 @@
           </g>
         </svg>
         <div class="excursion-head-item-cont">
-          <span class="qqq">{{$t('Excursion.ExcursionHeader.groupSize')}}</span>
-          <span class="www">{{exc.groupSize}}</span>
+          <span class="qqq">{{$t('Excursion.ExcursionHeader.groupSize.title')}}</span>
+          <span class="www">{{exc.groupSize}} {{$t('Excursion.ExcursionHeader.groupSize.persons')}}</span>
         </div>
       </div>
       <div class="excursion-head-item">
@@ -98,8 +98,8 @@
           </g>
         </svg>
         <div class="excursion-head-item-cont">
-          <span class="qqq">{{$t('Excursion.ExcursionHeader.language')}}</span>
-          <span class="www">Français</span>
+          <span class="qqq">{{$t('commonWords.languages.title')}}</span>
+          <span class="www">{{$t('commonWords.languages.fr')}}</span>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading">
-    <v-container grid-list-lg class="container ml-0">
+    <v-container grid-list-lg class="container">
       <v-layout row wrap>
         <v-flex
           xs12
@@ -120,10 +120,6 @@
 <style scoped lang="scss">
   .cardHover {
     transform: scale(1.1);
-  }
-
-  .container {
-    padding: 12px 7%;
   }
 
   h3 {

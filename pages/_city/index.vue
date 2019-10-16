@@ -1,45 +1,45 @@
 <template>
   <div>
-    <CityPage :city="city"/>
+    <v-layout row>
+      <v-flex xs12>
+        <div
+          :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
+          class="welcome-top"
+        >
+          <h1 class="welcome-top__text">{{city.h1}}</h1>
+        </div>
+      </v-flex>
+    </v-layout>
+    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+      Category
+    </h2>
+    <CategoryCards :category="category"/>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
 
-  const CityPage = () => import('~/components/City/Page')
+  const CategoryCards = () => import('~/components/Category/Cards')
 
 
   export default {
-    async asyncData({store, params, error, route}) {
-      let query = store.getters['filter/query']
-      // TODO Сделать условие, чтобы не обращалось каждый раз к бд
+    async asyncData({store, params}) {
       const url = {
         language: store.state.locale,
         city_url: params.city
       };
-      url.price_min = query.price_min || route.query.price_min || 0
-      url.price_max = query.price_max || route.query.price_max || 10000
-      url.group_min = query.group_min || route.query.group_min || 1
-      url.time_min = query.time_min || route.query.time_min || 0
-      url.time_max = query.time_max || route.query.time_max || 24
-      if (store.getters['city/city'].length === 0 || store.getters['city/cityByUrl'](params.city).url !== params.city ||
-        Object.keys(url).length !== 2) {
+      if (store.getters['filter/category'].length === 0 ||
+        store.getters['city/cityByUrl'](params.city).url !== params.city) {
+        await store.dispatch('filter/fetchCategory', url)
+      }
+
+      if (store.getters['city/city'].length === 0 ||
+        store.getters['city/cityByUrl'](params.city).url !== params.city) {
         await store.dispatch('city/fetchCity', url)
       }
-
       let city = await store.getters['city/cityByUrl'](params.city)
-      if (store.getters['filter/filters'].length === 0) {
-        await store.dispatch('filter/fetchFilters', url)
-      }
-      if (store.getters['excursion/excursions'].length !== city.excCount) {
-        await store.dispatch('excursion/fetchExcursions', url)
-      }
-      if (city === undefined) {
-        error({statusCode: 404})
-      }
 
-      // let filter = JSON.parse(JSON.stringify(Object.values(route.query)).replace('metro', 'métro')) || [];
       return {city}
     },
     head() {
@@ -50,30 +50,17 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters({
+        category: 'filter/category'
+      })
+    },
     components: {
-      CityPage
+      CategoryCards
     },
   }
 </script>
 
 <style scoped lang="scss">
-  .car-link {
-    bottom: 50px;
-    left: 50%;
-    background: rgba(0, 0, 0, .5);
-    transform: translate(-50%, 0);
-    padding: 5px 15px;
-    border-radius: 5px 5px 0 0;
-    position: absolute;
-  }
-
-  .filter {
-    position: absolute;
-    top: 70%;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
 
 </style>

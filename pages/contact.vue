@@ -57,7 +57,36 @@
   export default {
     data() {
       return {
-        hhh: this.$t('about.title')
+        checkbox: false,
+        form: {
+          name: '',
+          email: '',
+          message: '',
+        },
+        isSend: false,
+        msg: '',
+        valid: false,
+        emailRules: [
+          v => !!v || `${this.$t('Form.rules.email.req')}`,
+          v => /.+@.+/.test(v) || `${this.$t('Form.rules.email.valid')}`
+        ]
+      }
+    },
+    methods: {
+      onSubmit() {
+        this.$axios.post('/send', {
+          name: this.form.name,
+          email: this.form.email,
+          message: this.form.message,
+        })
+          .then(res => {
+            this.isSend = true;
+            this.msg = res.data
+          })
+          .catch(e => {
+            this.isSend = true;
+            this.msg = e
+          })
       }
     },
     head() {

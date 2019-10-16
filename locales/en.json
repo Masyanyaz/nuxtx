@@ -1,11 +1,43 @@
 {
+  "commonWords": {
+    "morePhoto": "Plus de photos",
+    "languages": {
+      "title": "Langue",
+      "fr": "Français",
+      "en": "Anglais",
+      "de": "Allemagne",
+      "it": "Italien"
+    }
+  },
+  "Cards": {
+    "excursion": "Excursions",
+    "duration": {
+      "title": "Durée",
+      "hour": "heure",
+      "hours": "heures"
+    },
+    "from": "à partir de"
+  },
   "Excursion": {
     "ExcursionHeader": {
-      "duration": "Duration",
-      "groupSize": "Group Size",
+      "duration": {
+        "title": "Durée",
+        "hour": "heure",
+        "hours": "heures"
+      },
+      "groupSize": {
+        "title": "Nombre de personnes",
+        "person": "personne",
+        "persons": "personnes"
+      },
       "language": "Language",
-      "price": "Price"
-    }
+      "price": "Prix"
+
+    },
+    "overview": "Descriptif",
+    "included": "Inclus",
+    "exclude": "Pas inclus",
+    "alsoLike": "Vous pourriez aussi aimer"
   },
   "City": {
 
@@ -15,35 +47,101 @@
   },
   "Form": {
     "header": "ONLINE ORDER FORM",
-    "name": "Name",
+    "name": "Nom",
     "email": "Email",
     "message": "Message",
-    "accept": "Do you agree?",
-    "send": "Book now",
+    "accept": "J'accepte le traitement de mes données personnelles",
+    "send": "Réserver",
     "rules": {
-      "name": "Name is required",
+      "name": "Nom est requis",
       "email": {
-        "req": "E-mail is required",
+        "req": "Email est requis",
         "valid": "E-mail must be valid"
       },
       "accept": "You must agree to continue!"
     }
   },
   "Navbar": {
-    "activities": "Activities",
-    "destinations": "Destinations",
-    "faq": "FAQ",
-    "aboutUs": "About us",
-    "contact": "Contact",
+    "activities": {
+      "name": "Activités",
+      "url": "activities"
+    },
+    "destinations": {
+      "name": "Destinations",
+      "url": "destinations"
+    },
+    "about": {
+      "name": "Qui sommes nous",
+      "url": "about-us"
+    },
+    "contact": {
+      "name": "Contacts",
+      "url": "contacts"
+    },
+    "faq": {
+      "name": "FAQ",
+      "url": "faq"
+    },
     "new": "Ad new",
     "english": "English",
-    "french": "contact"
+    "french": "French"
+  },
+  "Footrer": {
+    "needHelp":  {
+      "title":"Besoin d'aide?",
+      "phone": {
+        "title": "Appelez nous",
+        "number": "+33(0)184883357"
+      },
+      "email": {
+        "title": "Écrivez nous",
+        "email": "contact@russieautrement.com"
+      },
+      "social": "Suivez nous"
+    },
+    "company": {
+      "title": "Entreprise",
+      "about": {
+        "name": "Qui sommes nous",
+        "url": "about-us"
+      },
+      "team": {
+        "name": "Équipe",
+        "url": "team"
+      },
+      "blog": {
+        "name": "Blog",
+        "url": "blog"
+      }
+    },
+    "support": {
+      "title": "Soutien",
+      "contact": {
+        "name": "Contacts",
+        "url": "contacts"
+      },
+      "legal": {
+        "name": "Mentions légales",
+        "url": "legal"
+      },
+      "privacy": {
+        "name": "Politique de confidentialité",
+        "url": "privacy"
+      },
+      "cookies": {
+        "name": "Cookies",
+        "url": "cookies"
+      }
+    },
+    "setting": "Paramètres"
   },
   "index": {
     "title": "Home",
     "description": "Home des",
-    "h1": "Unusual excursions from locals",
-    "topDestinations": "Top Destinations"
+    "h1": "Visites des villes russes",
+    "topDestinations": "Top Destinations",
+    "activities": "Activités",
+    "reviews": "Nos clients heureux"
   },
   "_city": {
     "excursion": "Excursion"

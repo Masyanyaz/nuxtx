@@ -1,9 +1,9 @@
 <template>
-  <v-card class="d-none d-md-block" style="width: 270px; max-height: 475px; height: auto; border: 1px solid #D7DCE3;
+  <v-card class="d-none d-md-block" style="width: 270px; max-height: 490px; height: auto; border: 1px solid #D7DCE3;
   box-shadow: none; border-radius: 0 0 5px 5px">
     <v-toolbar dark color="#5191FA" class="d-flex pl-2" style="box-shadow: none;">
       <v-toolbar-title style="font-size: 24px;">
-        <span style="font-size: 14px;" class="mr-2">from</span>
+        <span style="font-size: 14px;" class="mr-2">{{$t('commonWords.from')}}</span>
         €{{exc.price}}
       </v-toolbar-title>
     </v-toolbar>

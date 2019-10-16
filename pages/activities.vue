@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      {{$t('_city.excursion')}}
+      {{$t('index.activities')}}
     </h2>
     <ExcursionCards :excursions="excursions"/>
   </div>

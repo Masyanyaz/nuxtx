@@ -16,6 +16,7 @@
   export default {
     async asyncData({store, params, error, route}) {
       let query = store.getters['filter/query']
+
       let component = false
       let city
       let filter
@@ -23,13 +24,14 @@
         language: store.state.locale,
         city_url: params.city,
         exc_url: params.id,
-        category_url: params.id
+        category_url: !params.id ? '.*' : params.id !== 'all' ? params.id : '.*'
       };
-      url.price_min = query.price_min || route.query.price_min || 0
-      url.price_max = query.price_max || route.query.price_max || 10000
-      url.group_min = query.group_min || route.query.group_min || 1
-      url.time_min = query.time_min || route.query.time_min || 0
-      url.time_max = query.time_max || route.query.time_max || 24
+      query.price_min ? url.price_min = query.price_min : false
+      query.price_max ? url.price_max = query.price_max : false
+      query.group_min ? url.group_min = query.group_min : false
+      query.time_min ? url.time_min = query.time_min : false
+      query.time_max ? url.time_max = query.time_max : false
+
       await store.dispatch('excursion/fetchExcursion', url)
       let exc = await store.getters['excursion/excByUrl'](params.id)
       if (exc === undefined) {
@@ -40,8 +42,8 @@
         if (filter === undefined) {
           error({statusCode: 404})
         }
-        if (store.getters['city/city'].length === 0 || store.getters['city/cityByUrl'](params.city).url !==
-          params.city || Object.keys(url).length !== 2) {
+        if (store.getters['city/city'].length === 0 ||
+          store.getters['city/cityByUrl'](params.city).url !== params.city) {
           await store.dispatch('city/fetchCity', url)
         }
         city = await store.getters['city/cityByUrl'](params.city)
@@ -56,8 +58,10 @@
       return {
         title: !this.component ? this.exc.title : this.filter.title,
         meta: [
-          {hid: 'description', name: 'description', content: !this.component ? this.exc.description :
-              this.filter.description}
+          {
+            hid: 'description', name: 'description', content: !this.component ? this.exc.description :
+              this.filter.description
+          }
         ]
       }
     },
@@ -78,9 +82,7 @@
       //   });
       //   return arr.slice(0, this.numberOfWidth)
       // },
-      ...mapGetters({
-
-      })
+      ...mapGetters({})
     },
     methods: {},
   }

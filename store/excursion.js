@@ -76,20 +76,20 @@ export const actions = {
   async fetchExcursion({commit}, payload) {
     console.log('fetchExcursion')
     commit('shared/clearError', null, {root: true})
-    commit('shared/setLoading', true, {root: true})
+    // commit('shared/setLoading', true, {root: true})
     let url = '?'
     for (let key in payload) {
       url += `${key}=${payload[key]}&`
     }
-    await this.$axios.get(`/admin/api/getexcursion/${payload.language}${url}`)
+    await this.$axios.get(`/admin/api/getexcursion/${payload.language}${url.slice(0,-1)}`)
       .then((data) => {
         commit('loadExcursion', data.data)
-        commit('shared/setLoading', false, {root: true})
+        // commit('shared/setLoading', false, {root: true})
 
       })
       .catch(e => {
         commit('shared/setError', e.message, {root: true})
-        commit('shared/setLoading', false, {root: true})
+        // commit('shared/setLoading', false, {root: true})
         throw e;
       })
   },

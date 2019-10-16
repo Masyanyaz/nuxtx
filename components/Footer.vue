@@ -2,18 +2,18 @@
   <div>
     <div class="footer container">
       <div class="footer-item">
-        <span class="footer-top-element">Нужна помощь?</span>
+        <span class="footer-top-element">{{$t('Footer.needHelp.title')}}</span>
         <span class="footer-top-element-border"/>
         <div class="footer-social-elements">
-          <span class="footer-social-elements-small">Позвоните нам</span>
-          <span class="footer-social-elements-bold">+33(0)184883357</span>
+          <span class="footer-social-elements-small">{{$t('Footer.needHelp.phone.title')}}</span>
+          <span class="footer-social-elements-bold">{{$t('Footer.needHelp.phone.number')}}</span>
         </div>
         <div class="footer-social-elements">
-          <span class="footer-social-elements-small">Напишите нам</span>
-          <span class="footer-social-elements-bold">contact@russieautrement.com</span>
+          <span class="footer-social-elements-small">{{$t('Footer.needHelp.email.title')}}</span>
+          <span class="footer-social-elements-bold">{{$t('Footer.needHelp.email.email')}}</span>
         </div>
         <div class="footer-social-elements">
-          <span class="footer-social-elements-small">Следуйте за нами</span>
+          <span class="footer-social-elements-small">{{$t('Footer.needHelp.social')}}</span>
           <div>
             <a
               v-for="(src, i) in socials"
@@ -30,18 +30,18 @@
         </div>
       </div>
       <div class="footer-item">
-        <span class="footer-top-element">Компания</span>
+        <span class="footer-top-element">{{$t('Footer.company.title')}}</span>
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
 
-          <span>О нас</span>
-          <span>Команда</span>
-          <span>Блог</span>
+          <span>{{$t('Footer.company.about.title')}}</span>
+          <span>{{$t('Footer.company.team.title')}}</span>
+          <span>{{$t('Footer.company.blog.title')}}</span>
 
         </div>
       </div>
       <div class="footer-item">
-        <span class="footer-top-element">Поддержка</span>
+        <span class="footer-top-element">{{$t('Footer.support.title')}}</span>
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
           <span>
@@ -49,16 +49,16 @@
               :to="$i18n.path(`contacts`)"
               style="text-decoration: none; color: inherit;"
             >
-              Контакты
+              {{$t('Footer.support.contact.title')}}
             </nuxt-link>
           </span>
-          <span>Юр инфо</span>
+          <span>{{$t('Footer.support.legal.title')}}</span>
           <span>
             <nuxt-link
               :to="$i18n.path(`cookies`)"
               style="text-decoration: none; color: inherit;"
             >
-              Cookies
+              {{$t('Footer.support.cookies.title')}}
             </nuxt-link>
           </span>
           <span>
@@ -66,16 +66,16 @@
               :to="$i18n.path(`politique-de-confidentialite`)"
               style="text-decoration: none; color: inherit;"
             >
-              Политика конфиденциальности
+              {{$t('Footer.support.privacy.title')}}
             </nuxt-link>
           </span>
         </div>
       </div>
       <div class="footer-item">
-        <span class="footer-top-element">Настройки</span>
+        <span class="footer-top-element">{{$t('Footer.sitting')}}</span>
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
-          <span>Язык</span>
+          <span>{{$t('commonWords.languages.title')}}</span>
           <div class="footer-select">
             <!--            <v-btn-->
             <!--              text-->
@@ -90,7 +90,7 @@
               to="/fr"
               @click="switchLanguage"
             >
-              Français
+              {{$t('commonWords.languages.fr')}}
             </v-btn>
           </div>
         </div>
@@ -162,6 +162,11 @@
         span {
           margin-bottom: 25px;
           font-size: 16px;
+
+          a {
+            text-decoration: none;
+            color: inherit;
+          }
         }
       }
     }

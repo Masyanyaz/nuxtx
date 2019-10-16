@@ -33,7 +33,7 @@
                   d="M4.5,9C4.086,9,3.75,8.664,3.75,8.25S4.086,7.5,4.5,7.5h2.25c0.414,0,0.75,0.336,0.75,0.75S7.164,9,6.75,9H4.5z"></path>
               </g>
             </svg>
-            More photo
+            {{$t('commonWords.morePhoto')}}
           </v-btn>
         </div>
         <div v-if="showGalery" class="galery align-center justify-center d-flex"
@@ -49,11 +49,11 @@
             <h1>{{exc.h1}}</h1>
             <ExcursionHeader :exc="exc"/>
 
-            <h2>Overview</h2>
+            <h2>{{$t('Excursion.overview')}}</h2>
             <div v-html="exc.detailText"/>
 
             <div v-if="exc.included || exc.excluded" class="hr">
-              <h2>Included/Exclude</h2>
+              <h2>{{$t('Excursion.included')/$t('Excursion.exclude')}}</h2>
               <div class="d-flex justify-space-between included">
                 <div
                   v-if="exc.included"
@@ -81,7 +81,7 @@
                     <span
                       :key="i"
                       v-text="incl"
-                    />
+                    ></span>
                   </div>
                 </div>
                 <div
@@ -108,7 +108,7 @@
                     <span
                       :key="i"
                       v-text="excl"
-                    />
+                    ></span>
                   </div>
                 </div>
               </div>
@@ -123,7 +123,7 @@
     <v-container class="hr">
       <v-layout row v-if="excursions">
         <v-flex xs12>
-          <h2 class="d-flex justify-center">You might also like</h2>
+          <h2 class="d-flex justify-center">{{$t('Excursion.alsoLike')}}</h2>
         </v-flex>
       </v-layout>
     </v-container>
@@ -168,7 +168,7 @@
         let form = document.querySelector('.form');
         let fixStop = document.querySelector('.fix-stop');
         let heightFixStop = null;
-        if (!heightFixStop) heightFixStop = fixStop.getBoundingClientRect().height + 175;
+        if (!heightFixStop) heightFixStop = fixStop.getBoundingClientRect().height + 155;
 
         if (heightFixStop <= 700) return false;
 

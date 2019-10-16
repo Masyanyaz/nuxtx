@@ -18,18 +18,6 @@
               active-class="green lighten-1"
             >
               <v-chip
-                value="all"
-                exact
-                :to="$i18n.path(`${city.url}`)"
-              >
-                All
-                <span
-                  class="ml-1"
-                  style="font-weight: bold"
-                >{{city.exc_count}}</span>
-              </v-chip>
-
-              <v-chip
                 v-for="(tag, i) in filters"
                 :key="i"
                 :value="tag.url"
@@ -44,8 +32,6 @@
               </v-chip>
             </v-chip-group>
           </div>
-        </div>
-        <div class="ml-10">
         </div>
       </v-flex>
     </v-layout>
@@ -92,14 +78,8 @@
           time_max: this.query.time_max || this.$route.query.time_max
         }
       })
-      this.querySelect
-
     },
     computed: {
-      querySelect() {
-        // Object.keys(this.query).length !== 0 ? this.$router.push({price_min: this.query.price_min, price_max: this.query.price_max, group_min: this.query.group_min,
-        //   time_min: this.query.time_min, time_max: this.query.time_max, category_url: this.query.category_url}) : false
-      },
       ...mapGetters({
         query: 'filter/query',
         excursions: 'excursion/excursions',

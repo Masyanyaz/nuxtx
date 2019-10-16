@@ -8,23 +8,24 @@
       </v-flex>
     </v-layout>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      Trending Activities
+      {{$t('index.activities')}}
     </h2>
     <ExcursionCards :excursions="excursions"/>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="cities"/>
-    <Blog class="mt-10" />
+    <Blog class="mt-10"/>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      Nos Clients Heureux
+      {{$t('index.reviews')}}
     </h2>
-    <Reviews />
+    <Reviews/>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
+
   const CityCards = () => import("~/components/City/CityCards")
   const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
   const Blog = () => import("~/components/Blog");
@@ -44,8 +45,7 @@
       }
     },
     data() {
-      return {
-      }
+      return {}
     },
     head() {
       return {
