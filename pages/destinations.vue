@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+      {{$t('destinations.h1')}}
+    </h1>
     <CityCards :cities="cities"/>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading">
-    <v-container grid-list-lg class="container">
+    <v-container grid-list-lg>
       <v-layout row wrap>
         <v-flex
           xs12

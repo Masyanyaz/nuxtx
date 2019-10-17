@@ -12,10 +12,8 @@
         height="100%"
         color="white"
       >
-        <v-row
-          class="fill-height container"
-          align="center"
-          justify="center"
+        <div
+          class="fill-height container d-flex align-center justify-center"
         >
           <div class="rev-line">
             <div class="rev-item"
@@ -34,7 +32,7 @@
               <p>{{item.text}}</p>
             </div>
           </div>
-        </v-row>
+        </div>
       </v-sheet>
     </v-carousel-item>
   </v-carousel>

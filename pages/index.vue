@@ -14,7 +14,7 @@
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.topDestinations')}}
     </h2>
-    <CityCards :cities="cities"/>
+    <CityCards :cities="citiesFilter"/>
     <Blog class="mt-10"/>
     <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.reviews')}}
@@ -32,7 +32,7 @@
   const Reviews = () => import("~/components/Reviews");
 
   export default {
-    async asyncData({store, params, error, route}) {
+    async asyncData({store}) {
       const url = {
         language: store.state.locale,
         order: 'excursion.popular',
@@ -55,12 +55,17 @@
         ]
       }
     },
-    computed: mapGetters({
-      loading: 'shared/loading',
-      user: 'user/user',
-      cities: 'city/cities',
-      excursions: 'excursion/excursions',
-    }),
+    computed: {
+      citiesFilter() {
+        return this.cities.filter(a => a.excCount !== 1)
+      },
+      ...mapGetters({
+        loading: 'shared/loading',
+        user: 'user/user',
+        cities: 'city/cities',
+        excursions: 'excursion/excursions',
+      })
+    },
     components: {
       CityCards,
       ExcursionCards,

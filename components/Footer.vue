@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="footer-item">
-        <span class="footer-top-element">{{$t('Footer.sitting')}}</span>
+        <span class="footer-top-element">{{$t('Footer.setting')}}</span>
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
           <span>{{$t('commonWords.languages.title')}}</span>
@@ -97,11 +97,11 @@
       </div>
     </div>
     <footer style="border-top: 1px solid #EAEEF3;" class="container">
-      <div class="d-flex justify-space-between align-center" style="padding: 0 7%;">
+      <div class="d-flex justify-space-between align-center">
         <div>
           Copyright © 2019 by Russie Autrement
         </div>
-        <div>
+        <div class="d-flex justify-space-between align-center">
           <img v-lazy="paySrc" alt="">
         </div>
       </div>
@@ -133,17 +133,10 @@
 </script>
 
 <style scoped lang="scss">
-  .container {
-    margin: 0;
-    padding-right: 0;
-    padding-left: 0;
-  }
-
   .footer {
     display: flex;
     justify-content: space-between;
-    padding: 0 7%;
-    margin: 50px 0;
+    margin: 50px auto;
     flex-wrap: wrap;
 
     @media(max-width: 600px) {
@@ -176,9 +169,10 @@
       padding-bottom: 20px;
       text-transform: uppercase;
       font-size: 16px;
+      font-weight: bold;
 
       &-border {
-        width: 30%;
+        width: 100px;
         border-bottom: 1px solid #ebebeb;
         display: block;
       }

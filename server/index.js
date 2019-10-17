@@ -246,13 +246,34 @@ app.post('/admin/api/deleteexcursion/:id', (req, res) => {
 
 // get cities
 app.get('/admin/api/getcities/:lang', (req, res) => {
-  let sql = `SELECT cities.name, cities.url, cities.previewImage, COUNT(excursion.id) AS excCount
+  // let sql = `SELECT cities.name, cities.url, cities.previewImage, COUNT(excursion.id) AS excCount
+  //           FROM cities
+  //           LEFT JOIN excursion
+  //           ON cities.id = excursion.city_id
+  //           WHERE cities.lang = '${req.params.lang}'
+  //           GROUP BY cities.id
+  //           ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+  let sql = `SELECT cities.name, cities.url, cities.h1, cities.title, cities.description, cities.previewImage, COUNT(excursion.id) AS excCount
             FROM cities
             LEFT JOIN excursion
             ON cities.id = excursion.city_id
             WHERE cities.lang = '${req.params.lang}'
             GROUP BY cities.id
-            ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
+            
+            UNION
+            
+            SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            exc_category_data.title, exc_category_data.description, exc_category_data.previewImage, COUNT(excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category.data_id = exc_category_data.id
+            WHERE cities.lang = '${req.params.lang}'
+            AND exc_category_data.popular = 'true'
+            GROUP BY exc_category_data.url`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result)
@@ -411,7 +432,7 @@ app.get('/admin/api/getfilterlist/:lang', (req, res) => {
 
 // category list
 app.get('/admin/api/getcategorylist/:lang', (req, res) => {
-  let sql = `SELECT exc_category_data.id ,exc_category_data.name, cities.url AS city_url, exc_category_data.url, exc_category_data.previewImage, COUNT(excursion.id) AS exc_count
+  let sql = `SELECT exc_category_data.id ,exc_category_data.name, cities.url AS city_url, exc_category_data.url, exc_category_data.previewImage, COUNT(excursion.id) AS exc_count, exc_category_data.popular
             FROM exc_category_data
             INNER JOIN excursion
             INNER JOIN cities

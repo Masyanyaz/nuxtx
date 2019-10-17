@@ -6,18 +6,68 @@
           <div class="contacts-page">
             <div class="cp-left">
               <h3>
-                We'd love to hear from you
+                Nous aimerions recevoir de vos nouvelles
               </h3>
               <p>
-                Send us a message and we'll respond as soon as possible
+                Envoyez nous un message. Nous vous répondrons le plus rapidement possible
               </p>
               <div class="cp-line"></div>
-              <form action="" class="cp-form">
-                <input type="text" name="name" placeholder="Name">
-                <input type="text" name="email" placeholder="Email">
-                <textarea name="" cols="30" rows="10" placeholder="Message"></textarea>
-                <input type="submit" name="" value="Send message" class="cp-button">
-              </form>
+              <v-card-text>
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  validation
+                >
+                  <v-text-field
+                    outlined
+                    v-model="form.name"
+                    :rules="[v => !!v || `${$t('Form.rules.name')}`]"
+                    name="name"
+                    :label="$t('Form.name')"
+                    type="text"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    outlined
+                    v-model="form.email"
+                    :rules="emailRules"
+                    name="email"
+                    :label="$t('Form.email')"
+                    type="email"
+                    required
+                  ></v-text-field>
+                  <v-textarea
+                    outlined
+                    v-model="form.message"
+                    name="message"
+                    :label="$t('Form.message')"
+                    type="text"
+                    rows="4"
+                  ></v-textarea>
+                  <v-checkbox
+                    class="mt-0"
+                    v-model="checkbox"
+                    :rules="[v => !!v || `${$t('Form.rules.accept')}`]"
+                    :label="$t('Form.accept')"
+                    required
+                    :messages="msg"
+                  ></v-checkbox>
+                </v-form>
+              </v-card-text>
+              <v-card-actions
+                class="d-flex justify-center"
+              >
+                <v-btn
+                  style="font-size: 14px; color: #ffffff"
+                  class="mb-5"
+                  width="220px"
+                  @click="onSubmit"
+                  :disabled="!valid"
+                  color="#5191FA"
+                >
+                  CONTACTEZ-NOUS
+                </v-btn>
+              </v-card-actions>
             </div>
             <div class="cp-right">
               <div class="bg"><img src="https://acmap.travelerwp.com/wp-content/uploads/2018/12/bg-contact-1.jpg"
@@ -39,16 +89,10 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container class="mt-10 pl-0 pr-0">
-      <v-layout>
-        <v-flex>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7995.637412967884!2d30.3159477!3d59.9336463!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x76d6b2ef83b3d0d1!2sRussie%20Autrement!5e0!3m2!1sru!2sru!4v1568968823323!5m2!1sru!2sru"
-            width="100%" height="500" frameborder="0" style="border:0;" allowfullscreen="">
-          </iframe>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7995.637412967884!2d30.3159477!3d59.9336463!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x76d6b2ef83b3d0d1!2sRussie%20Autrement!5e0!3m2!1sru!2sru!4v1568968823323!5m2!1sru!2sru"
+      width="100%" height="500" frameborder="0" style="border:0;" allowfullscreen="">
+    </iframe>
   </div>
 </template>
 
@@ -63,7 +107,6 @@
           email: '',
           message: '',
         },
-        isSend: false,
         msg: '',
         valid: false,
         emailRules: [
@@ -80,11 +123,9 @@
           message: this.form.message,
         })
           .then(res => {
-            this.isSend = true;
             this.msg = res.data
           })
           .catch(e => {
-            this.isSend = true;
             this.msg = e
           })
       }
@@ -104,7 +145,7 @@
   .contacts-page {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
   }
 

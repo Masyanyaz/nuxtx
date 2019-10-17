@@ -2,24 +2,23 @@
   <v-app class="main-color">
     <Navbar/>
 
-    <v-container fluid class="pl-0 pr-0 pt-0">
+    <v-container fluid class="pl-0 pr-0 pt-0 mr-0 ml-0">
 
       <nuxt/>
 
     </v-container>
-    <Footer/>
 
+    <Footer/>
   </v-app>
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar'
-  import Footer from '@/components/Footer'
+  const Navbar = () => import('~/components/Navbar')
+  const Footer = () => import('~/components/Footer')
 
   export default {
     data() {
       return {
-        title: 'asda'
       }
     },
     components: {

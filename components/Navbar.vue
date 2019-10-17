@@ -22,7 +22,7 @@
     </v-navigation-drawer>
 
     <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3;"
-               class="container d-flex align-center ml-0">
+               class="container d-flex align-center">
       <v-app-bar-nav-icon
         class="d-flex d-md-none"
         @click.stop="drawer = !drawer"
@@ -73,9 +73,6 @@
       isUserloggedIn() {
         return this.$store.getters['user/isUserloggedIn']
       },
-      error() {
-        return this.$store.getters['shared/error']
-      },
       links() {
         return [
           {title: this.$t('Navbar.activities.name'), url: this.$t('Navbar.activities.url')},
@@ -96,8 +93,6 @@
 
 <style scoped lang="scss">
   .container {
-    padding: 12px 7%;
-
     @media (max-width: 960px) {
       padding: 0;
     }

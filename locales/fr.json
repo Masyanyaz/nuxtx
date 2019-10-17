@@ -41,9 +41,6 @@
   "City": {
 
   },
-  "Footer": {
-
-  },
   "Form": {
     "header": "ONLINE ORDER FORM",
     "name": "Nom",
@@ -71,7 +68,7 @@
     },
     "about": {
       "name": "Qui sommes nous",
-      "url": "about-us"
+      "url": "qui-sommes-nous"
     },
     "contact": {
       "name": "Contacts",
@@ -90,7 +87,7 @@
       "title":"Besoin d'aide?",
       "phone": {
         "title": "Appelez nous",
-        "number": "+33(0)184883357"
+        "number": "+33 (0) 1 84 88 33 57"
       },
       "email": {
         "title": "Écrivez nous",
@@ -173,6 +170,11 @@
     "title": "Home",
     "description": "",
     "h1": ""
+  },
+  "destinations": {
+    "title": "Home",
+    "description": "",
+    "h1": "Destinations"
   },
   "excursionAddNew": {
     "tabs": {
