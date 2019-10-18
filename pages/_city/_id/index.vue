@@ -1,9 +1,9 @@
 <template>
   <div v-if="!component">
-    <ExcursionPage :exc="exc"/>
+    <ExcursionPage :exc="exc" />
   </div>
   <div v-else>
-    <CityPage :city="city"/>
+    <CityPage :city="city" :filter="filter"/>
   </div>
 </template>
 

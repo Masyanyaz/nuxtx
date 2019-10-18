@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row>
+    <v-layout>
       <v-flex xs12>
         <div
           :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
@@ -38,7 +38,7 @@
         </v-chip>
       </v-chip-group>
     </v-container>
-    <h3 class="d-flex justify-center mt-9 mb-7">
+    <h3 class="d-flex justify-center mt-9 mb-7" style="text-align: center">
       Nos meilleurs visites à Saint-Pétersbourg
     </h3>
     <ExcursionCards :excursions="excursions"/>

@@ -1,42 +1,31 @@
 <template>
-  <v-carousel
-    height="350"
-    hide-delimiter-background
-    :show-arrows="false"
-  >
-    <v-carousel-item
-      v-for="(slide, i) in 1"
-      :key="i"
-    >
-      <v-sheet
-        height="100%"
-        color="white"
+  <v-container grid-list-lg class="fill-height d-flex align-center justify-center">
+    <v-layout wrap class="rev-line">
+      <v-flex
+        xs12
+        sm6
+        md4
+        lg4
+        xl4
+        v-for="(item, i) in items"
+        :key="i"
+        class="d-flex"
       >
-        <div
-          class="fill-height container d-flex align-center justify-center"
-        >
-          <div class="rev-line">
-            <div class="rev-item"
-                 v-for="(item, i) in items"
-                 :key="i"
-            >
-              <div class="author">
-                <img v-lazy="item.imgSrc" alt="">
-                <div class="author-meta">
-                  <span>{{item.name}}</span>
-                  <div class="star">
-                    <div class="rev-star" v-for="star in item.rating"></div>
-                  </div>
-                </div>
+        <v-card class="rev-item">
+          <div class="author">
+            <img v-lazy="item.imgSrc" alt="">
+            <div class="author-meta">
+              <span>{{item.name}}</span>
+              <div class="star">
+                <div class="rev-star" v-for="star in item.rating"></div>
               </div>
-              <p>{{item.text}}</p>
             </div>
           </div>
-        </div>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
-
+          <p>{{item.text}}</p>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -71,16 +60,18 @@
 
 <style scoped lang="scss">
   .rev-line {
-    display: flex;
-    justify-content: space-between;
+
+    /*@media (max-width: 960px) {*/
+    /*  flex-direction: column;*/
+    /*  margin: 0 auto;*/
+    /*}*/
 
     .rev-item {
-      width: 32%;
       border: 1px solid #D7DCE3;
       border-radius: 3px;
-      padding: 30px;
       background: url(http://116.203.132.142/wp-content/themes/traveler/v2/images/qoute_icon.png) top 30px right 30px no-repeat;
       box-sizing: border-box;
+      padding: 12px;
 
       .author {
         display: flex;

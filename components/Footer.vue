@@ -97,7 +97,7 @@
       </div>
     </div>
     <footer style="border-top: 1px solid #EAEEF3;" class="container">
-      <div class="d-flex justify-space-between align-center">
+      <div class="d-flex justify-space-between align-center copyright">
         <div>
           Copyright © 2019 by Russie Autrement
         </div>
@@ -191,13 +191,24 @@
       }
 
       &-bold {
-        font-size: 22px;
+        font-size: calc(16px + 2 * ((100vw) / 500));
         color: #000;
       }
     }
 
     &-select {
       display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .copyright {
+    div {
+      @media(max-width: 660px) {
+        margin-bottom: 15px;
+      }
+    }
+    @media(max-width: 660px) {
       flex-direction: column;
     }
   }

@@ -4,23 +4,21 @@
       <v-spacer></v-spacer>
       <CityEdit :city="city"></CityEdit>
     </v-card-actions>
-    <v-layout row>
+    <v-layout>
       <v-flex xs12>
         <div
           :style="{background: 'url(' + city.mainImage + ') no-repeat 50% 15% /cover'}"
           class="welcome-top"
         >
           <h1 class="welcome-top__text">{{city.h1}}</h1>
-          <div class="filter pl-4 pr-4">
+          <div class="filter pl-4 pr-4 d-md-flex d-none">
             <v-chip-group
-              v-model="filter"
               column
               active-class="green lighten-1"
             >
               <v-chip
                 v-for="(tag, i) in filters"
                 :key="i"
-                :value="tag.url"
                 :disabled="tag.exc_count === 0"
                 :to="$i18n.path(`${city.url}/${tag.url}`)"
               >
@@ -28,9 +26,49 @@
                 <span
                   class="ml-1"
                   style="font-weight: bold"
-                >{{tag.exc_count}}</span>
+                >
+                  {{tag.exc_count}}
+                </span>
               </v-chip>
             </v-chip-group>
+          </div>
+          <div class="filter pl-4 pr-4 d-flex d-md-none">
+            <div class="d-flex flex-column justify-center align-center">
+              <h4 style="color: #ffffff; margin-top: -40px; font-size: 28px;">{{filter.name}}</h4>
+              <p style="color: #ffffff; font-size: 20px;">{{filter.exc_count}} {{$t('Cards.excursion')}}</p>
+              <v-chip
+                color="green lighten-1"
+                @click="drawer = !drawer"
+              >
+                Выбрать категорию
+              </v-chip>
+            </div>
+            <v-navigation-drawer
+              class="d-flex"
+              v-if="drawer"
+              v-model="drawer"
+              app
+            >
+              <v-list dense>
+                <v-list-item
+                  v-for="(tag, i) in filters"
+                  :key="i"
+                  :to="$i18n.path(`${city.url}/${tag.url}`)"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{ tag.name }}
+                      <span
+                        class="ml-1"
+                        style="font-weight: bold"
+                      >
+                        {{tag.exc_count}}
+                      </span>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-navigation-drawer>
           </div>
         </div>
       </v-flex>
@@ -38,7 +76,7 @@
     <!--<h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('_city.excursion')}}
     </h2>-->
-    <ExcursionFilter :city="city" />
+    <ExcursionFilter :city="city"/>
     <ExcursionCards :excursions="excursions"/>
   </div>
 </template>
@@ -51,10 +89,10 @@
   const ExcursionFilter = () => import("~/components/Excursion/Filter");
 
   export default {
-    props: ['city'],
+    props: ['city', 'filter'],
     data() {
       return {
-        filter: '',
+        drawer: false,
         showGalery: false,
         filterList: [],
         count: null
@@ -110,5 +148,6 @@
     display: flex;
     justify-content: center;
   }
+
 
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-navigation-drawer
-      class="d-flex d-md-none"
+      class="d-flex"
+      v-if="drawer"
       v-model="drawer"
-      absolute
+      app
       temporary
     >
       <v-list dense>
@@ -11,7 +12,7 @@
           v-for="(link, i) in links"
           :key="i"
           link
-          :to="link.url"
+          :to="$i18n.path(`${link.url}`)"
         >
           <v-list-item-content>
             <v-list-item-title>{{ link.title }}
@@ -66,7 +67,7 @@
   export default {
     data() {
       return {
-        drawer: null
+        drawer: false
       }
     },
     computed: {
