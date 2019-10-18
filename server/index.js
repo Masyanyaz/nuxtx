@@ -276,6 +276,11 @@ app.get('/admin/api/getcities/:lang', (req, res) => {
             GROUP BY exc_category_data.url`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
+    result.forEach(a => {
+      if (a.url !== 'saint-petersbourg') {
+        a.url = `saint-petersbourg/${a.url}`
+      }
+    })
     res.send(result)
   });
 });
@@ -324,9 +329,9 @@ app.get('/admin/api/getallurl/:lang', (req, res) => {
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
     result.forEach(a => {
-      a.citiesUrl = a.citiesUrl ?  a.citiesUrl.split(',') : ''
-      a.excursionUrl = a.excursionUrl ?  a.excursionUrl.split(',') : ''
-      a.categoryUrl = a.categoryUrl ?  a.categoryUrl.split(',') : ''
+      a.citiesUrl = a.citiesUrl ? a.citiesUrl.split(',') : ''
+      a.excursionUrl = a.excursionUrl ? a.excursionUrl.split(',') : ''
+      a.categoryUrl = a.categoryUrl ? a.categoryUrl.split(',') : ''
     })
     res.send(result)
   });

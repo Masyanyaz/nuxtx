@@ -19,6 +19,7 @@
     "git": "git pull && npm run build && pm2 restart 0"
   },
   "dependencies": {
+    "@mdi/js": "^4.5.95",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/devalue": "^1.2.3",
     "body-parser": "^1.19.0",

@@ -21,7 +21,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3;"
+    <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3; background-color: inherit"
                class="container d-flex align-center">
       <v-app-bar-nav-icon
         class="d-flex d-md-none"

@@ -97,7 +97,6 @@
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -112,7 +111,7 @@
         emailRules: [
           v => !!v || `${this.$t('Form.rules.email.req')}`,
           v => /.+@.+/.test(v) || `${this.$t('Form.rules.email.valid')}`
-        ]
+        ],
       }
     },
     methods: {

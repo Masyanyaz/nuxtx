@@ -68,26 +68,13 @@ module.exports = {
   */
   vuetify: {
     defaultAssets: {
-      // icons: false,
+      icons: false,
       font: {
         family: 'Poppins'
       }
     },
-
-    theme: {
-      themes: {
-        light: {
-        }
-      }
-    },
-    options: {
-      minifyTheme: function (css) {
-        return process.env.NODE_ENV === 'production'
-          ? css.replace(/[\r\n|\r|\n]/g, '')
-          : css
-      },
-    },
-    treeShake: true
+    optionsPath: '~/plugins/vuetify.options.js',
+    treeShake: process.env.NODE_ENV === 'production'
   },
   /*
   ** Build configuration
