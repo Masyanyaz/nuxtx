@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-card-actions v-if="isUserloggedIn" style="position: absolute; top: 0; right: 0;">
+      <v-spacer></v-spacer>
+      <CityEdit :city="city"></CityEdit>
+    </v-card-actions>
     <v-layout>
       <v-flex xs12>
         <div
@@ -38,9 +42,9 @@
         </v-chip>
       </v-chip-group>
     </v-container>
-    <h3 class="d-flex justify-center mt-9 mb-7" style="text-align: center">
+    <h2 class="d-flex justify-center mt-9 mb-7" style="text-align: center">
       Nos meilleurs visites à Saint-Pétersbourg
-    </h3>
+    </h2>
     <ExcursionCards :excursions="excursions"/>
     <v-container class="d-flex justify-center">
       <v-btn
@@ -54,9 +58,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-
-  const CategoryCards = () => import('~/components/Category/Cards')
-  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
 
   export default {
     async asyncData({store, params}) {
@@ -99,11 +100,13 @@
       ...mapGetters({
         category: 'filter/category',
         excursions: 'excursion/excursions',
+        isUserloggedIn: 'user/isUserloggedIn'
       })
     },
     components: {
-      CategoryCards,
-      ExcursionCards
+      CategoryCards: () => import('~/components/Category/Cards'),
+      ExcursionCards: () => import("~/components/Excursion/ExcursionCards"),
+      CityEdit: () => import("~/components/City/CityEdit"),
     },
   }
 </script>

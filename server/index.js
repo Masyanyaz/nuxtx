@@ -22,6 +22,7 @@ app.post('/admin/api/addcity', (req, res) => {
     url: req.body.url.trim(),
     lang: req.body.lang,
     name: req.body.name.trim(),
+    popular: req.body.popular,
   };
 
   const renameAndMove = (name, i = '') => {
@@ -70,6 +71,7 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
     url: req.body.url.trim(),
     lang: req.body.lang,
     name: req.body.name.trim(),
+    popular: req.body.popular,
   };
 
   const renameAndMove = (name, i = '') => {
@@ -122,13 +124,11 @@ app.post('/admin/api/deletecity/:id', (req, res) => {
 // add excursion
 app.post('/admin/api/addexcursion', (req, res) => {
   let exc = {
-    city: req.body.city,
     city_id: req.body.city_id,
     title: req.body.title.trim(),
     description: req.body.description.trim(),
     h1: req.body.h1.trim(),
     url: req.body.url.trim(),
-    lang: req.body.lang,
     name: req.body.name.trim(),
     detailText: req.body.detailText,
     included: JSON.stringify(req.body.included.split('\n')),
@@ -136,7 +136,7 @@ app.post('/admin/api/addexcursion', (req, res) => {
     groupSize: req.body.groupSize.trim(),
     price: req.body.price.trim(),
     time: req.body.time.trim(),
-    type: JSON.stringify(req.body.type.trim().split(',')),
+    popular: req.body.popular,
   };
 
   const renameAndMove = (name, i = '') => {
@@ -171,8 +171,21 @@ app.post('/admin/api/addexcursion', (req, res) => {
   exc.galery = JSON.stringify(galery);
 
   let sql = 'INSERT INTO excursion SET ?';
+  let sql2 = 'INSERT INTO exc_category (exc_id, data_id) VALUES ?'
   let query = db.query(sql, exc, (err, result) => {
     if (err) throw err;
+    let category = [];
+    if(req.body.type) {
+      req.body.type.forEach(a => {
+        let val = [result.insertId]
+        val.push(a)
+        category.push(val)
+      })
+    }
+    db.query(sql2, [category], (err) => {
+      if (err) throw err;
+    });
+    console.log(result.insertId)
     res.send('Form submitted');
   });
 });
@@ -253,7 +266,7 @@ app.get('/admin/api/getcities/:lang', (req, res) => {
   //           WHERE cities.lang = '${req.params.lang}'
   //           GROUP BY cities.id
   //           ORDER BY ${req.query.order ? `${req.query.order}` : 'cities.id'} ${req.query.sort ? `${req.query.sort}` : 'ASC'}`
-  let sql = `SELECT cities.name, cities.url, cities.h1, cities.title, cities.description, cities.previewImage, COUNT(excursion.id) AS excCount
+  let sql = `SELECT cities.id, cities.name, cities.url, cities.h1, cities.title, cities.description, cities.previewImage, COUNT(excursion.id) AS excCount
             FROM cities
             LEFT JOIN excursion
             ON cities.id = excursion.city_id
@@ -262,7 +275,7 @@ app.get('/admin/api/getcities/:lang', (req, res) => {
             
             UNION
             
-            SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            SELECT exc_category_data.id, exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
             exc_category_data.title, exc_category_data.description, exc_category_data.previewImage, COUNT(excursion.id) AS exc_count
             FROM exc_category_data
             INNER JOIN excursion
@@ -312,27 +325,30 @@ app.get('/admin/api/getcity/:lang', (req, res) => {
   });
 });
 
-app.get('/admin/api/getcities', (req, res) => {
-  let sql = `SELECT id, url, name FROM cities`;
+app.get('/admin/api/getfullcity/:lang', (req, res) => {
+  let sql = `SELECT *
+            FROM cities
+            WHERE cities.lang = '${req.params.lang}'  
+            AND cities.url = '${req.query.city_url}'`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
+    result.forEach(city => {
+      city.galery ? city.galery = JSON.parse(city.galery) : false
+    });
     res.send(result)
   });
 });
 
 app.get('/admin/api/getallurl/:lang', (req, res) => {
-  let sql = `SELECT GROUP_CONCAT(DISTINCT cities.url) AS citiesUrl, GROUP_CONCAT(DISTINCT excursion.url) AS excursionUrl, GROUP_CONCAT(DISTINCT exc_category_data.url) AS categoryUrl
-            FROM exc_category_data
-            INNER JOIN excursion
+  let sql = `SELECT exc_category_data.url FROM exc_category_data
+            INNER JOIN cities
+            WHERE cities.lang = '${req.params.lang}'
+            UNION
+            SELECT excursion.url FROM excursion
             INNER JOIN cities
             WHERE cities.lang = '${req.params.lang}'`;
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    result.forEach(a => {
-      a.citiesUrl = a.citiesUrl ? a.citiesUrl.split(',') : ''
-      a.excursionUrl = a.excursionUrl ? a.excursionUrl.split(',') : ''
-      a.categoryUrl = a.categoryUrl ? a.categoryUrl.split(',') : ''
-    })
     res.send(result)
   });
 });

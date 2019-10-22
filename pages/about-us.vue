@@ -42,9 +42,9 @@
       </div>
     </div>
 
-    <p class="aaa mt-5 mb-5">
+    <h2 class="aaa mt-10 mb-5">
       Leadership Team
-    </p>
+    </h2>
 
     <div class="au-wokers">
       <div class="au-wokers-item">
@@ -114,7 +114,6 @@
 <style scoped lang="scss">
   .au-top {
     display: flex;
-    flex-directoin: row;
     justify-content: space-between;
     padding: 15px;
   }
@@ -226,7 +225,6 @@
     font-size: 20px;
     color: #1A2B48;
     letter-spacing: 0;
-    text-align: center;
     line-height: 40px;
     font-weight: 300;
     margin-bottom: 40px;
@@ -241,20 +239,19 @@
   .au-quote-img .name {
     font-size: 14px;
     color: #1A2B48;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .au-quote-img .pos {
     font-size: 14px;
     color: #768092;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
-  p.aaa {
+  .aaa {
     text-align: center;
     font-size: 28px;
     color: #1A2B48;
-    text-align: center;
     margin-bottom: 20px;
   }
 

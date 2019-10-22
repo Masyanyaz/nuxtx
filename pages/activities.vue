@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h1 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('index.activities')}}
-    </h2>
+    </h1>
     <ExcursionCards :excursions="excursions"/>
   </div>
 </template>

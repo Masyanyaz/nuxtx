@@ -41,7 +41,6 @@
                     :rules="[i.rules]"
                     :items="i.items"
                     :name="i.itemName"
-                    return-object
                   ></v-select>
                   <v-textarea
                     v-else-if="i.textarea"
@@ -267,7 +266,7 @@
         formData.append('description', this.tabs.metaTags.item.description.model);
         formData.append('h1', this.tabs.metaTags.item.h1.model);
         formData.append('url', this.tabs.main.item.url.model);
-        formData.append('lang', this.tabs.section.item.lang.model.value);
+        formData.append('lang', this.tabs.section.item.lang.model);
         formData.append('name', this.tabs.main.item.name.model);
 
         await this.$store.dispatch('city/createCity', formData)

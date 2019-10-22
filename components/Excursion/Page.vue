@@ -42,8 +42,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <div style="margin: 60px 5% 0; display: flex;">
-      <v-container>
+    <div style="margin: 60px 4% 0; display: flex;" class="container">
         <v-layout>
           <v-flex xs12>
             <h1>{{exc.h1}}</h1>
@@ -115,13 +114,12 @@
             </div>
           </v-flex>
         </v-layout>
-      </v-container>
       <div class="d-none d-md-block fix-stop ml-5" style="width: 270px; min-width: 270px;">
         <Form class="form" :exc="exc"/>
       </div>
     </div>
     <v-container class="hr">
-      <v-layout row v-if="excursions">
+      <v-layout row v-if="excursions.length">
         <v-flex xs12>
           <h2 class="d-flex justify-center">{{$t('Excursion.alsoLike')}}</h2>
         </v-flex>
@@ -229,13 +227,13 @@
   .fix {
     position: fixed;
     top: 0;
-    right: 5%;
+    right: 9%;
     margin-top: 12px;
   }
 
   .abs {
     position: absolute;
-    right: 5%;
+    right: 9%;
   }
 
   h2 {

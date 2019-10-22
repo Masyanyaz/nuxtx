@@ -90,6 +90,25 @@ export const actions = {
         throw e;
       })
   },
+  async fetchFullCity({commit, $axios}, payload) {
+    console.log('fetchFullCity')
+    commit('shared/clearError', null, {root: true})
+    // commit('shared/setLoading', true, {root: true})
+    let url = '?'
+    for (let key in payload) {
+      url += `${key}=${payload[key]}&`
+    }
+    await this.$axios.get(`/admin/api/getfullcity/${payload.language}${url.slice(0,-1)}`)
+      .then((data) => {
+        commit('loadCity', data.data)
+        // commit('shared/setLoading', false, {root: true})
+      })
+      .catch(e => {
+        commit('shared/setError', e.message, {root: true})
+        // commit('shared/setLoading', false, {root: true})
+        throw e;
+      })
+  },
   async updateCity({commit}, payload) {
     // commit('clearError')
     // commit('setLoading', true)

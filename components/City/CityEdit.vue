@@ -3,7 +3,7 @@
     <v-btn
       class="warning mr-2"
       text
-      @click="modal = !modal"
+      @click="openEditWindow"
     >
       Edit
     </v-btn>
@@ -61,7 +61,6 @@
                         :rules="[i.rules]"
                         :items="i.items"
                         :name="i.itemName"
-                        return-object
                       ></v-select>
                       <v-textarea
                         v-else-if="i.textarea"
@@ -72,6 +71,12 @@
                         multi-line
                         type="text"
                       ></v-textarea>
+                      <v-checkbox
+                        v-else-if="i.checkbox"
+                        v-model="i.model"
+                        :name="i.itemName"
+                        :label="i.itemName"
+                      ></v-checkbox>
                       <v-text-field
                         v-else
                         :rules="[i.rules]"
@@ -228,6 +233,13 @@
                 model: this.city.url,
                 required: true,
                 rules: v => !!v || 'Is required'
+              },
+              popular: {
+                itemName: 'popular',
+                checkbox: true,
+                model: this.city.popular,
+                required: true,
+                rules: v => !!v || 'Is required'
               }
             }
           },
@@ -259,7 +271,7 @@
             item: {
               lang: {
                 itemName: 'lang',
-                model: '',
+                model: this.city.lang,
                 required: true,
                 select: true,
                 disabled: false,
@@ -290,8 +302,9 @@
         formData.append('description', this.tabs.metaTags.item.description.model);
         formData.append('h1', this.tabs.metaTags.item.h1.model);
         formData.append('url', this.tabs.main.item.url.model);
-        formData.append('lang', this.tabs.section.item.lang.model.value);
+        formData.append('lang', this.tabs.section.item.lang.model);
         formData.append('name', this.tabs.main.item.name.model);
+        formData.append('popular', this.tabs.main.item.popular.model);
 
         this.$axios.post(`/admin/api/updatecity/${this.city.id}`, formData)
           .then(res => {
@@ -354,6 +367,14 @@
               throw e;
             })
         }
+      },
+      async openEditWindow() {
+        this.modal = !this.modal
+        const url = {
+          language: this.$store.state.locale,
+          city_url: this.$route.params.city,
+        };
+        await this.$store.dispatch('city/fetchFullCity', url)
       }
     }
   }

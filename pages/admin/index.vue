@@ -1,8 +1,13 @@
 <template>
   <div>
-    <h1>admin panel</h1>
-    <v-btn to="admin/add-new">Add</v-btn>
-    <v-btn to="admin/addcity">Add city</v-btn>
+    <div>
+      <h1>admin panel</h1>
+      <v-btn to="admin/add-new">Add</v-btn>
+      <v-btn to="admin/addcity">Add city</v-btn>
+    </div>
+    <div>
+      <nuxt-child name="addcity"/>
+    </div>
   </div>
 </template>
 

@@ -34,9 +34,30 @@
         <span class="footer-top-element-border"/>
         <div class="footer-item-list">
 
-          <span>{{$t('Footer.company.about.title')}}</span>
-          <span>{{$t('Footer.company.team.title')}}</span>
-          <span>{{$t('Footer.company.blog.title')}}</span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`${$t('Footer.company.about.url')}`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              {{$t('Footer.company.about.title')}}
+            </nuxt-link>
+          </span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`${$t('Footer.company.team.url')}`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              {{$t('Footer.company.team.title')}}
+            </nuxt-link>
+          </span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`${$t('Footer.company.blog.url')}`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              {{$t('Footer.company.blog.title')}}
+            </nuxt-link>
+          </span>
 
         </div>
       </div>
@@ -46,16 +67,23 @@
         <div class="footer-item-list">
           <span>
             <nuxt-link
-              :to="$i18n.path(`contacts`)"
+              :to="$i18n.path(`${$t('Footer.support.contact.url')}`)"
               style="text-decoration: none; color: inherit;"
             >
               {{$t('Footer.support.contact.title')}}
             </nuxt-link>
           </span>
-          <span>{{$t('Footer.support.legal.title')}}</span>
           <span>
             <nuxt-link
-              :to="$i18n.path(`cookies`)"
+              :to="$i18n.path(`${$t('Footer.support.legal.url')}`)"
+              style="text-decoration: none; color: inherit;"
+            >
+              {{$t('Footer.support.legal.title')}}
+            </nuxt-link>
+          </span>
+          <span>
+            <nuxt-link
+              :to="$i18n.path(`${$t('Footer.support.cookies.url')}`)"
               style="text-decoration: none; color: inherit;"
             >
               {{$t('Footer.support.cookies.title')}}
@@ -63,7 +91,7 @@
           </span>
           <span>
             <nuxt-link
-              :to="$i18n.path(`politique-de-confidentialite`)"
+              :to="$i18n.path(`${$t('Footer.support.privacy.url')}`)"
               style="text-decoration: none; color: inherit;"
             >
               {{$t('Footer.support.privacy.title')}}

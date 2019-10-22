@@ -84,10 +84,6 @@
 <script>
   import {mapGetters} from 'vuex'
 
-  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
-  const CityEdit = () => import("~/components/City/CityEdit");
-  const ExcursionFilter = () => import("~/components/Excursion/Filter");
-
   export default {
     props: ['city', 'filter'],
     data() {
@@ -100,9 +96,9 @@
     },
 
     components: {
-      ExcursionCards,
-      CityEdit,
-      ExcursionFilter
+      ExcursionCards: () => import("~/components/Excursion/ExcursionCards"),
+      CityEdit: () => import("~/components/City/CityEdit"),
+      ExcursionFilter:() => import("~/components/Excursion/Filter")
     },
 
     created() {

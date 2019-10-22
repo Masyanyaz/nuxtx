@@ -26,11 +26,6 @@
 <script>
   import {mapGetters} from 'vuex'
 
-  const CityCards = () => import("~/components/City/CityCards")
-  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
-  const Blog = () => import("~/components/Blog");
-  const Reviews = () => import("~/components/Reviews");
-
   export default {
     async asyncData({store}) {
       const url = {
@@ -67,10 +62,10 @@
       })
     },
     components: {
-      CityCards,
-      ExcursionCards,
-      Blog,
-      Reviews
+      CityCards: () => import("~/components/City/CityCards"),
+      ExcursionCards: () => import("~/components/Excursion/ExcursionCards"),
+      Blog: () => import("~/components/Blog"),
+      Reviews: () => import("~/components/Reviews")
     }
   }
 </script>
