@@ -18,7 +18,8 @@
               :to="$i18n.path(`${exc.city_url}/${exc.url}`)"
             >
               <div class="d-flex justify-center align-center" style="overflow: hidden; position: relative;">
-                <img v-lazy="exc.previewImage" alt="" height="200" width="100%" :class="{cardHover : hover}" style="transition: all .3s;">
+                <img v-lazy="exc.previewImage" alt="" height="200" width="100%" :class="{cardHover : hover}"
+                     style="transition: all .3s;">
                 <span class="pr-1 pl-1 d-flex align-center justify-center time">
                   <svg width="14px" height="14" viewBox="0 0 34 34" version="1.1" class="mr-1"
                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -55,8 +56,9 @@
                   <h3 class="mb-1" style="">
                     {{exc.name}}
                   </h3>
-                  <p style="font-size: calc(7px + 2 * ((100vw) / 300));">
-                    <svg width="10px" height="16px" viewBox="0 0 11 18" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                  <p style="font-size: calc(10px + 2 * ((100vw) / 700));" class="">
+                    <svg width="10px" height="16px" viewBox="0 0 11 18" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g id="Hotel-layout" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Room_Only_Detail_1" transform="translate(-135.000000, -4858.000000)" fill="#ffab53"
@@ -77,9 +79,14 @@
                         </g>
                       </g>
                     </svg>
-                    from
                     <span style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: 500;">
-                    €{{exc.price}}
+                      €{{exc.price}}
+                    </span>
+                    <span style="font-size: calc(9px + 2 * ((100vw) / 900));">
+                      / par personne
+                      <nobr style="position: relative; top: -12px;">
+                        en groupe de {{exc.pricePerPerson}} participants
+                      </nobr>
                     </span>
                   </p>
                 </div>

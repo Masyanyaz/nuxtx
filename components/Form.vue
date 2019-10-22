@@ -4,7 +4,7 @@
     <v-toolbar dark color="#5191FA" class="d-flex pl-2" style="box-shadow: none;">
       <v-toolbar-title style="font-size: 24px;">
         <span style="font-size: 14px;" class="mr-2">{{$t('commonWords.from')}}</span>
-        €{{exc.price}}
+        €{{price}}
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text>
@@ -64,7 +64,7 @@
 
 <script>
   export default {
-    props: ['exc'],
+    props: ['price'],
     data() {
       return {
         checkbox: false,

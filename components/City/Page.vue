@@ -15,6 +15,7 @@
             <v-chip-group
               column
               active-class="green lighten-1"
+              mandatory
             >
               <v-chip
                 v-for="(tag, i) in filters"
@@ -108,8 +109,7 @@
           price_min: this.query.price_min || this.$route.query.price_min,
           price_max: this.query.price_max || this.$route.query.price_max,
           group_min: this.query.group_min || this.$route.query.group_min,
-          time_min: this.query.time_min || this.$route.query.time_min,
-          time_max: this.query.time_max || this.$route.query.time_max
+          time_group: this.query.time_group || this.$route.query.time_group
         }
       })
     },

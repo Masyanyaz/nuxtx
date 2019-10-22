@@ -42,30 +42,58 @@
         </div>
       </v-flex>
     </v-layout>
-    <div style="margin: 60px 4% 0; display: flex;" class="container">
-        <v-layout>
-          <v-flex xs12>
-            <h1>{{exc.h1}}</h1>
-            <ExcursionHeader :exc="exc"/>
+    <div style="margin-top: 60px; display: flex;" class="container">
+      <v-layout>
+        <v-flex xs12>
+          <h1>{{exc.h1}}</h1>
+          <ExcursionHeader :exc="exc"/>
 
-            <h2>{{$t('Excursion.overview')}}</h2>
-            <div v-html="exc.detailText"/>
-
-            <div v-if="exc.included || exc.excluded" class="hr">
-              <h2>{{$t('Excursion.included')/$t('Excursion.exclude')}}</h2>
-              <div class="d-flex justify-space-between included">
+          <h2>{{$t('Excursion.overview')}}</h2>
+          <div v-html="exc.detailText"/>
+          <div class="hr" v-if="exc.priceList">
+            <h2>Price</h2>
+            <v-layout>
+              <v-flex xs12 sm10 md8 xl6>
+                <v-simple-table>
+                  <template>
+                    <thead style="background-color: #bababa;">
+                    <tr>
+                      <th class="text-center" style="width: 45%;">Person</th>
+                      <th class="text-center" style="width: 10%;"></th>
+                      <th class="text-center" style="width: 45%;">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(price, i) in exc.priceList" :key="i" class="text-center">
+                      <td v-if="i < 6">{{i+1}} person</td>
+                      <td v-else-if="i === 6">7-15 person</td>
+                      <td v-else>16+ person</td>
+                      <td style="font-weight: 200; color: #bababa; font-size: 20px;">|</td>
+                      <td v-if="price === '-'">{{ price }}</td>
+                      <td v-else-if="price === ''">По запросу</td>
+                      <td v-else>{{ price }} €</td>
+                    </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-flex>
+            </v-layout>
+          </div>
+          <div v-if="exc.included || exc.excluded" class="hr">
+            <h2>{{$t('Excursion.included')}}/{{$t('Excursion.exclude')}}</h2>
+            <div class="d-flex justify-space-between included">
+              <div
+                v-if="exc.included"
+                class="d-flex justify-start align-start included-item"
+                style="flex-direction: column"
+              >
                 <div
-                  v-if="exc.included"
-                  class="d-flex justify-start align-start included-item"
-                  style="flex-direction: column"
+                  class="d-flex align-center"
+                  v-for="(incl, i) in exc.included"
                 >
-                  <div
-                    class="d-flex align-center"
-                    v-for="(incl, i) in exc.included"
-                  >
-                    <svg height="14px" width="14px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
-                         style="enable-background:new 0 0 24 24;" xml:space="preserve" class="mr-3">
+                  <svg height="14px" width="14px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
+                       style="enable-background:new 0 0 24 24;" xml:space="preserve" class="mr-3">
                       <g fill="#2ECC71">
                         <path d="M6.347,24.003c-0.601,0-1.182-0.183-1.68-0.529c-0.261-0.181-0.489-0.403-0.68-0.658L0.15,17.7
                           c-0.12-0.16-0.171-0.358-0.143-0.556C0.036,16.946,0.14,16.77,0.3,16.65c0.131-0.098,0.286-0.15,0.45-0.15
@@ -77,25 +105,25 @@
                         </path>
                       </g>
                     </svg>
-                    <span
-                      :key="i"
-                      v-text="incl"
-                    ></span>
-                  </div>
+                  <span
+                    :key="i"
+                    v-text="incl"
+                  ></span>
                 </div>
+              </div>
+              <div
+                v-if="exc.excluded"
+                class="d-flex justify-start align-start included-item"
+                style="flex-direction: column"
+              >
                 <div
-                  v-if="exc.excluded"
-                  class="d-flex justify-start align-start included-item"
-                  style="flex-direction: column"
+                  class="d-flex align-center"
+                  v-for="(excl, i) in exc.excluded"
                 >
-                  <div
-                    class="d-flex align-center"
-                    v-for="(excl, i) in exc.excluded"
-                  >
-                    <svg class="mr-3" height="18px" width="18px" version="1.1" id="Layer_1"
-                         xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
-                         style="enable-background:new 0 0 24 24;" xml:space="preserve">
+                  <svg class="mr-3" height="18px" width="18px" version="1.1" id="Layer_1"
+                       xmlns="http://www.w3.org/2000/svg"
+                       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"
+                       style="enable-background:new 0 0 24 24;" xml:space="preserve">
                       <g fill="#FA5636">
                         <path d="M19.5,20.25c-0.2,0-0.389-0.078-0.53-0.22L12,13.061l-6.97,6.97c-0.142,0.142-0.33,0.22-0.53,0.22s-0.389-0.078-0.53-0.22
                           c-0.292-0.292-0.292-0.768,0-1.061l6.97-6.97L3.97,5.03C3.828,4.889,3.75,4.7,3.75,4.5s0.078-0.389,0.22-0.53
@@ -104,18 +132,18 @@
                           C19.889,20.172,19.7,20.25,19.5,20.25z"></path>
                       </g>
                     </svg>
-                    <span
-                      :key="i"
-                      v-text="excl"
-                    ></span>
-                  </div>
+                  <span
+                    :key="i"
+                    v-text="excl"
+                  ></span>
                 </div>
               </div>
             </div>
-          </v-flex>
-        </v-layout>
+          </div>
+        </v-flex>
+      </v-layout>
       <div class="d-none d-md-block fix-stop ml-5" style="width: 270px; min-width: 270px;">
-        <Form class="form" :exc="exc"/>
+        <Form class="form" :price="exc.price"/>
       </div>
     </div>
     <v-container class="hr">
@@ -132,31 +160,24 @@
 <script>
   import {mapGetters} from 'vuex'
 
-  const ExcursionHeader = () => import('~/components/Excursion/ExcursionHeader')
-  const Galery = () => import('~/components/Galery')
-  const ExcursionEdit = () => import('~/components/Excursion/ExcursionEdit')
-  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards")
-  const Form = () => import("~/components/Form")
-
   export default {
-    props: ['exc'],
+    props: ['exc', 'excursions'],
     data() {
       return {
         showGalery: false,
         numberOfWidth: null
       }
     },
-
     components: {
-      ExcursionCards,
-      ExcursionHeader,
-      Galery,
-      ExcursionEdit,
-      Form
+      ExcursionCards: () => import("~/components/Excursion/ExcursionCards"),
+      ExcursionHeader: () => import('~/components/Excursion/ExcursionHeader'),
+      Galery: () => import('~/components/Galery'),
+      ExcursionEdit: () => import('~/components/Excursion/ExcursionEdit'),
+      Form: () => import("~/components/Form")
     },
     computed: {
       ...mapGetters({
-        excursions: 'excursion/excursions',
+
         cities: 'city/cities',
         isUserloggedIn: 'user/isUserloggedIn'
       })
@@ -226,14 +247,11 @@
 
   .fix {
     position: fixed;
-    top: 0;
-    right: 9%;
     margin-top: 12px;
   }
 
   .abs {
     position: absolute;
-    right: 9%;
   }
 
   h2 {
@@ -271,5 +289,8 @@
   .hr {
     border-top: 2px solid #D7DCE3;
     margin-top: 25px;
+  }
+  td, th {
+    font-size: 18px;
   }
 </style>

@@ -65,7 +65,7 @@
                     :required="i.required"
                     :name="i.itemName"
                     :label="i.itemName"
-                    type="text"
+                    :type="i.type || 'text'"
                   ></v-text-field>
                 </v-card>
               </v-tab-item>
@@ -228,11 +228,6 @@
                 required: true,
                 rules: v => !!v || 'Is required'
               },
-              price: {
-                itemName: 'price',
-                model: '',
-                rules: false
-              },
               time: {
                 itemName: 'time',
                 model: '',
@@ -241,7 +236,8 @@
               groupSize: {
                 itemName: 'groupSize',
                 model: '',
-                rules: false
+                rules: false,
+                type: 'number'
               },
               popular: {
                 itemName: 'popular',
@@ -321,6 +317,24 @@
                 items: [],
               }
             }
+          },
+          price: {
+            headerName: 'Цена',
+            item: {
+              priceList: {
+                itemName: 'priceList',
+                model: '',
+                required: false,
+                textarea: true,
+                rules: false
+              },
+              pricePerPerson: {
+                itemName: 'pricePerPerson',
+                model: 4,
+                rules: false,
+                type: 'number'
+              },
+            }
           }
         },
       }
@@ -368,7 +382,8 @@
         formData.append('included', this.tabs.detail.item.included.model);
         formData.append('excluded', this.tabs.detail.item.excluded.model);
         formData.append('groupSize', this.tabs.main.item.groupSize.model);
-        formData.append('price', this.tabs.main.item.price.model);
+        formData.append('priceList', this.tabs.price.item.priceList.model);
+        formData.append('pricePerPerson', this.tabs.price.item.pricePerPerson.model);
         formData.append('time', this.tabs.main.item.time.model);
         formData.append('title', this.tabs.metaTags.item.title.model);
         formData.append('description', this.tabs.metaTags.item.description.model);

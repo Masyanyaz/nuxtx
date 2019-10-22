@@ -123,6 +123,7 @@ app.post('/admin/api/deletecity/:id', (req, res) => {
 
 // add excursion
 app.post('/admin/api/addexcursion', (req, res) => {
+  let price = req.body.priceList.split('\n');
   let exc = {
     city_id: req.body.city_id,
     title: req.body.title.trim(),
@@ -134,7 +135,9 @@ app.post('/admin/api/addexcursion', (req, res) => {
     included: JSON.stringify(req.body.included.split('\n')),
     excluded: JSON.stringify(req.body.excluded.split('\n')),
     groupSize: req.body.groupSize.trim(),
-    price: req.body.price.trim(),
+    pricePerPerson: req.body.pricePerPerson,
+    price: price[req.body.pricePerPerson - 1],
+    priceList: JSON.stringify(price),
     time: req.body.time.trim(),
     popular: req.body.popular,
   };
@@ -175,17 +178,21 @@ app.post('/admin/api/addexcursion', (req, res) => {
   let query = db.query(sql, exc, (err, result) => {
     if (err) throw err;
     let category = [];
-    if(req.body.type) {
-      req.body.type.forEach(a => {
-        let val = [result.insertId]
-        val.push(a)
+    if (req.body.type) {
+      if (typeof req.body.type !== 'string') {
+        req.body.type.forEach(a => {
+          let val = [result.insertId];
+          val.push(a);
+          category.push(val)
+        })
+      } else {
+        let val = [result.insertId, req.body.type];
         category.push(val)
-      })
+      }
     }
     db.query(sql2, [category], (err) => {
       if (err) throw err;
     });
-    console.log(result.insertId)
     res.send('Form submitted');
   });
 });
@@ -312,9 +319,7 @@ app.get('/admin/api/getcity/:lang', (req, res) => {
             AND excursion.price >= ${req.query.price_min || 0}
             AND excursion.price <= ${req.query.price_max || 10000}
             AND excursion.groupSize >= ${req.query.group_min || 1} 
-            AND excursion.groupSize <= ${req.query.group_max || 10}
-            AND excursion.time >= ${req.query.time_min || 0}
-            AND excursion.time <= ${req.query.time_max || 24}
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
             GROUP BY cities.id`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
@@ -356,7 +361,7 @@ app.get('/admin/api/getallurl/:lang', (req, res) => {
 // get excursions
 app.get('/admin/api/getexcursions/:lang', (req, res) => {
   let sql = `SELECT excursion.id, excursion.name, cities.url AS city_url, cities.lang, excursion.url, excursion.price, 
-            excursion.time, excursion.previewImage
+            excursion.pricePerPerson, excursion.time, excursion.previewImage
             FROM excursion
             INNER JOIN cities
             INNER JOIN exc_category
@@ -370,9 +375,8 @@ app.get('/admin/api/getexcursions/:lang', (req, res) => {
             AND excursion.price >= ${req.query.price_min || 0}
             AND excursion.price <= ${req.query.price_max || 10000}
             AND excursion.groupSize >= ${req.query.group_min || 1} 
-            AND excursion.groupSize <= ${req.query.group_max || 10}
-            AND excursion.time >= ${req.query.time_min || 0}
-            AND excursion.time <= ${req.query.time_max || 24}
+            AND excursion.groupSize <= ${req.query.group_max || 100}
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
             GROUP BY excursion.id
             ORDER BY ${req.query.order || 'excursion.id'} ${req.query.sort || 'ASC'}
             LIMIT ${req.query.limit || 100}`
@@ -385,7 +389,7 @@ app.get('/admin/api/getexcursions/:lang', (req, res) => {
 // get excursion
 app.get('/admin/api/getexcursion/:lang', (req, res) => {
 
-  let sql = `SELECT excursion.id, excursion.url, excursion.name, excursion.h1, excursion.title, excursion.description, excursion.price,
+  let sql = `SELECT excursion.id, excursion.url, excursion.name, excursion.h1, excursion.title, excursion.description, excursion.price, excursion.pricePerPerson, excursion.priceList,
             excursion.time, excursion.mainImage, excursion.galery, excursion.detailText, excursion.included, excursion.excluded, excursion.groupSize
             FROM excursion
             LEFT JOIN cities
@@ -399,6 +403,7 @@ app.get('/admin/api/getexcursion/:lang', (req, res) => {
       exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
       exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
       exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
+      exc.priceList ? exc.priceList = JSON.parse(exc.priceList) : exc.priceList = '';
     });
     res.send(result)
   });
@@ -420,9 +425,7 @@ app.get('/admin/api/getfilterlist/:lang', (req, res) => {
             AND excursion.price >= ${req.query.price_min || 0}
             AND excursion.price <= ${req.query.price_max || 10000}
             AND excursion.groupSize >= ${req.query.group_min || 1} 
-            AND excursion.groupSize <= ${req.query.group_max || 10}
-            AND excursion.time >= ${req.query.time_min || 0}
-            AND excursion.time <= ${req.query.time_max || 24}
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
             GROUP BY exc_category_data.url
             
             UNION
@@ -441,9 +444,7 @@ app.get('/admin/api/getfilterlist/:lang', (req, res) => {
             AND excursion.price >= ${req.query.price_min || 0}
             AND excursion.price <= ${req.query.price_max || 10000}
             AND excursion.groupSize >= ${req.query.group_min || 1} 
-            AND excursion.groupSize <= ${req.query.group_max || 10}
-            AND excursion.time >= ${req.query.time_min || 0}
-            AND excursion.time <= ${req.query.time_max || 24}
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
             GROUP BY exc_category_data.url`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;

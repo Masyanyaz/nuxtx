@@ -1,4 +1,4 @@
-import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMenu } from '@mdi/js'
+import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMenu, mdiChevronRight, mdiChevronLeft, mdiPlus, mdiMinus } from '@mdi/js'
 
 
 export default {
@@ -7,7 +7,9 @@ export default {
     values: {
       checkboxOff: mdiCheckboxBlankOutline,
       checkboxOn: mdiCheckboxMarked,
-      menu: mdiMenu
+      menu: mdiMenu,
+      next: mdiPlus,
+      prev: mdiMinus
     }
   },
   lang: {},

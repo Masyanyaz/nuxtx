@@ -34,12 +34,16 @@
           <div class="ml-3 mr-3"><b>{{$t('Excursion.ExcursionHeader.groupSize.title')}}</b></div>
         </div>
         <v-chip-group
+          style="width: 350px; margin-left: -20px;"
+          show-arrows
           v-model="groupSizeFilter"
           active-class="filter-number"
+          class=""
+          mandatory
         >
           <v-chip
             label
-            v-for="i in 6"
+            v-for="i in 15"
             :key="i"
             :value="i"
             class="mr-2"
@@ -158,7 +162,7 @@
       app
       right
       temporary
-      width="320"
+      width="350"
     >
       <div class="d-flex justify-space-between pt-2 pb-2 flex-column pr-5 pl-5 pt-5">
         <div class="mr-3 mb-5">
@@ -194,12 +198,16 @@
             <div class="ml-3 mr-3"><b>{{$t('Excursion.ExcursionHeader.groupSize.title')}}</b></div>
           </div>
           <v-chip-group
+            style="width: 350px; margin-left: -20px;"
+            show-arrows
             v-model="groupSizeFilter"
             active-class="filter-number"
+            class=""
+            mandatory
           >
             <v-chip
               label
-              v-for="i in 6"
+              v-for="i in 15"
               :key="i"
               :value="i"
               class="mr-2"
@@ -208,7 +216,7 @@
             </v-chip>
           </v-chip-group>
         </div>
-        <div class="mr-3 mb-5">
+        <div class="mb-5">
           <div class="d-flex align-center">
             <svg width="32px" height="32px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -314,13 +322,14 @@
     props: ['city'],
     data() {
       return {
+        groupSizeList: 0,
         drawer: false,
         cardFilter: null,
         timeItems: [
-          {text: '0-3', value: [0, 3]},
-          {text: '3-5', value: [3, 5]},
-          {text: '5-7', value: [5, 7]},
-          {text: 'Full day 7+', value: [7, 24]},
+          {text: '0-3', value: 1},
+          {text: '3-5', value: 2},
+          {text: '5-7', value: 3},
+          {text: 'Full day 7+', value: 4},
         ],
         timeFilter: [],
         groupSizeFilter: this.city.group_min,
@@ -333,8 +342,9 @@
     },
     created() {
       if (Object.keys(this.query).length !== 0) {
-        this.groupSizeFilter = this.query.group_min;
+        this.groupSizeFilter = +this.query.group_min;
         this.priceFilter.value = [this.query.price_min, this.query.price_max];
+        this.timeFilter = this.query.time_group ? JSON.parse(this.query.time_group) : []
       }
     },
     computed: {
@@ -345,35 +355,42 @@
     methods: {
       async isFiltered() {
         this.cardFilter = null;
-        let timeArr = Array.from(new Set(this.timeFilter.flat()))
+
         const url = {
           language: this.$store.state.locale,
           city_url: this.$route.params.city,
           price_min: this.priceFilter.value[0],
           price_max: this.priceFilter.value[1],
           group_min: this.groupSizeFilter,
-          time_min: Math.min(...timeArr) != 'Infinity' ? Math.min(...timeArr) : 0,
-          time_max: Math.max(...timeArr) != '-Infinity' ? Math.max(...timeArr) : 24,
           category_url: !this.$route.params.id ? '.*' : this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
         }
+        this.timeFilter.length !== 0 ? url.time_group = JSON.stringify(this.timeFilter) : false
+
         await this.$store.dispatch('filter/fetchFilters', url)
         await this.$store.dispatch('excursion/fetchExcursions', url)
         await this.$store.dispatch('filter/createQuery', url)
         let query = this.$store.getters['filter/query']
-        console.log(query)
 
         this.$router.push({
           query: {
             price_min: query.price_min || this.$route.query.price_min,
             price_max: query.price_max || this.$route.query.price_max,
             group_min: query.group_min || this.$route.query.group_min,
-            time_min: query.time_min || this.$route.query.time_min,
-            time_max: query.time_max || this.$route.query.time_max
+            time_group: JSON.stringify(query.time_group) || ''
           }
         })
       },
       async isReset() {
         this.cardFilter = null;
+
+        this.$store.commit('filter/deleteQuery')
+        const url = {
+          language: this.$store.state.locale,
+          city_url: this.$route.params.city,
+          category_url: this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
+        }
+        await this.$store.dispatch('filter/fetchFilters', url)
+        await this.$store.dispatch('excursion/fetchExcursions', url)
         this.timeFilter = [];
         this.groupSizeFilter = this.city.group_min;
         this.priceFilter = {
@@ -381,15 +398,6 @@
           max: this.city.price_max,
           value: [this.city.price_min, this.city.price_max]
         };
-        this.$store.commit('filter/deleteQuery')
-        const url = {
-          language: this.$store.state.locale,
-          city_url: this.$route.params.city,
-          category_url: this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
-        }
-        await this.$store.dispatch('city/fetchCity', url)
-        await this.$store.dispatch('filter/fetchFilters', url)
-        await this.$store.dispatch('excursion/fetchExcursions', url)
 
         this.$router.push({query: {}})
       }

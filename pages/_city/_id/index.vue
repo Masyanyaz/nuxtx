@@ -1,6 +1,6 @@
 <template>
   <div v-if="!component">
-    <ExcursionPage :exc="exc" />
+    <ExcursionPage :exc="exc" :excursions="excursions"/>
   </div>
   <div v-else>
     <CityPage :city="city" :filter="filter"/>
@@ -9,9 +9,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-
-  const ExcursionPage = () => import('~/components/Excursion/Page')
-  const CityPage = () => import('~/components/City/Page')
 
   export default {
     async asyncData({store, params, error, route}) {
@@ -29,8 +26,7 @@
       query.price_min ? url.price_min = query.price_min : false
       query.price_max ? url.price_max = query.price_max : false
       query.group_min ? url.group_min = query.group_min : false
-      query.time_min ? url.time_min = query.time_min : false
-      query.time_max ? url.time_max = query.time_max : false
+      query.time_group ? url.time_group = JSON.parse(query.time_group) : false
 
       await store.dispatch('excursion/fetchExcursion', url)
       let exc = await store.getters['excursion/excByUrl'](params.id)
@@ -51,6 +47,8 @@
         await store.dispatch('excursion/fetchExcursions', url)
 
         component = true
+      } else {
+        await store.dispatch('excursion/fetchExcursions', url)
       }
       return {exc, component, city, filter}
     },
@@ -69,8 +67,8 @@
       return {}
     },
     components: {
-      ExcursionPage,
-      CityPage
+      ExcursionPage: () => import('~/components/Excursion/Page'),
+      CityPage: () => import('~/components/City/Page')
     },
     computed: {
       // filtered() {
@@ -82,7 +80,9 @@
       //   });
       //   return arr.slice(0, this.numberOfWidth)
       // },
-      ...mapGetters({})
+      ...mapGetters({
+        excursions: 'excursion/excursions',
+      })
     },
     methods: {},
   }
