@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      QUI SOMMES NOUS ?
+      {{$t('about.h1')}}
     </h1>
     <div class="au-top">
       <div class="au-top-item">
@@ -102,9 +102,9 @@
     },
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('about.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('about.description')}
         ]
       }
     }

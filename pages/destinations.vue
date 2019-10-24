@@ -27,9 +27,9 @@
     }),
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('destinations.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('destinations.description')}
         ]
       }
     },

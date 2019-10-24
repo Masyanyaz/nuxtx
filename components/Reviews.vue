@@ -1,31 +1,33 @@
 <template>
-  <v-container grid-list-lg class="fill-height d-flex align-center justify-center">
-    <v-layout wrap class="rev-line">
-      <v-flex
-        xs12
-        sm6
-        md4
-        lg4
-        xl4
-        v-for="(item, i) in items"
-        :key="i"
-        class="d-flex"
-      >
-        <v-card class="rev-item">
-          <div class="author">
-            <img v-lazy="item.imgSrc" alt="">
-            <div class="author-meta">
-              <span>{{item.name}}</span>
-              <div class="star">
-                <div class="rev-star" v-for="star in item.rating"></div>
+  <div style="background-color: #fff;" class="py-3">
+    <v-container grid-list-lg class="fill-height d-flex align-center justify-center">
+      <v-layout wrap class="rev-line">
+        <v-flex
+          xs12
+          sm6
+          md4
+          lg4
+          xl4
+          v-for="(item, i) in items"
+          :key="i"
+          class="d-flex"
+        >
+          <v-card class="rev-item">
+            <div class="author">
+              <img v-lazy="item.imgSrc" alt="">
+              <div class="author-meta">
+                <span>{{item.name}}</span>
+                <div class="star">
+                  <div class="rev-star" v-for="star in item.rating"></div>
+                </div>
               </div>
             </div>
-          </div>
-          <p>{{item.text}}</p>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+            <p>{{item.text}}</p>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -60,7 +62,6 @@
 
 <style scoped lang="scss">
   .rev-line {
-
     /*@media (max-width: 960px) {*/
     /*  flex-direction: column;*/
     /*  margin: 0 auto;*/

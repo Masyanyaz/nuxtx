@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      {{$t('index.activities')}}
+      {{$t('activities.h1')}}
     </h1>
     <ExcursionCards :excursions="excursions"/>
   </div>
@@ -14,9 +14,9 @@
   export default {
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('activities.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('activities.description')}
         ]
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      Politique de confidentialité
+      {{$t('politic.h1')}}
     </h1>
     <p style="text-align: justify;">
       Russieautrement (« <b>www.russieautrement.com</b>&nbsp;» « <b>nous </b>», « <b>notre </b>») est un service en
@@ -423,9 +423,9 @@
   export default {
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('politic.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('politic.description')}
         ]
       }
     }

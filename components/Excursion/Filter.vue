@@ -332,7 +332,7 @@
           {text: 'Full day 7+', value: 4},
         ],
         timeFilter: [],
-        groupSizeFilter: this.city.group_min,
+        groupSizeFilter: 4,
         priceFilter: {
           min: this.city.price_min,
           max: this.city.price_max,

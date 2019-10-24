@@ -174,8 +174,6 @@
 <script>
   import {mapGetters} from 'vuex'
 
-  const ExcursionAddNew = () => import('@/components/Excursion/ExcursionAddNew')
-
   export default {
     async fetch({store}) {
       const url = {
@@ -348,7 +346,7 @@
       })
     },
     components: {
-      ExcursionAddNew
+      ExcursionAddNew: () => import('@/components/Excursion/ExcursionAddNew')
     },
     // async asyncData({$axios, store}) {
     //   $axios('/admin/api/getcities')

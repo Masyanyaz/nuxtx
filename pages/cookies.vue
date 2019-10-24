@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg>
     <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      Notifications sur l’utilisation des cookies
+      {{$t('cookies.h1')}}
     </h1>
     <p style="text-align: justify;">
       <i>Dernière mise à jour : 26 mars 2018</i>
@@ -155,9 +155,9 @@
   export default {
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('cookies.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('cookies.description')}
         ]
       }
     }

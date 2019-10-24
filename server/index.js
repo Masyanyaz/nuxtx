@@ -13,6 +13,35 @@ app.use(bodyParser.json());
 
 app.use(upload());
 
+const renameAndMove = (req, name, folder, i = '') => {
+  console.log(req)
+  switch (folder) {
+    case 'cities':
+      folder = `${folder}/${req.body.lang}`;
+      break;
+    case 'excursion':
+      folder = `${folder}/${req.body.city_id}`;
+      break;
+    case 'category':
+      folder = `${folder}/${req.body.lang}`;
+      break;
+  }
+  let file = name === 'galery' ? req.files[name][i] : req.files[name];
+  name = name.replace('Image', '');
+  let filename = file.name;
+  let fileExt = filename.slice(filename.lastIndexOf('.'));
+  filename = name === 'galery' ? `${req.body.url}-${i}${fileExt}` : `${name}-${req.body.url}${fileExt}`;
+  let path = name === 'galery' ? `/image/${folder}/${req.body.url}/${name}/` : `/image/${folder}/${req.body.url}/`;
+  let filePath = path + filename;
+  fs.mkdirSync('./static' + path, {recursive: true}, err => {
+    throw err;
+  });
+  file.mv('./static' + filePath, err => {
+    if (err) throw err;
+  });
+  return filePath;
+}
+
 // add city
 app.post('/admin/api/addcity', (req, res) => {
   let city = {
@@ -25,34 +54,15 @@ app.post('/admin/api/addcity', (req, res) => {
     popular: req.body.popular,
   };
 
-  const renameAndMove = (name, i = '') => {
-    let gal = name === 'galery' ? 'galery/' : '';
-    let file = name === 'galery' ? req.files[name][i] : req.files[name];
-    name = name.replace('Image', '');
-    let filename = file.name;
-    let fileExt = filename.slice(filename.lastIndexOf('.'));
-    filename = `${name}-${city.url}${i}${fileExt}`;
-    let path = `/image/${city.lang}/${city.url}/${gal}`;
-    let filePath = path + filename;
-    fs.mkdirSync('./static' + path, {recursive: true}, err => {
-      throw err;
-    });
-    file.mv('./static' + filePath, err => {
-      if (err) throw err;
-    });
-    return filePath;
-  }
-
   let galery = [];
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove('galery', `${i}`));
+      galery.push(renameAndMove(req,'galery', 'cities',`${i}`));
     }
-    ;
-  }
+  };
 
-  city.previewImage = renameAndMove('previewImage');
-  city.mainImage = renameAndMove('mainImage');
+  city.previewImage = renameAndMove(req,'previewImage', 'cities');
+  city.mainImage = renameAndMove(req,'mainImage', 'cities');
   city.galery = JSON.stringify(galery);
 
   let sql = 'INSERT INTO cities SET ?';
@@ -74,35 +84,17 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
     popular: req.body.popular,
   };
 
-  const renameAndMove = (name, i = '') => {
-    let gal = name === 'galery' ? 'galery/' : '';
-    let file = name === 'galery' ? req.files[name][i] : req.files[name];
-    name = name.replace('Image', '');
-    let filename = file.name;
-    let fileExt = filename.slice(filename.lastIndexOf('.'));
-    filename = `${name}-${city.url}${i}${fileExt}`;
-    let path = `/image/${city.lang}/${city.url}/${gal}`;
-    let filePath = path + filename;
-    fs.mkdirSync('./static' + path, {recursive: true}, err => {
-      throw err;
-    });
-    file.mv('./static' + filePath, err => {
-      if (err) throw err;
-    });
-    return filePath;
-  }
-
   let galery = [];
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove('galery', `${i}`));
+      galery.push(renameAndMove(req,'galery', 'cities',`${i}`));
     }
     ;
   }
 
-  city.previewImage = renameAndMove('previewImage');
-  city.mainImage = renameAndMove('mainImage');
+  city.previewImage = renameAndMove(req,'previewImage', 'cities');
+  city.mainImage = renameAndMove(req,'mainImage', 'cities');
   city.galery = JSON.stringify(galery);
 
   let sql = `UPDATE cities SET ? WHERE id = '${req.params.id}'`;
@@ -142,35 +134,16 @@ app.post('/admin/api/addexcursion', (req, res) => {
     popular: req.body.popular,
   };
 
-  const renameAndMove = (name, i = '') => {
-    let gal = name === 'galery' ? 'galery/' : '';
-    let file = name === 'galery' ? req.files[name][i] : req.files[name];
-    name = name.replace('Image', '');
-    let filename = file.name;
-    let fileExt = filename.slice(filename.lastIndexOf('.'));
-    filename = `${name}-${exc.url}${i}${fileExt}`;
-    let path = `/image/${exc.lang}/${exc.city}/${exc.url}/${gal}`;
-    let filePath = path + filename;
-    fs.mkdirSync('./static' + path, {recursive: true}, err => {
-      throw err;
-    });
-    file.mv('./static' + filePath, err => {
-      if (err) throw err;
-    });
-    return filePath;
-  }
-
   let galery = [];
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove('galery', `${i}`));
+      galery.push(renameAndMove(req,'galery', 'excursion',`${i}`));
     }
-    ;
-  }
+  };
 
-  exc.previewImage = renameAndMove('previewImage');
-  exc.mainImage = renameAndMove('mainImage');
+  exc.previewImage = renameAndMove(req,'previewImage', 'excursion');
+  exc.mainImage = renameAndMove(req,'mainImage', 'excursion');
   exc.galery = JSON.stringify(galery);
 
   let sql = 'INSERT INTO excursion SET ?';
@@ -217,35 +190,16 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
     type: JSON.stringify(req.body.type.trim().split(',')),
   };
 
-  const renameAndMove = (name, i = '') => {
-    let gal = name === 'galery' ? 'galery/' : '';
-    let file = name === 'galery' ? req.files[name][i] : req.files[name];
-    name = name.replace('Image', '');
-    let filename = file.name;
-    let fileExt = filename.slice(filename.lastIndexOf('.'));
-    filename = `${name}-${exc.url}${i}${fileExt}`;
-    let path = `/image/${exc.lang}/${exc.city}/${exc.url}/${gal}`;
-    let filePath = path + filename;
-    fs.mkdirSync('./static' + path, {recursive: true}, err => {
-      throw err;
-    });
-    file.mv('./static' + filePath, err => {
-      if (err) throw err;
-    });
-    return filePath;
-  }
-
   let galery = [];
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove('galery', `${i}`));
+      galery.push(renameAndMove(req,'galery', 'excursion',`${i}`));
     }
-    ;
-  }
+  };
 
-  exc.previewImage = renameAndMove('previewImage');
-  exc.mainImage = renameAndMove('mainImage');
+  exc.previewImage = renameAndMove(req,'previewImage', 'excursion');
+  exc.mainImage = renameAndMove(req,'mainImage', 'excursion');
   exc.galery = JSON.stringify(galery);
 
   let sql = `UPDATE excursion SET ? WHERE id = '${req.params.id}'`;

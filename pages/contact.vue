@@ -131,9 +131,9 @@
     },
     head() {
       return {
-        title: this.$t('index.title'),
+        title: this.$t('contact.title'),
         meta: [
-          {hid: 'description', name: 'description', content: this.$t('index.description')}
+          {hid: 'description', name: 'description', content: this.$t('contact.description')}
         ]
       }
     }

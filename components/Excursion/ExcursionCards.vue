@@ -84,9 +84,9 @@
                     </span>
                     <span style="font-size: calc(9px + 2 * ((100vw) / 900));">
                       / par personne
-                      <nobr style="position: relative; top: -12px;">
+                      <div class="nobr">
                         en groupe de {{exc.pricePerPerson}} participants
-                      </nobr>
+                      </div>
                     </span>
                   </p>
                 </div>
@@ -144,5 +144,10 @@
     color: #000;
     font-size: 14px;
     height: 22px;
+  }
+  .nobr {
+    position: relative;
+    margin-top: -12px;
+    white-space: nowrap;
   }
 </style>

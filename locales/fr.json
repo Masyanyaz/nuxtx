@@ -132,9 +132,9 @@
     "setting": "Paramètres"
   },
   "index": {
-    "title": "Home",
-    "description": "Home des",
-    "h1": "Visites des villes russes",
+    "title": "Villes de Russie: Visites guidées en français",
+    "description": "Villes russes: Visites insolittes en français. Des guides privés; des excursions individuelles et en petit groupe, le meilleur rapport qualité prix",
+    "h1": "Excursions en Russie",
     "topDestinations": "Top Destinations",
     "activities": "Activités",
     "reviews": "Nos clients heureux"
@@ -162,18 +162,28 @@
     }
   },
   "about": {
-    "title": "Home",
-    "description": "",
-    "h1": ""
+    "title": "Information sur notre projet",
+    "description": "Une agence d'excursions qui organise des visites guidées dans les villes russes.",
+    "h1": "Qui sommes nous"
   },
   "contact": {
-    "title": "Home",
-    "description": "",
-    "h1": ""
+    "title": "Nos contacts",
+    "description": "Nous contacter: nos coordonnées et l'adresse du bureau",
+    "h1": "Contacts"
+  },
+  "cookies": {
+    "title": "Nous utilisations les fichiers cookies",
+    "description": "Conditions d'utilisation des cookies et d'autres technologies similaires",
+    "h1": "L’utilisation des cookies"
+  },
+  "politic": {
+    "title": "Le traitement de vos données personnelles",
+    "description": "Comment nous collectons et traitons vos données personnelles",
+    "h1": "Politique de confidentialité "
   },
   "destinations": {
-    "title": "Home",
-    "description": "",
+    "title": "Les visites guidées privées en français. Liste des villes ",
+    "description": "Des excursions en Russie, des visites guidées en français. La liste des destinations.",
     "h1": "Destinations"
   },
   "excursionAddNew": {
@@ -183,5 +193,10 @@
         "spb": "saint-petersburg"
       }
     }
+  },
+  "activities": {
+    "title": "Des visites insolites avec des guides francophones",
+    "description": "Des excursions en Russie, des visites guidées privées en français. Les activités et attractions incontournables en Russie ",
+    "h1": "Activités"
   }
 }
