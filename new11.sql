@@ -1,4 +1,33 @@
+create table cities
+(
+    id           int auto_increment
+        primary key,
+    title        text null,
+    description  text null,
+    h1           text null,
+    galery       text null,
+    url          text null,
+    lang         text null,
+    name         text null,
+    previewImage text null,
+    mainImage    text null,
+    popular      text null
+);
+
 INSERT INTO new.cities (id, title, description, h1, galery, url, lang, name, previewImage, mainImage, popular) VALUES (135, 'Visites guidées de St-Pétersbourg en français', 'Des visites insolites de St Pétersbourg en français. Des visites sur meusure ou en petit groupe. Le meilleur rapport qualité/prix.', 'Visites guidées de St-Pétersbourg', '["/image/fr/saint-petersbourg/galery/galery-saint-petersbourg0.jpg","/image/fr/saint-petersbourg/galery/galery-saint-petersbourg1.jpg","/image/fr/saint-petersbourg/galery/galery-saint-petersbourg2.jpg","/image/fr/saint-petersbourg/galery/galery-saint-petersbourg3.jpg"]', 'saint-petersbourg', 'fr', 'Saint-Pétersbourg', '/image/fr/saint-petersbourg/preview-saint-petersbourg.jpg', '/image/fr/saint-petersbourg/main-saint-petersbourg.jpg', 'true');
+create table exc_category
+(
+    id      int auto_increment
+        primary key,
+    exc_id  int not null,
+    data_id int not null,
+    constraint FK_exc_category_exc_category_data
+        foreign key (data_id) references exc_category_data (id),
+    constraint exc_category_excursion_fk
+        foreign key (exc_id) references excursion (id)
+            on update cascade on delete cascade
+);
+
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (1, 13, 8);
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (2, 14, 10);
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (3, 15, 8);
@@ -51,6 +80,19 @@ INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (134, 32, 2);
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (135, 34, 2);
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (136, 34, 11);
 INSERT INTO new.exc_category (id, exc_id, data_id) VALUES (137, 17, 2);
+create table exc_category_data
+(
+    id           int auto_increment
+        primary key,
+    name         text null,
+    url          text null,
+    h1           text null,
+    title        text null,
+    description  text null,
+    previewImage text null,
+    popular      text null
+);
+
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (1, 'Tours de ville', 'tours-de-ville', 'Tours de ville à Saint-Pétersbourg', 'Tours de ville à Saint-Pétersbourg', 'Tours de ville à St-Pétersbourg avec des guides francophones, sur mesure ou en mini-groupe, le meilleur rapport qualité-prix.', '/image/fr/saint-petersbourg/eglise-bois-pokrovskaia/preview-eglise-bois-pokrovskaia.jpg', 'false');
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (2, 'Pavlovsk', 'pavlovsk', 'Visite de la ville de Pavlovsk', 'Visite guidée de la ville de Pavlovsk', 'Visites insolites à Pavlovsk. Des visites sur mesure ou en mini-groupe. Le meilleur rapport qualité/prix.', '/image/fr/saint-petersbourg/visite-parc-catherine-tsarskoie-selo/preview-visite-parc-catherine-tsarskoie-selo.jpg', 'true');
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (3, 'Peterhof', 'petergof', 'Visite de la ville de Peterhof', 'Visite guidée de la ville de Peterhof avec un guide francophone', 'Visites insolites à Peterhof. Des visites sur mesure ou en mini-groupe. Le meilleur rapport qualité/prix.', '/image/fr/saint-petersbourg/musee-appartement-fiodor-dostoievski/preview-musee-appartement-fiodor-dostoievski.jpg', 'true');
@@ -63,6 +105,34 @@ INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previe
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (10, 'Veliky Novgorod', 'veliky-novgorod', 'Visite de la ville de Veliki Novgorod', 'Visite guidée de la ville de Veliki Novgorod', 'Profitez de cette visite insolite et découvrez la ville de Veliki Novgorod en compagnie d''un guide francophone.  Une visite sur mesure ou en mini-groupe. Le meilleur rapport qualité/prix.', '/image/fr/saint-petersbourg/saint-petersbourg-comme-vous-habitez/preview-saint-petersbourg-comme-vous-habitez.jpg', 'true');
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (11, 'Tsarskoïe Selo', 'tsarskoie-selo', 'Visite guidée de Tsarskoïe selo (Pouchkine)', 'Visite guidée de la ville de Tsarskoïe selo (Pouchkine) ', 'Visite guidée de la ville de Tsarskoïe selo (Pouchkine). Une visite sur mesure ou en mini-groupe. Le meilleur rapport qualité/prix.', '/image/fr/saint-petersbourg/saint-petersbourg-comme-vous-habitez/preview-saint-petersbourg-comme-vous-habitez.jpg', 'true');
 INSERT INTO new.exc_category_data (id, name, url, h1, title, description, previewImage, popular) VALUES (12, 'Ladoga', 'ladoga', 'Visites du lac Ladoga', 'Visites guidées du lac Ladoga', 'Visites insolites du lac Ladoga. Des visites sur mesure ou en mini-groupe. Le meilleur rapport qualité/prix.', '/image/fr/saint-petersbourg/saint-petersbourg-comme-vous-habitez/preview-saint-petersbourg-comme-vous-habitez.jpg', 'true');
+create table excursion
+(
+    id             int auto_increment
+        primary key,
+    city_id        int  not null,
+    url            text not null,
+    popular        text null,
+    h1             text null,
+    title          text null,
+    description    text null,
+    name           text null,
+    detailText     text null,
+    included       text null,
+    excluded       text null,
+    groupSize      int  null,
+    price          int  null,
+    time           text null,
+    timeGroup      text null,
+    mainImage      text null,
+    previewImage   text null,
+    galery         text null,
+    priceList      text null,
+    pricePerPerson int  null,
+    constraint excursion_cities_fk
+        foreign key (city_id) references cities (id)
+            on update cascade on delete cascade
+);
+
 INSERT INTO new.excursion (id, city_id, url, popular, h1, title, description, name, detailText, included, excluded, groupSize, price, time, timeGroup, mainImage, previewImage, galery, priceList, pricePerPerson) VALUES (13, 135, 'visite-du-bania', null, 'Visite du bania ', 'Visite du bania à St-Pétersbourg', 'Visite du bania russe traditionnel à St-Pétersbourg. Découvrez son histoire et ses traditions:', 'Visite du bania', '<p>Allez découvrir le vrai banya pour vous sentir russe lors de votre séjour à Saint-Pétersbourg! Une visite au bain russe sera une expérience inoubliable et l’occasion de diversifier le programme touristique standard avec une aventure inhabituelle.</p>
 <p>Le bain russe est une tradition ancienne qui est aimée et respectée dans notre pays. Vous pourrez visiter le bain privé située dans une maison en bois. La température à l''intérieur peut atteindre 100 degrés.</p>
 
