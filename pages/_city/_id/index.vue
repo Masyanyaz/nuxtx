@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!component">
+  <div v-if="isExc">
     <ExcursionPage :exc="exc" :excursions="excursions"/>
   </div>
   <div v-else>
@@ -11,52 +11,52 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    async asyncData({store, params, error, route}) {
-      let query = store.getters['filter/query']
+    async asyncData({store, params, error}) {
+      let query = store.getters['filter/query'];
 
-      let component = false
-      let city
-      let filter
       const url = {
         language: store.state.locale,
         city_url: params.city,
-        exc_url: params.id,
+        id: params.id,
         category_url: !params.id ? '.*' : params.id !== 'all' ? params.id : '.*'
       };
-      query.price_min ? url.price_min = query.price_min : false
-      query.price_max ? url.price_max = query.price_max : false
-      query.group_min ? url.group_min = query.group_min : false
-      query.time_group ? url.time_group = JSON.parse(query.time_group) : false
+      query.price_min ? url.price_min = query.price_min : false;
+      query.price_max ? url.price_max = query.price_max : false;
+      query.group_min ? url.group_min = query.group_min : false;
+      query.time_group ? url.time_group = JSON.parse(query.time_group) : false;
 
-      await store.dispatch('excursion/fetchExcursion', url)
-      let exc = await store.getters['excursion/excByUrl'](params.id)
-      if (exc === undefined) {
+      try {
+        await store.dispatch('fetchExcursuinOrFilter', url)
+        let isExc = await store.state.isExc;
+
+        if (isExc) {
+          let exc = await store.getters['excursion/excByUrl'](params.id)
+          return {exc, isExc}
+        }
+
         if (store.getters['filter/filters'].length === 0) {
           await store.dispatch('filter/fetchFilters', url)
         }
-        filter = await store.getters['filter/filterByUrl'](params.id)
-        if (filter === undefined) {
-          error({statusCode: 404})
-        }
+        let filter = await store.getters['filter/filterByUrl'](params.id)
+
         if (store.getters['city/city'].length === 0 || store.getters['city/cityByUrl'](params.city).url !== params.city) {
           await store.dispatch('city/fetchCity', url)
         }
-        city = await store.getters['city/cityByUrl'](params.city)
+        let city = await store.getters['city/cityByUrl'](params.city)
 
         await store.dispatch('excursion/fetchExcursions', url)
 
-        component = true
-      } else {
-        await store.dispatch('excursion/fetchExcursions', url)
+        return {isExc, city, filter}
+      } catch {
+        error({statusCode: 404})
       }
-      return {exc, component, city, filter}
     },
     head() {
       return {
-        title: !this.component ? this.exc.title : this.filter.title,
+        title: this.isExc ? this.exc.title : this.filter.title,
         meta: [
           {
-            hid: 'description', name: 'description', content: !this.component ? this.exc.description :
+            hid: 'description', name: 'description', content: this.isExc ? this.exc.description :
               this.filter.description
           }
         ]

@@ -433,6 +433,95 @@ app.get('/admin/api/getexcursion', (req, res) => {
   });
 });
 
+app.get('/admin/api/excursuinorfilter/:lang/:id', (req, res) => {
+  let sql = `SELECT 'true' AS isExc
+            FROM excursion
+            INNER JOIN cities
+            WHERE cities.lang = '${req.params.lang}'
+            AND cities.id = excursion.city_id
+            AND excursion.url = '${req.params.id}'
+            
+            UNION
+            
+            SELECT 'false' AS isExc
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON cities.lang = '${req.params.lang}'
+            AND cities.id = excursion.city_id
+            AND excursion.id = exc_category.exc_id
+            AND exc_category_data.url = '${req.params.id}'
+            GROUP BY exc_category_data.url`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    if (!result.length) {
+      res.sendStatus(404);
+    } else {
+      if(result[0].isExc === 'true') {
+        let sql = `SELECT excursion.id, excursion.url, excursion.name, excursion.h1, excursion.title, excursion.description, excursion.price, excursion.pricePerPerson, excursion.priceList,
+            excursion.time, excursion.mainImage, excursion.galery, excursion.detailText, excursion.included, excursion.excluded, excursion.groupSize
+            FROM excursion
+            LEFT JOIN cities
+            ON cities.id = excursion.city_id
+            WHERE cities.url = '${req.query.city_url}'
+            AND cities.lang = '${req.params.lang}' 
+            AND excursion.url = '${req.params.id}'`
+        let query = db.query(sql, (err, result) => {
+          if (err) console.log(err);
+          result.forEach(exc => {
+            exc.galery ? exc.galery = JSON.parse(exc.galery) : exc.galery = '';
+            exc.included ? exc.included = JSON.parse(exc.included) : exc.included = '';
+            exc.excluded ? exc.excluded = JSON.parse(exc.excluded) : exc.excluded = '';
+            exc.priceList ? exc.priceList = JSON.parse(exc.priceList) : exc.priceList = '';
+          });
+          res.send(result)
+        });
+      } else {
+        let sql = `SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            exc_category_data.title, exc_category_data.description, COUNT(DISTINCT excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category_data.url = 'all'
+            WHERE cities.url REGEXP '${req.query.city_url || '.*'}'
+            AND cities.lang = '${req.params.lang}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
+            GROUP BY exc_category_data.url
+            
+            UNION
+            
+            SELECT exc_category_data.name, exc_category_data.url, exc_category_data.h1, 
+            exc_category_data.title, exc_category_data.description, COUNT(excursion.id) AS exc_count
+            FROM exc_category_data
+            INNER JOIN excursion
+            INNER JOIN cities
+            INNER JOIN exc_category
+            ON excursion.id = exc_category.exc_id
+            AND cities.id = excursion.city_id
+            AND exc_category.data_id = exc_category_data.id
+            WHERE cities.url REGEXP '${req.query.city_url || '.*'}'
+            AND cities.lang = '${req.params.lang}'
+            AND excursion.price >= ${req.query.price_min || 0}
+            AND excursion.price <= ${req.query.price_max || 10000}
+            AND excursion.groupSize >= ${req.query.group_min || 1} 
+            AND timeGroup REGEXP '${req.query.time_group || '.*'}'
+            GROUP BY exc_category_data.url`
+        let query = db.query(sql, (err, result) => {
+          if (err) throw err;
+          res.send(result)
+        });
+      }
+    }
+  });
+});
+
 // send form
 app.post('/send', (req, res) => {
   const output = `

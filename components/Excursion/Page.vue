@@ -250,8 +250,8 @@
     border-top: 2px solid #D7DCE3;
     margin-top: 25px;
   }
-  
-  td {
+
+  .v-data-table td {
     font-size: 16px;
   }
 </style>
