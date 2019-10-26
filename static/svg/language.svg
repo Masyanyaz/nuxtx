@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"
+       stroke-linejoin="round">
+        <g id="Tour_Detail_1" transform="translate(-735.000000, -1005.000000)" stroke="#5191FA">
+            <g id="tour-detail" transform="translate(0.000000, 211.000000)">
+                <g id="feauture" transform="translate(135.000000, 765.000000)">
+                    <g id="Group" transform="translate(601.000000, 25.000000)">
+                        <g transform="translate(0.000000, 5.000000)" id="Regular">
+                            <g>
+                                <circle id="Oval" cx="9" cy="5.5" r="5.5"></circle>
+                                <path
+                                        d="M10,13.0773333 C9.66846827,13.0319989 9.33455994,13.0061766 9,13 C4.02943725,13 5.92118946e-16,17.0294373 0,22"
+                                        id="Shape"></path>
+                                <path
+                                        d="M28,26 L24,26 L18,30 L18,26 L16,26 C14.8954305,26 14,25.1045695 14,24 L14,16 C14,14.8954305 14.8954305,14 16,14 L28,14 C29.1045695,14 30,14.8954305 30,16 L30,24 C30,25.1045695 29.1045695,26 28,26 Z"
+                                        id="Shape"></path>
+                                <path d="M18,18 L26,18" id="Shape"></path>
+                                <path d="M18,22 L26,22" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

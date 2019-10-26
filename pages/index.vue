@@ -7,19 +7,21 @@
         </div>
       </v-flex>
     </v-layout>
-    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center my-8">
       {{$t('index.activities')}}
     </h2>
     <ExcursionCards :excursions="excursions"/>
-    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center my-8">
       {{$t('index.topDestinations')}}
     </h2>
     <CityCards :cities="citiesFilter"/>
     <Blog class="mt-10"/>
-    <h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
-      {{$t('index.reviews')}}
-    </h2>
-    <Reviews/>
+    <div style="background-color: #fff;" class="py-3 my-8">
+      <h2 class="d-flex justify-center">
+        {{$t('index.reviews')}}
+      </h2>
+      <Reviews/>
+    </div>
   </div>
 </template>
 
@@ -83,5 +85,9 @@
 
   .welcome-top {
     background: url('/image/home/noel-garanti.jpg') no-repeat 50% 15% / cover;
+  }
+
+  h2 {
+    font-size: calc(17px + 2 * ((100vw) / 200));
   }
 </style>

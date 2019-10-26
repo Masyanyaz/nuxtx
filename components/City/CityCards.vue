@@ -30,7 +30,7 @@
                   <span
                     style="font-size: calc(10px + 2 * ((100vw) / 400));text-shadow: 1px 1px #000;"
                   >
-                    {{city.excCount}} excursions
+                    {{city.excCount}} {{$t('commonWords.excursion')}}
                   </span>
                 </div>
               </div>

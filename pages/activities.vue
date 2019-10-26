@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h1 class="d-flex justify-center my-8" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('activities.h1')}}
     </h1>
     <ExcursionCards :excursions="excursions"/>

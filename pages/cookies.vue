@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-lg>
-    <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h1 class="d-flex justify-center my-8" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('cookies.h1')}}
     </h1>
     <p style="text-align: justify;">

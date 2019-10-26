@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h1 class="d-flex justify-center my-8" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('destinations.h1')}}
     </h1>
     <CityCards :cities="cities"/>
@@ -9,7 +9,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  const CityCards = () => import("~/components/City/CityCards")
 
   export default {
     async asyncData({store}) {
@@ -34,7 +33,7 @@
       }
     },
     components: {
-      CityCards
+      CityCards: () => import("~/components/City/CityCards")
     }
   }
 </script>

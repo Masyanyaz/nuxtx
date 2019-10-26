@@ -14,7 +14,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <h2 class="d-flex justify-center mt-9 mb-4" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h2 class="d-flex justify-center mt-9 mb-4">
       Choisissez une visite guidée
     </h2>
     <CategoryCards :category="categoryFilter" />
@@ -36,13 +36,14 @@
         >
           {{ tag.name }}
           <span
-            class="ml-1"
-            style="font-weight: bold"
-          >{{tag.exc_count}}</span>
+            class="ml-1 font-weight-bold"
+          >
+            {{tag.exc_count}}
+          </span>
         </v-chip>
       </v-chip-group>
     </v-container>
-    <h2 class="d-flex justify-center mt-9 mb-7" style="text-align: center">
+    <h2 class="d-flex justify-center my-8" style="text-align: center">
       Nos meilleurs visites à Saint-Pétersbourg
     </h2>
     <ExcursionCards :excursions="excursions"/>
@@ -112,5 +113,7 @@
 </script>
 
 <style scoped lang="scss">
-
+  h2 {
+    font-size: calc(17px + 2 * ((100vw) / 200));
+  }
 </style>

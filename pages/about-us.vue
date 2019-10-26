@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="d-flex justify-center mt-7 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
+    <h1 class="d-flex justify-center my-8" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('about.h1')}}
     </h1>
     <div class="au-top">
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="card-line mt-7 mb-7">
+    <div class="card-line my-8">
       <div class="card" v-for="(item, i) in cardItems" :key="i">
         <div class="front">
           <h3>{{item.title}}</h3>
@@ -173,10 +173,6 @@
     box-sizing: border-box;
   }
 
-  /*.card:hover .front {
-    transform: rotateY(-180deg);
-  }*/
-
   .card .back {
     position: absolute;
     backface-visibility: hidden;
@@ -187,10 +183,6 @@
     border: 5px solid #5191FA;
     box-sizing: border-box;
   }
-
-  /*.card:hover .back {
-    transform: rotateX(0deg);
-  }*/
 
   .front > h3 {
     margin-top: 0;
@@ -206,7 +198,7 @@
   }
 
   .back > p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 14px;
     color: #fff;
     text-align: left;
@@ -278,13 +270,13 @@
     font-size: 14px;
     color: #1A2B48;
     margin-top: 10px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .au-wokers-item .pos {
     font-size: 14px;
     color: #768092;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
 

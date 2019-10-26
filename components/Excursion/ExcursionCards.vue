@@ -3,11 +3,7 @@
     <v-container grid-list-lg>
       <v-layout row wrap>
         <v-flex
-          xs12
-          sm6
-          md4
-          lg3
-          xl2
+          xs12 sm6 md4 lg3 xl2
           v-for="(exc, i) in excursions"
           :key="i"
         >
@@ -45,7 +41,7 @@
                     </g>
                   </g>
                 </svg>
-                  {{exc.time}} heures
+                  {{exc.time}} {{exc.time === '1' ? $t('commonWords.duration.hour') : $t('commonWords.duration.hours')}}
                 </span>
               </div>
               <v-card-title
@@ -82,11 +78,11 @@
                     <span style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: 500;">
                       €{{exc.price}}
                     </span>
-                    <span style="font-size: calc(9px + 2 * ((100vw) / 900));">
-                      / par personne
-                      <div class="nobr">
-                        en groupe de {{exc.pricePerPerson}} participants
-                      </div>
+                    <span style="font-size: calc(11px + 2 * ((100vw) / 900));">
+                      / {{$t('commonWords.perPerson')}}
+                      <span class="nobr d-block" style="font-size: calc(9px + 2 * ((100vw) / 900));">
+                        {{$t('Excursion.Cards.perGroup.1')}} {{exc.pricePerPerson}} {{$t('Excursion.Cards.perGroup.2')}}
+                      </span>
                     </span>
                   </p>
                 </div>

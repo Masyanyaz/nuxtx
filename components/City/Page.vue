@@ -11,7 +11,7 @@
           class="welcome-top"
         >
           <h1 class="welcome-top__text">{{city.h1}}</h1>
-          <div class="filter pl-4 pr-4 d-md-flex d-none">
+          <div class="filter d-md-flex d-none container">
             <v-chip-group
               column
               active-class="green lighten-1"
@@ -25,18 +25,17 @@
               >
                 {{ tag.name }}
                 <span
-                  class="ml-1"
-                  style="font-weight: bold"
+                  class="ml-1 font-weight-bold"
                 >
                   {{tag.exc_count}}
                 </span>
               </v-chip>
             </v-chip-group>
           </div>
-          <div class="filter pl-4 pr-4 d-flex d-md-none">
+          <div class="filter px-4 d-flex d-md-none">
             <div class="d-flex flex-column justify-center align-center">
               <h4 style="color: #ffffff; margin-top: -40px; font-size: 28px;">{{filter.name}}</h4>
-              <p style="color: #ffffff; font-size: 20px;">{{filter.exc_count}} {{$t('Cards.excursion')}}</p>
+              <p style="color: #ffffff; font-size: 20px;">{{filter.exc_count}} {{$t('commonWords.excursion')}}</p>
               <v-chip
                 color="green lighten-1"
                 @click="drawer = !drawer"
@@ -77,7 +76,7 @@
     <!--<h2 class="d-flex justify-center mt-9 mb-7" style="font-size: calc(17px + 2 * ((100vw) / 200));">
       {{$t('_city.excursion')}}
     </h2>-->
-    <ExcursionFilter :city="city"/>
+    <ExcursionFilter :city="city" class="my-5"/>
     <ExcursionCards :excursions="excursions"/>
   </div>
 </template>
@@ -86,7 +85,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    props: ['city', 'filter'],
+    props: ['city'],
     data() {
       return {
         drawer: false,
@@ -114,6 +113,9 @@
       })
     },
     computed: {
+      filter() {
+        return this.$store.getters['filter/filterByUrl'](this.$route.params.id)
+      },
       ...mapGetters({
         query: 'filter/query',
         excursions: 'excursion/excursions',
@@ -137,11 +139,8 @@
   }
 
   .filter {
-    position: absolute;
+    position: relative;
     top: 70%;
-    left: 0;
-    width: 100%;
-    display: flex;
     justify-content: center;
   }
 

@@ -3,7 +3,6 @@
     <div class="footer container">
       <div class="footer-item">
         <span class="footer-top-element">{{$t('Footer.needHelp.title')}}</span>
-        <span class="footer-top-element-border"/>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">{{$t('Footer.needHelp.phone.title')}}</span>
           <span class="footer-social-elements-bold">{{$t('Footer.needHelp.phone.number')}}</span>
@@ -24,94 +23,32 @@
               <img
                 v-lazy="src.src"
                 alt=""
-                style="margin-right:10px; ">
+                class="mr-3"
+              >
             </a>
           </div>
         </div>
       </div>
-      <div class="footer-item">
-        <span class="footer-top-element">{{$t('Footer.company.title')}}</span>
-        <span class="footer-top-element-border"/>
+      <div class="footer-item"
+           v-for="(item, i) in menuItems"
+           :key="i">
+        <span class="footer-top-element">{{item.title}}</span>
         <div class="footer-item-list">
-
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.company.about.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.company.about.title')}}
-            </nuxt-link>
-          </span>
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.company.team.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.company.team.title')}}
-            </nuxt-link>
-          </span>
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.company.blog.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.company.blog.title')}}
-            </nuxt-link>
-          </span>
-
-        </div>
-      </div>
-      <div class="footer-item">
-        <span class="footer-top-element">{{$t('Footer.support.title')}}</span>
-        <span class="footer-top-element-border"/>
-        <div class="footer-item-list">
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.support.contact.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.support.contact.title')}}
-            </nuxt-link>
-          </span>
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.support.legal.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.support.legal.title')}}
-            </nuxt-link>
-          </span>
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.support.cookies.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.support.cookies.title')}}
-            </nuxt-link>
-          </span>
-          <span>
-            <nuxt-link
-              :to="$i18n.path(`${$t('Footer.support.privacy.url')}`)"
-              style="text-decoration: none; color: inherit;"
-            >
-              {{$t('Footer.support.privacy.title')}}
-            </nuxt-link>
-          </span>
+          <nuxt-link
+            v-for="(link, i) in item.links"
+            :key="i"
+            :to="$i18n.path(link.url)"
+            class="mb-6"
+          >
+            {{link.title}}
+          </nuxt-link>
         </div>
       </div>
       <div class="footer-item">
         <span class="footer-top-element">{{$t('Footer.setting')}}</span>
-        <span class="footer-top-element-border"/>
         <div class="footer-item-list">
           <span>{{$t('commonWords.languages.title')}}</span>
           <div class="footer-select">
-            <!--            <v-btn-->
-            <!--              text-->
-            <!--              to="/en"-->
-            <!--              @click="switchLanguage"-->
-            <!--            >-->
-            <!--              English-->
-            <!--            </v-btn>-->
             <v-btn
               class="pl-0 pr-0"
               text
@@ -146,7 +83,47 @@
           {src: '/image/footer/ico_instagram_footer.png', href: 'https://www.instagram.com/russieautrement/'},
           {src: '/image/footer/ico_twitter_footer.png', href: 'https://twitter.com/Russie_A_Ltd/'}
         ],
-        paySrc: '/image/footer/1.svg'
+        paySrc: '/image/footer/1.svg',
+        menuItems: [
+          {
+            title: this.$t('Footer.company.title'),
+            links: [
+              {
+                url: this.$t('Links.about.url'),
+                title: this.$t('Links.about.title'),
+              },
+              {
+                url: this.$t('Links.team.url'),
+                title: this.$t('Links.team.title'),
+              },
+              {
+                url: this.$t('Links.blog.url'),
+                title: this.$t('Links.blog.title'),
+              }
+            ]
+          },
+          {
+            title: this.$t('Footer.support.title'),
+            links: [
+              {
+                url: this.$t('Links.contact.url'),
+                title: this.$t('Links.contact.title'),
+              },
+              {
+                url: this.$t('Links.legal.url'),
+                title: this.$t('Links.legal.title'),
+              },
+              {
+                url: this.$t('Links.cookies.url'),
+                title: this.$t('Links.cookies.title'),
+              },
+              {
+                url: this.$t('Links.privacy.url'),
+                title: this.$t('Links.privacy.title'),
+              }
+            ]
+          }
+        ]
       }
     },
     methods: {
@@ -180,26 +157,21 @@
         flex-direction: column;
         padding-top: 20px;
 
-        span {
-          margin-bottom: 25px;
-          font-size: 16px;
-
-          a {
-            text-decoration: none;
-            color: inherit;
-          }
+        a {
+          text-decoration: none;
+          color: inherit;
         }
       }
     }
 
     &-top-element {
       display: block;
-      padding-bottom: 20px;
       text-transform: uppercase;
-      font-size: 16px;
       font-weight: bold;
 
-      &-border {
+      &::after {
+        margin-top: 20px;
+        content: '';
         width: 100px;
         border-bottom: 1px solid #ebebeb;
         display: block;
@@ -236,6 +208,7 @@
         margin-bottom: 15px;
       }
     }
+
     @media(max-width: 660px) {
       flex-direction: column;
     }

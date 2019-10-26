@@ -1,25 +1,14 @@
 <template>
   <div class="blue-block">
     <div class="container d-flex">
-      <div class="bb-item pl-0 pr-0">
-        <img src="http://116.203.132.142/wp-content/uploads/2019/01/ico_travelers_1.svg" alt="">
-        <span>Excursions à la carte</span>
-        <p>Toutes nos excursions sont individuelles. Nous n'organisons pas de grands groupes pré-formés avec des gens
-          qui ne se connaissent pas.</p>
-      </div>
-
-      <div class="bb-item pr-3 pl-3">
-        <img src="http://116.203.132.142/wp-content/uploads/2019/01/ico_maps_1.svg" alt="">
-        <span>Économie du temps</span>
-        <p>Notre guide vous donnera les informations nécessaires pour une meilleure compréhension de l'histoire russe !
-          Il vous conseillera aussi de bonnes adresses où manger.</p>
-      </div>
-
-      <div class="bb-item pr-0 pl-0">
-        <img src="http://116.203.132.142/wp-content/uploads/2019/01/ico_localguide_1.svg" alt="">
-        <span>Immersion culturelle</span>
-        <p>Profitez de la découverte de Saint-Pétersbourg en compagnie d’un guide locale, représentant de sa
-          culture.</p>
+      <div class="bb-item"
+           :class="i === 1 ? 'px-3' : 'px-0'"
+           v-for="(item,i) in items"
+           :key="i"
+      >
+        <img v-lazy="item.img" alt="">
+        <span>{{item.title}}</span>
+        <p>{{item.text}}</p>
       </div>
     </div>
   </div>
@@ -27,6 +16,27 @@
 
 <script>
   export default {
+    data() {
+      return {
+        items: [
+          {
+            img: '/svg/ico_travelers_1.svg',
+            title: 'Excursions à la carte',
+            text: 'Toutes nos excursions sont individuelles. Nous n\'organisons pas de grands groupes pré-formés avec des gens qui ne se connaissent pas.'
+          },
+          {
+            img: '/svg/ico_maps_1.svg',
+            title: 'Économie du temps',
+            text: 'Notre guide vous donnera les informations nécessaires pour une meilleure compréhension de l\'histoire russe! Il vous conseillera aussi de bonnes adresses où manger.'
+          },
+          {
+            img: '/svg/ico_localguide_1.svg',
+            title: 'Immersion culturelle',
+            text: 'Profitez de la découverte de Saint-Pétersbourg en compagnie d’un guide locale, représentant de sa culture.'
+          }
+        ]
+      }
+    },
     name: "Blog"
   }
 </script>
@@ -35,7 +45,6 @@
   .blue-block {
     background: #4287f8;
     color: #fff;
-    justify-content: space-between;
 
     .container {
       @media (max-width: 960px) {

@@ -3,11 +3,7 @@
     <v-container grid-list-lg class="container">
       <v-layout row wrap>
         <v-flex
-          xs12
-          sm6
-          md4
-          lg3
-          xl2
+          xs12 sm6 md4 lg3 xl2
           v-for="item in category"
           :key="item.id"
         >
@@ -30,7 +26,7 @@
                   <span
                     style="font-size: calc(10px + 2 * ((100vw) / 400));text-shadow: 1px 1px #000;"
                   >
-                    {{item.exc_count}} excursions
+                    {{item.exc_count}} {{$t('commonWords.excursion')}}
                   </span>
                 </div>
               </div>

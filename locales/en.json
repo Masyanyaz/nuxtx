@@ -7,42 +7,40 @@
       "en": "Anglais",
       "de": "Allemagne",
       "it": "Italien"
-    }
-  },
-  "Cards": {
+    },
+    "from": "à partir de",
     "excursion": "Excursions",
     "duration": {
       "title": "Durée",
       "hour": "heure",
       "hours": "heures"
     },
-    "from": "à partir de"
+    "groupSize": {
+      "title": "Nombre de personnes",
+      "person": "personne",
+      "persons": "personnes"
+    },
+    "price": "Prix",
+    "perPerson": "par personne"
   },
   "Excursion": {
     "ExcursionHeader": {
-      "duration": {
-        "title": "Durée",
-        "hour": "heure",
-        "hours": "heures"
-      },
-      "groupSize": {
-        "title": "Nombre de personnes",
-        "person": "personne",
-        "persons": "personnes"
-      },
-      "language": "Language",
-      "price": "Prix"
 
     },
+
+    "Cards": {
+      "perGroup": {
+        "1": "en groupe de",
+        "2": "participants"
+      }
+    },
+
     "overview": "Descriptif",
     "included": "Inclus",
     "exclude": "Pas inclus",
     "alsoLike": "Vous pourriez aussi aimer"
   },
   "City": {
-
-  },
-  "Footer": {
 
   },
   "Form": {
@@ -61,7 +59,7 @@
       "accept": "You must agree to continue!"
     }
   },
-  "Navbar": {
+  "Links": {
     "activities": {
       "name": "Activités",
       "url": "activities"
@@ -72,7 +70,15 @@
     },
     "about": {
       "name": "Qui sommes nous",
-      "url": "about-us"
+      "url": "qui-sommes-nous"
+    },
+    "team": {
+      "title": "Équipe",
+      "url": "team"
+    },
+    "blog": {
+      "title": "Blog",
+      "url": "blog"
     },
     "contact": {
       "name": "Contacts",
@@ -82,16 +88,28 @@
       "name": "FAQ",
       "url": "faq"
     },
-    "new": "Ad new",
-    "english": "English",
-    "french": "French"
+    "legal": {
+      "title": "Mentions légales",
+      "url": "legal"
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "url": "privacy"
+    },
+    "cookies": {
+      "title": "Cookies",
+      "url": "cookies"
+    }
   },
-  "Footrer": {
+  "Navbar": {
+    "new": "Ad new"
+  },
+  "Footer": {
     "needHelp":  {
       "title":"Besoin d'aide?",
       "phone": {
         "title": "Appelez nous",
-        "number": "+33(0)184883357"
+        "number": "+33 (0) 1 84 88 33 57"
       },
       "email": {
         "title": "Écrivez nous",
@@ -100,56 +118,28 @@
       "social": "Suivez nous"
     },
     "company": {
-      "title": "Entreprise",
-      "about": {
-        "name": "Qui sommes nous",
-        "url": "about-us"
-      },
-      "team": {
-        "name": "Équipe",
-        "url": "team"
-      },
-      "blog": {
-        "name": "Blog",
-        "url": "blog"
-      }
+      "title": "Entreprise"
     },
     "support": {
-      "title": "Soutien",
-      "contact": {
-        "name": "Contacts",
-        "url": "contacts"
-      },
-      "legal": {
-        "name": "Mentions légales",
-        "url": "legal"
-      },
-      "privacy": {
-        "name": "Politique de confidentialité",
-        "url": "privacy"
-      },
-      "cookies": {
-        "name": "Cookies",
-        "url": "cookies"
-      }
+      "title": "Soutien"
     },
     "setting": "Paramètres"
   },
   "index": {
-    "title": "Home",
-    "description": "Home des",
-    "h1": "Visites des villes russes",
+    "title": "Villes de Russie: Visites guidées en français",
+    "description": "Villes russes: Visites insolittes en français. Des guides privés; des excursions individuelles et en petit groupe, le meilleur rapport qualité prix",
+    "h1": "Excursions en Russie",
     "topDestinations": "Top Destinations",
     "activities": "Activités",
     "reviews": "Nos clients heureux"
   },
   "_city": {
-    "excursion": "Excursion"
+
   },
   "faq": {
     "title": "faq fr",
-    "description": "",
-    "h1": "",
+    "description": "faq fr",
+    "h1": "faq fr",
     "items": {
       "1": {
 
@@ -166,14 +156,34 @@
     }
   },
   "about": {
-    "title": "Home",
-    "description": "",
-    "h1": ""
+    "title": "Information sur notre projet",
+    "description": "Une agence d'excursions qui organise des visites guidées dans les villes russes.",
+    "h1": "Qui sommes nous"
   },
   "contact": {
-    "title": "Home",
-    "description": "",
-    "h1": ""
+    "title": "Nos contacts",
+    "description": "Nous contacter: nos coordonnées et l'adresse du bureau",
+    "h1": "Contacts"
+  },
+  "cookies": {
+    "title": "Nous utilisations les fichiers cookies",
+    "description": "Conditions d'utilisation des cookies et d'autres technologies similaires",
+    "h1": "L’utilisation des cookies"
+  },
+  "politic": {
+    "title": "Le traitement de vos données personnelles",
+    "description": "Comment nous collectons et traitons vos données personnelles",
+    "h1": "Politique de confidentialité "
+  },
+  "destinations": {
+    "title": "Les visites guidées privées en français. Liste des villes ",
+    "description": "Des excursions en Russie, des visites guidées en français. La liste des destinations.",
+    "h1": "Destinations"
+  },
+  "activities": {
+    "title": "Des visites insolites avec des guides francophones",
+    "description": "Des excursions en Russie, des visites guidées privées en français. Les activités et attractions incontournables en Russie ",
+    "h1": "Activités"
   },
   "excursionAddNew": {
     "tabs": {

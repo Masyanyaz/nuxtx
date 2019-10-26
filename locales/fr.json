@@ -8,35 +8,40 @@
       "de": "Allemagne",
       "it": "Italien"
     },
-    "from": "à partir de"
-  },
-  "Cards": {
+    "from": "à partir de",
     "excursion": "Excursions",
     "duration": {
       "title": "Durée",
       "hour": "heure",
       "hours": "heures"
-    }
+    },
+    "groupSize": {
+      "title": "Nombre de personnes",
+      "person": "personne",
+      "persons": "personnes"
+    },
+    "price": "Prix",
+    "perPerson": "par personne",
+    "request": "Sur demande"
   },
   "Excursion": {
     "ExcursionHeader": {
-      "duration": {
-        "title": "Durée",
-        "hour": "heure",
-        "hours": "heures"
-      },
-      "groupSize": {
-        "title": "Nombre de personnes",
-        "person": "personne",
-        "persons": "personnes"
-      },
-      "price": "Prix"
 
     },
-    "overview": "Descriptif",
-    "included": "Inclus",
-    "exclude": "Pas inclus",
-    "alsoLike": "Vous pourriez aussi aimer"
+
+    "Cards": {
+      "perGroup": {
+        "1": "en groupe de",
+        "2": "participants"
+      }
+    },
+    "Page": {
+      "overview": "Descriptif",
+      "included": "Inclus",
+      "excluded": "Pas inclus",
+      "alsoLike": "Vous pourriez aussi aimer",
+      "tablePrice": "Tarifs"
+    }
   },
   "City": {
 
@@ -57,30 +62,50 @@
       "accept": "You must agree to continue!"
     }
   },
-  "Navbar": {
+  "Links": {
     "activities": {
-      "name": "Activités",
+      "title": "Activités",
       "url": "activities"
     },
     "destinations": {
-      "name": "Destinations",
+      "title": "Destinations",
       "url": "destinations"
     },
     "about": {
-      "name": "Qui sommes nous",
+      "title": "Qui sommes nous",
       "url": "qui-sommes-nous"
     },
+    "team": {
+      "title": "Équipe",
+      "url": "team"
+    },
+    "blog": {
+      "title": "Blog",
+      "url": "blog"
+    },
     "contact": {
-      "name": "Contacts",
+      "title": "Contacts",
       "url": "contacts"
     },
     "faq": {
-      "name": "FAQ",
+      "title": "FAQ",
       "url": "faq"
     },
-    "new": "Ad new",
-    "english": "English",
-    "french": "French"
+    "legal": {
+      "title": "Mentions légales",
+      "url": "legal"
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "url": "politique-de-confidentialite"
+    },
+    "cookies": {
+      "title": "Cookies",
+      "url": "cookies"
+    }
+  },
+  "Navbar": {
+    "new": "Ad new"
   },
   "Footer": {
     "needHelp":  {
@@ -96,38 +121,10 @@
       "social": "Suivez nous"
     },
     "company": {
-      "title": "Entreprise",
-      "about": {
-        "title": "Qui sommes nous",
-        "url": "qui-sommes-nous"
-      },
-      "team": {
-        "title": "Équipe",
-        "url": "team"
-      },
-      "blog": {
-        "title": "Blog",
-        "url": "blog"
-      }
+      "title": "Entreprise"
     },
     "support": {
-      "title": "Soutien",
-      "contact": {
-        "title": "Contacts",
-        "url": "contacts"
-      },
-      "legal": {
-        "title": "Mentions légales",
-        "url": "legal"
-      },
-      "privacy": {
-        "title": "Politique de confidentialité",
-        "url": "privacy"
-      },
-      "cookies": {
-        "title": "Cookies",
-        "url": "cookies"
-      }
+      "title": "Soutien"
     },
     "setting": "Paramètres"
   },
@@ -140,12 +137,12 @@
     "reviews": "Nos clients heureux"
   },
   "_city": {
-    "excursion": "Excursion"
+
   },
   "faq": {
     "title": "faq fr",
-    "description": "",
-    "h1": "",
+    "description": "faq fr",
+    "h1": "faq fr",
     "items": {
       "1": {
 
@@ -186,6 +183,11 @@
     "description": "Des excursions en Russie, des visites guidées en français. La liste des destinations.",
     "h1": "Destinations"
   },
+  "activities": {
+    "title": "Des visites insolites avec des guides francophones",
+    "description": "Des excursions en Russie, des visites guidées privées en français. Les activités et attractions incontournables en Russie ",
+    "h1": "Activités"
+  },
   "excursionAddNew": {
     "tabs": {
       "language": "Английский",
@@ -193,10 +195,5 @@
         "spb": "saint-petersburg"
       }
     }
-  },
-  "activities": {
-    "title": "Des visites insolites avec des guides francophones",
-    "description": "Des excursions en Russie, des visites guidées privées en français. Les activités et attractions incontournables en Russie ",
-    "h1": "Activités"
   }
 }

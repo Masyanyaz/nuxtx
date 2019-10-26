@@ -56,7 +56,8 @@
         @click="onSubmit"
         :disabled="!valid"
         color="#5191FA"
-      >{{$t('Form.send')}}
+      >
+        {{$t('Form.send')}}
       </v-btn>
     </v-card-actions>
   </v-card>

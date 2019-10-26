@@ -15,14 +15,16 @@
           :to="$i18n.path(`${link.url}`)"
         >
           <v-list-item-content>
-            <v-list-item-title>{{ link.title }}
+            <v-list-item-title>
+              {{ link.title }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar height="80" style="box-shadow: none; border-bottom: 1px solid #EAEEF3; background-color: inherit"
+    <v-app-bar height="80"
+               style="box-shadow: none; border-bottom: 1px solid #EAEEF3; background-color: inherit"
                class="container d-flex align-center">
       <v-app-bar-nav-icon
         class="d-flex d-md-none"
@@ -33,7 +35,7 @@
           class="mr-5"
           :to="$i18n.path('')"
         >
-          <img src="/logo.svg" alt="" style="margin-bottom: -7px;" />
+          <img src="/svg/logo.svg" alt="" style="margin-bottom: -7px;" />
         </nuxt-link>
       <v-toolbar-items class="d-none d-md-flex pl-0 pr-0">
         <v-btn
@@ -76,10 +78,10 @@
       },
       links() {
         return [
-          {title: this.$t('Navbar.activities.name'), url: this.$t('Navbar.activities.url')},
-          {title: this.$t('Navbar.destinations.name'), url: this.$t('Navbar.destinations.url')},
-          {title: this.$t('Navbar.about.name'), url: this.$t('Navbar.about.url')},
-          {title: this.$t('Navbar.contact.name'), url: this.$t('Navbar.contact.url')},
+          {title: this.$t('Links.activities.title'), url: this.$t('Links.activities.url')},
+          {title: this.$t('Links.destinations.title'), url: this.$t('Links.destinations.url')},
+          {title: this.$t('Links.about.title'), url: this.$t('Links.about.url')},
+          {title: this.$t('Links.contact.title'), url: this.$t('Links.contact.url')},
         ]
       }
     },
