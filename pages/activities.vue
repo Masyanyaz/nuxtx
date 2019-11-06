@@ -4,6 +4,7 @@
       {{$t('activities.h1')}}
     </h1>
     <ExcursionCards :excursions="excursions"/>
+
   </div>
 </template>
 
@@ -27,7 +28,6 @@
       await store.dispatch('excursion/fetchExcursions', url)
     },
     computed: mapGetters({
-      loading: 'shared/loading',
       excursions: 'excursion/excursions',
     }),
     components: {

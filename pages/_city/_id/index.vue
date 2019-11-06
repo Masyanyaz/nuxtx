@@ -70,15 +70,6 @@
       CityPage: () => import('~/components/City/Page')
     },
     computed: {
-      // filtered() {
-      //   let arr = [];
-      //   this.excursions.forEach((a, i) => {
-      //     a.type.forEach(r => {
-      //       this.exc.type.includes(r) && this.exc.url !== a.url ? arr.push(a) : false
-      //     })
-      //   });
-      //   return arr.slice(0, this.numberOfWidth)
-      // },
       ...mapGetters({
         excursions: 'excursion/excursions',
       })

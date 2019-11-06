@@ -61,8 +61,8 @@
         </div>
       </div>
     </div>
-    <footer style="border-top: 1px solid #EAEEF3;" class="container">
-      <div class="d-flex justify-space-between align-center copyright">
+    <footer style="border-top: 1px solid #EAEEF3;">
+      <div class="d-flex justify-space-between align-center copyright container py-3">
         <div>
           Copyright © 2019 by Russie Autrement
         </div>

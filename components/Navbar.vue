@@ -66,6 +66,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
     data() {
       return {
@@ -73,9 +75,6 @@
       }
     },
     computed: {
-      isUserloggedIn() {
-        return this.$store.getters['user/isUserloggedIn']
-      },
       links() {
         return [
           {title: this.$t('Links.activities.title'), url: this.$t('Links.activities.url')},
@@ -83,11 +82,14 @@
           {title: this.$t('Links.about.title'), url: this.$t('Links.about.url')},
           {title: this.$t('Links.contact.title'), url: this.$t('Links.contact.url')},
         ]
-      }
+      },
+      ...mapGetters({
+        isUserloggedIn: 'user/isUserloggedIn'
+      })
     },
     methods: {
       onLogout() {
-        this.$store.dispatch('user/logoutUser')
+        this.$store.dispatch('user/logoutUser');
         this.$router.push('/')
       }
     }

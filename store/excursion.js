@@ -65,7 +65,6 @@ export const actions = {
       .then((data) => {
         commit('loadExcursions', data.data)
         commit('shared/setLoading', false, {root: true})
-
       })
       .catch(e => {
         commit('shared/setError', e.message, {root: true})

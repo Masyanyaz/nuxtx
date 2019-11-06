@@ -20,8 +20,6 @@
       }
     },
     computed: mapGetters({
-      loading: 'shared/loading',
-      user: 'user/user',
       cities: 'city/cities'
     }),
     head() {

@@ -57,8 +57,6 @@
         return this.cities.filter(a => a.excCount !== 1)
       },
       ...mapGetters({
-        loading: 'shared/loading',
-        user: 'user/user',
         cities: 'city/cities',
         excursions: 'excursion/excursions',
       })
