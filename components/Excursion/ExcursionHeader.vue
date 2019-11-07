@@ -6,7 +6,7 @@
            :key="i">
         <img v-lazy="item.img"
              alt=""
-             class="mr-3">
+             class="mr-2">
         <div>
           <div class="font-weight-bold">{{item.title}}</div>
           <div>{{item.value}} {{item.valueLang}}</div>

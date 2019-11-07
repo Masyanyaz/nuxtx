@@ -5,11 +5,11 @@
         <span class="footer-top-element">{{$t('Footer.needHelp.title')}}</span>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">{{$t('Footer.needHelp.phone.title')}}</span>
-          <span class="footer-social-elements-bold">{{$t('Footer.needHelp.phone.number')}}</span>
+          <a class="footer-social-elements-bold" :href="`tel:${$t('Footer.needHelp.phone.number')}`">{{$t('Footer.needHelp.phone.number')}}</a>
         </div>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">{{$t('Footer.needHelp.email.title')}}</span>
-          <span class="footer-social-elements-bold">{{$t('Footer.needHelp.email.email')}}</span>
+          <a class="footer-social-elements-bold" :href="`mailto:${$t('Footer.needHelp.email.email')}`">{{$t('Footer.needHelp.email.email')}}</a>
         </div>
         <div class="footer-social-elements">
           <span class="footer-social-elements-small">{{$t('Footer.needHelp.social')}}</span>
@@ -62,8 +62,8 @@
       </div>
     </div>
     <footer style="border-top: 1px solid #EAEEF3;">
-      <div class="d-flex justify-space-between align-center copyright container py-3">
-        <div>
+      <div class="d-flex justify-space-between align-center copyright container py-4">
+        <div class="text-center">
           Copyright © 2019 by Russie Autrement
         </div>
         <div class="d-flex justify-space-between align-center">
@@ -191,8 +191,9 @@
       }
 
       &-bold {
-        font-size: calc(16px + 2 * ((100vw) / 500));
+        font-size: calc(15px + 2 * ((100vw) / 500));
         color: #000;
+        text-decoration: none;
       }
     }
 

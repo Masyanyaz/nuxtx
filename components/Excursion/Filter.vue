@@ -45,8 +45,8 @@
         </v-chip-group>
       </div>
       <div class="mr-5">
-        <div class="d-flex align-center mb-4">
-          <img src="/svg/duration.svg" alt="">
+        <div class="d-flex align-center mb-4" style="margin-left: -4px;">
+          <img src="/svg/euro.svg" alt="" width="24" height="24">
           <div class="mx-3"><b>{{$t('commonWords.price')}}</b></div>
         </div>
         <div class="d-flex align-center" style="width: 200px;">
@@ -95,18 +95,18 @@
       temporary
       width="350"
     >
-      <div class="d-flex justify-space-between flex-column py-2 px-5">
-        <div class="mr-3 mb-5">
+      <div class="d-flex justify-space-between flex-column py-3 px-5">
+        <v-btn text class="mb-5" @click.stop="drawer = !drawer">x</v-btn>
+        <div class="mb-5">
           <div class="d-flex align-center">
             <img src="/svg/groupSize.svg" alt="">
             <div class="ml-3 mr-3"><b>{{$t('commonWords.groupSize.title')}}</b></div>
           </div>
           <v-chip-group
-            style="width: 350px; margin-left: -20px;"
+            style="width: 300px; margin-left: -20px;"
             show-arrows
             v-model="groupSizeFilter"
             active-class="filter-number"
-            class=""
             mandatory
           >
             <v-chip
@@ -134,6 +134,7 @@
               v-for="(tag, i) in timeItems"
               :key="i"
               :value="tag.value"
+              style="font-size: calc(11px + 2 * ((100vw) / 1000))"
             >
               {{ tag.text }}
             </v-chip>
@@ -141,10 +142,10 @@
         </div>
         <div class="mr-5 mb-5">
           <div class="d-flex align-center mb-4">
-            <img src="/svg/duration.svg" alt="">
+            <img src="/svg/euro.svg" alt="" width="24" height="24">
             <div class="mx-3"><b>{{$t('commonWords.price')}}</b></div>
           </div>
-          <div class="d-flex align-center" style="width: 200px;">
+          <div class="d-flex align-center" style="width: 200px; margin-left: 4px;">
             <v-range-slider
               class="slider"
               messages=""

@@ -78,9 +78,9 @@
                     <span style="font-size: calc(15px + 2 * ((100vw) / 300)); font-weight: 500;">
                       €{{exc.price}}
                     </span>
-                    <span style="font-size: calc(11px + 2 * ((100vw) / 900));">
+                    <span style="font-size: calc(9px + 2 * ((100vw) / 900));">
                       / {{$t('commonWords.perPerson')}}
-                      <span class="nobr d-block" style="font-size: calc(9px + 2 * ((100vw) / 900));">
+                      <span class="nobr d-block">
                         {{$t('Excursion.Cards.perGroup.1')}} {{exc.pricePerPerson}} {{$t('Excursion.Cards.perGroup.2')}}
                       </span>
                     </span>

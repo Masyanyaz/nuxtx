@@ -7,17 +7,28 @@
       app
       temporary
     >
-      <v-list dense>
+      <v-list dense class="py-0">
+        <v-btn text
+               class="d-flex justify-start"
+               width="100%"
+               height="51"
+               style="font-size: 20px; font-weight: 300; background-color: rgba(0,0,0,.1);"
+               @click.stop="drawer = !drawer">
+          <
+        </v-btn>
+
         <v-list-item
           v-for="(link, i) in links"
           :key="i"
           link
           :to="$i18n.path(`${link.url}`)"
+          class="px-0"
         >
-          <v-list-item-content>
-            <v-list-item-title>
+          <v-list-item-content class="py-0">
+            <v-list-item-title class="px-5 py-4">
               {{ link.title }}
             </v-list-item-title>
+            <v-divider />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -30,13 +41,13 @@
         class="d-flex d-md-none"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-        <nuxt-link
-          exact
-          class="mr-5"
-          :to="$i18n.path('')"
-        >
-          <img src="/svg/logo.svg" alt="" style="margin-bottom: -7px;" />
-        </nuxt-link>
+      <nuxt-link
+        exact
+        class="mr-5"
+        :to="$i18n.path('')"
+      >
+        <img src="/svg/logo.svg" alt="" style="margin-bottom: -7px;" />
+      </nuxt-link>
       <v-toolbar-items class="d-none d-md-flex pl-0 pr-0">
         <v-btn
           text

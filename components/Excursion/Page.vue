@@ -21,10 +21,11 @@
             {{$t('commonWords.morePhoto')}}
           </v-btn>
         </div>
-        <div v-if="showGalery" class="galery align-center justify-center d-flex"
+        <div v-if="showGalery"
+             class="galery align-center justify-center d-flex"
              @click.self="showGalery = !showGalery">
-          <Galery :items="exc.galery" style="width: 100%; max-width: 990px; height: 100%; max-height: 660px; position:
-          absolute;"/>
+          <Galery :items="exc.galery" style="max-width: 990px; max-height: 660px;" />
+          <v-btn text style="position: absolute; bottom: 0; width: 100%; z-index: 99999; height: 70px; background-color: rgba(0,0,0,.5)" @click="showGalery = !showGalery">x</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -32,10 +33,10 @@
       <v-layout>
         <v-flex xs12>
           <h1>{{exc.h1}}</h1>
-          <ExcursionHeader :exc="exc"/>
+          <ExcursionHeader :exc="exc" />
 
           <h2>{{$t('Excursion.Page.overview')}}</h2>
-          <div v-html="exc.detailText"/>
+          <div v-html="exc.detailText" />
           <div class="hr" v-if="exc.priceList">
             <h2>{{$t('Excursion.Page.tablePrice')}}</h2>
             <v-layout>
@@ -99,17 +100,17 @@
         </v-flex>
       </v-layout>
       <div class="d-none d-md-block fix-stop ml-5" style="width: 270px; min-width: 270px;">
-        <Form class="form" :price="exc.price"/>
+        <Form class="form" :price="exc.price" />
       </div>
     </div>
     <v-container class="hr">
       <v-layout row v-if="excursions.length">
         <v-flex xs12>
-          <h2 class="d-flex justify-center">{{$t('Excursion.Page.alsoLike')}}</h2>
+          <h2 class="d-flex justify-center text-center">{{$t('Excursion.Page.alsoLike')}}</h2>
         </v-flex>
       </v-layout>
     </v-container>
-    <ExcursionCards :excursions="excursions"/>
+    <ExcursionCards :excursions="excursions" />
   </div>
 </template>
 
@@ -135,6 +136,11 @@
       Galery: () => import('~/components/Galery'),
       ExcursionEdit: () => import('~/components/Excursion/ExcursionEdit'),
       Form: () => import("~/components/Form")
+    },
+    watch: {
+      showGalery() {
+        this.showGalery ? document.querySelector('html').style.overflow = 'hidden' : document.querySelector('html').style.overflow = 'auto'
+      },
     },
     computed: {
       ...mapGetters({
@@ -188,6 +194,7 @@
           window.addEventListener('scroll', this.autoScrollForm)
         }
         this.numberOfWidth = this.sizeWindow()
+
       }
     },
     beforeDestroy() {
