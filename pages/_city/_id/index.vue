@@ -1,6 +1,6 @@
 <template>
   <div v-if="isExc">
-    <ExcursionPage :exc="exc" :excursions="excursions"/>
+    <ExcursionPage :exc="exc"/>
   </div>
   <div v-else>
     <CityPage :city="city"/>
@@ -17,8 +17,7 @@
       const url = {
         language: store.state.locale,
         city_url: params.city,
-        id: params.id,
-        category_url: !params.id ? '.*' : params.id !== 'all' ? params.id : '.*'
+        id: params.id
       };
       query.price_min ? url.price_min = query.price_min : false;
       query.price_max ? url.price_max = query.price_max : false;
@@ -31,8 +30,11 @@
 
         if (isExc) {
           let exc = await store.getters['excursion/excByUrl'](params.id)
+          await store.dispatch('excursion/fetchExcursions', url)
           return {exc, isExc}
         }
+
+        url.category_url = !params.id ? '.*' : params.id !== 'all' ? params.id : '.*'
 
         if (store.getters['filter/filters'].length === 0) {
           await store.dispatch('filter/fetchFilters', url)

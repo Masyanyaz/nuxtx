@@ -104,13 +104,13 @@
       </div>
     </div>
     <v-container class="hr">
-      <v-layout row v-if="excursions.length">
+      <v-layout v-if="excursions.length">
         <v-flex xs12>
           <h2 class="d-flex justify-center text-center">{{$t('Excursion.Page.alsoLike')}}</h2>
         </v-flex>
       </v-layout>
     </v-container>
-    <ExcursionCards :excursions="excursions" />
+    <ExcursionCards :excursions="excursionsFilter" />
   </div>
 </template>
 
@@ -118,7 +118,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    props: ['exc', 'excursions'],
+    props: ['exc'],
     data() {
       return {
         showGalery: false,
@@ -143,9 +143,16 @@
       },
     },
     computed: {
+      excursionsFilter() {
+        if (process.browser) {
+          return this.excursions.filter((a, i) => i < this.sizeWindow() && a.url !== this.exc.url)
+        }
+      },
+
       ...mapGetters({
         cities: 'city/cities',
-        isUserloggedIn: 'user/isUserloggedIn'
+        isUserloggedIn: 'user/isUserloggedIn',
+        excursions: 'excursion/excursions',
       })
     },
     methods: {

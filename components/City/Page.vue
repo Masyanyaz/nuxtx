@@ -102,15 +102,15 @@
     },
 
     created() {
-      this.$router.push({
-        path: this.$router.path,
-        query: {
-          price_min: this.query.price_min || this.$route.query.price_min,
-          price_max: this.query.price_max || this.$route.query.price_max,
-          group_min: this.query.group_min || this.$route.query.group_min,
-          time_group: this.query.time_group || this.$route.query.time_group
-        }
-      })
+      // this.$router.push({
+      //   path: this.$router.path,
+      //   query: {
+      //     price_min: this.query.price_min || this.$route.query.price_min,
+      //     price_max: this.query.price_max || this.$route.query.price_max,
+      //     group_min: this.query.group_min || this.$route.query.group_min,
+      //     time_group: this.query.time_group || this.$route.query.time_group
+      //   }
+      // })
     },
     computed: {
       filter() {

@@ -21,7 +21,8 @@
       "persons": "personnes"
     },
     "price": "Prix",
-    "perPerson": "par personne"
+    "perPerson": "par personne",
+    "request": "Sur demande"
   },
   "Excursion": {
     "ExcursionHeader": {
@@ -34,11 +35,13 @@
         "2": "participants"
       }
     },
-
-    "overview": "Descriptif",
-    "included": "Inclus",
-    "exclude": "Pas inclus",
-    "alsoLike": "Vous pourriez aussi aimer"
+    "Page": {
+      "overview": "Descriptif",
+      "included": "Inclus",
+      "excluded": "Pas inclus",
+      "alsoLike": "Vous pourriez aussi aimer",
+      "tablePrice": "Tarifs"
+    }
   },
   "City": {
 
@@ -61,15 +64,15 @@
   },
   "Links": {
     "activities": {
-      "name": "Activités",
+      "title": "Activités",
       "url": "activities"
     },
     "destinations": {
-      "name": "Destinations",
+      "title": "Destinations",
       "url": "destinations"
     },
     "about": {
-      "name": "Qui sommes nous",
+      "title": "Qui sommes nous",
       "url": "qui-sommes-nous"
     },
     "team": {
@@ -81,11 +84,11 @@
       "url": "blog"
     },
     "contact": {
-      "name": "Contacts",
+      "title": "Contacts",
       "url": "contacts"
     },
     "faq": {
-      "name": "FAQ",
+      "title": "FAQ",
       "url": "faq"
     },
     "legal": {
@@ -94,7 +97,7 @@
     },
     "privacy": {
       "title": "Politique de confidentialité",
-      "url": "privacy"
+      "url": "politique-de-confidentialite"
     },
     "cookies": {
       "title": "Cookies",

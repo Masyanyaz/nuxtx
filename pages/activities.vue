@@ -10,7 +10,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  const ExcursionCards = () => import("~/components/Excursion/ExcursionCards");
 
   export default {
     head() {
@@ -31,7 +30,7 @@
       excursions: 'excursion/excursions',
     }),
     components: {
-      ExcursionCards
+      ExcursionCards: () => import("~/components/Excursion/ExcursionCards")
     }
   }
 </script>

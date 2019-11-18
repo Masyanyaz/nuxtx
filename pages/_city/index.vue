@@ -2,7 +2,7 @@
   <div>
     <v-card-actions v-if="isUserloggedIn" style="position: absolute; top: 0; right: 0;">
       <v-spacer></v-spacer>
-      <CityEdit :city="city"></CityEdit>
+      <CityEdit></CityEdit>
     </v-card-actions>
     <v-layout>
       <v-flex xs12>
@@ -61,7 +61,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    async asyncData({store, params}) {
+    async asyncData({store, params, error}) {
       const url = {
         language: store.state.locale,
         city_url: params.city,
@@ -69,17 +69,19 @@
         sort: 'desc',
         limit: 8
       };
-      if (store.getters['filter/category'].length === 0 ||
-        store.getters['city/cityByUrl'](params.city).url !== params.city) {
+      if (store.getters['filter/category'].length === 0 || store.getters['city/cityByUrl'](params.city).url !== params.city) {
         await store.dispatch('filter/fetchCategory', url)
       }
 
-      if (store.getters['city/city'].length === 0 ||
-        store.getters['city/cityByUrl'](params.city).url !== params.city) {
+      if (store.getters['city/city'].length === 0 || store.getters['city/cityByUrl'](params.city).url !== params.city) {
         await store.dispatch('city/fetchCity', url)
       }
       await store.dispatch('excursion/fetchExcursions', url)
       let city = await store.getters['city/cityByUrl'](params.city)
+
+      if(!city) {
+        return error({statusCode: 404})
+      }
 
       return {city}
     },

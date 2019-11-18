@@ -316,8 +316,8 @@
                 rules: v => !!v || 'Is required'
               },
               city: {
-                itemName: 'city',
-                model: this.exc.city,
+                itemName: 'images.js',
+                model: this.exc.images,
                 required: true,
                 select: true,
                 items: [],
@@ -354,7 +354,7 @@
         this.images.galery.image.forEach(img => {
           formData.append('galery', img);
         })
-        formData.append('city', this.tabs.section.item.city.model.url);
+        formData.append('images.js', this.tabs.section.item.city.model.url);
         formData.append('city_id', this.tabs.section.item.city.model.value);
         formData.append('detailText', this.tabs.detail.item.detailText.model);
         formData.append('included', this.tabs.detail.item.included.model);

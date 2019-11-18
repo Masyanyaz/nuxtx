@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const upload = require('express-fileupload');
 const {Nuxt, Builder} = require('nuxt');
 const nodemailer = require('nodemailer');
@@ -13,64 +12,17 @@ app.use(bodyParser.json());
 
 app.use(upload());
 
-const renameAndMove = (req, name, folder, i = '') => {
-  console.log(req)
-  switch (folder) {
-    case 'cities':
-      folder = `${folder}/${req.body.lang}`;
-      break;
-    case 'excursion':
-      folder = `${folder}/${req.body.city_id}`;
-      break;
-    case 'category':
-      folder = `${folder}/${req.body.lang}`;
-      break;
-  }
-  let file = name === 'galery' ? req.files[name][i] : req.files[name];
-  name = name.replace('Image', '');
-  let filename = file.name;
-  let fileExt = filename.slice(filename.lastIndexOf('.'));
-  filename = name === 'galery' ? `${req.body.url}-${i}${fileExt}` : `${name}-${req.body.url}${fileExt}`;
-  let path = name === 'galery' ? `/image/${folder}/${req.body.url}/${name}/` : `/image/${folder}/${req.body.url}/`;
-  let filePath = path + filename;
-  fs.mkdirSync('./static' + path, {recursive: true}, err => {
-    throw err;
-  });
-  file.mv('./static' + filePath, err => {
-    if (err) throw err;
-  });
-  return filePath;
-}
+const city = require('./api/city');
+
+app.route('/admin/api/allcity/')
+   .get(city.getAllCities)
+
+app.route('/admin/api/city/:lang?')
+   .get(city.get)
+   .post(city.addCity);
 
 // add city
-app.post('/admin/api/addcity', (req, res) => {
-  let city = {
-    title: req.body.title.trim(),
-    description: req.body.description.trim(),
-    h1: req.body.h1.trim(),
-    url: req.body.url.trim(),
-    lang: req.body.lang,
-    name: req.body.name.trim(),
-    popular: req.body.popular,
-  };
-
-  let galery = [];
-  if (req.files.galery) {
-    for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove(req,'galery', 'cities',`${i}`));
-    }
-  };
-
-  city.previewImage = renameAndMove(req,'previewImage', 'cities');
-  city.mainImage = renameAndMove(req,'mainImage', 'cities');
-  city.galery = JSON.stringify(galery);
-
-  let sql = 'INSERT INTO cities SET ?';
-  let query = db.query(sql, city, (err, result) => {
-    if (err) throw err;
-    res.send('Form submitted')
-  });
-});
+app.post('/admin/api/addcity', city.addCity);
 
 // update city
 app.post('/admin/api/updatecity/:id', (req, res) => {
@@ -88,13 +40,13 @@ app.post('/admin/api/updatecity/:id', (req, res) => {
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove(req,'galery', 'cities',`${i}`));
+      galery.push(renameAndMove(req, 'galery', 'cities', `${i}`));
     }
     ;
   }
 
-  city.previewImage = renameAndMove(req,'previewImage', 'cities');
-  city.mainImage = renameAndMove(req,'mainImage', 'cities');
+  city.previewImage = renameAndMove(req, 'previewImage', 'cities');
+  city.mainImage = renameAndMove(req, 'mainImage', 'cities');
   city.galery = JSON.stringify(galery);
 
   let sql = `UPDATE cities SET ? WHERE id = '${req.params.id}'`;
@@ -138,12 +90,13 @@ app.post('/admin/api/addexcursion', (req, res) => {
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove(req,'galery', 'excursion',`${i}`));
+      galery.push(renameAndMove(req, 'galery', 'excursion', `${i}`));
     }
-  };
+  }
+  ;
 
-  exc.previewImage = renameAndMove(req,'previewImage', 'excursion');
-  exc.mainImage = renameAndMove(req,'mainImage', 'excursion');
+  exc.previewImage = renameAndMove(req, 'previewImage', 'excursion');
+  exc.mainImage = renameAndMove(req, 'mainImage', 'excursion');
   exc.galery = JSON.stringify(galery);
 
   let sql = 'INSERT INTO excursion SET ?';
@@ -173,7 +126,7 @@ app.post('/admin/api/addexcursion', (req, res) => {
 // update excursion
 app.post('/admin/api/updateexcursion/:id', (req, res) => {
   let exc = {
-    city: req.body.city,
+    city: req.body.images,
     city_id: req.body.city_id,
     title: req.body.title.trim(),
     description: req.body.description.trim(),
@@ -194,12 +147,13 @@ app.post('/admin/api/updateexcursion/:id', (req, res) => {
 
   if (req.files.galery) {
     for (let i = 0; i < req.files.galery.length; i++) {
-      galery.push(renameAndMove(req,'galery', 'excursion',`${i}`));
+      galery.push(renameAndMove(req, 'galery', 'excursion', `${i}`));
     }
-  };
+  }
+  ;
 
-  exc.previewImage = renameAndMove(req,'previewImage', 'excursion');
-  exc.mainImage = renameAndMove(req,'mainImage', 'excursion');
+  exc.previewImage = renameAndMove(req, 'previewImage', 'excursion');
+  exc.mainImage = renameAndMove(req, 'mainImage', 'excursion');
   exc.galery = JSON.stringify(galery);
 
   let sql = `UPDATE excursion SET ? WHERE id = '${req.params.id}'`;
@@ -232,6 +186,7 @@ app.get('/admin/api/getcities/:lang', (req, res) => {
             LEFT JOIN excursion
             ON cities.id = excursion.city_id
             WHERE cities.lang = '${req.params.lang}'
+            AND excursion.id > 0
             GROUP BY cities.id
             
             UNION
@@ -458,7 +413,7 @@ app.get('/admin/api/excursuinorfilter/:lang/:id', (req, res) => {
     if (!result.length) {
       res.sendStatus(404);
     } else {
-      if(result[0].isExc === 'true') {
+      if (result[0].isExc === 'true') {
         let sql = `SELECT excursion.id, excursion.url, excursion.name, excursion.h1, excursion.title, excursion.description, excursion.price, excursion.pricePerPerson, excursion.priceList,
             excursion.time, excursion.mainImage, excursion.galery, excursion.detailText, excursion.included, excursion.excluded, excursion.groupSize
             FROM excursion

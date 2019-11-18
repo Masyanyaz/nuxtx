@@ -1,32 +1,7 @@
 <template>
-  <div>
-    <v-btn
-      class="warning mr-2"
-      text
-      @click="openEditWindow"
-    >
-      Edit
-    </v-btn>
-    <v-btn
-      class="error mr-2"
-      text
-      @click="deleteCity"
-    >
-      Dalete
-    </v-btn>
-    <v-dialog
-      width="700px"
-      v-model="modal"
-      v-if="modal"
-    >
-      <v-container style="background-color: #fff;">
-        <v-layout>
-          <NewAddForm :headerNames="headerNames" :tabItems="tabItems" :createAd="updatedCity"/>
-        </v-layout>
-        {{city}}
-      </v-container>
-    </v-dialog>
-  </div>
+  <v-layout>
+    <NewAddForm :headerNames="headerNames" :tabItems="tabItems" :createAd="createAd"/>
+  </v-layout>
 </template>
 
 <script>
@@ -35,16 +10,8 @@
   export default {
     data() {
       return {
-        modal: false,
         headerNames: ['Основное', 'Мета теги', 'Раздел'],
-      }
-    },
-    computed: {
-      city() {
-        return this.$store.getters['city/cityByUrl'](this.$route.params.city)
-      },
-      tabItems() {
-        return {
+        tabItems: {
           main: {
             russianName: {
               itemName: 'russianName',
@@ -121,14 +88,16 @@
             }
           }
           ,
-        }
-      },
+        },
+      }
+    },
+    computed: {
       ...mapGetters({
-        images: 'admin/images/images'
+        images: 'admin/images/images',
       })
     },
     methods: {
-      updatedCity() {
+      async createAd() {
         let formData = new FormData();
         formData.append('previewImage', this.images.previewImage.image);
         formData.append('mainImage', this.images.mainImage.image);
@@ -144,35 +113,11 @@
         formData.append('russianName', this.tabItems.main.russianName.model);
         formData.append('popular', this.tabItems.main.popular.model);
 
-        this.$axios.post(`/admin/api/updatecity/${this.city.id}`, formData)
-          .then(res => {
-            this.isSend = true;
-            this.msg = res.data
-          })
-          .catch(e => {
-            this.isSend = true;
-            this.msg = e
-          })
-      },
-      deleteCity() {
-        let accept = confirm(`Удалить ${this.city.name}?`);
-        if (accept) {
-          this.$axios.post(`/admin/api/deletecity/${this.city.id}`)
-            .then(() => {
-              console.log('deleted')
-            })
-            .catch(e => {
-              throw e;
-            })
+        await this.$store.dispatch('city/createCity', formData);
+        try {
+        } catch (e) {
+          throw e;
         }
-      },
-      async openEditWindow() {
-        const url = {
-          language: this.$store.state.locale,
-          city_url: this.$route.params.city,
-        };
-        await this.$store.dispatch('city/fetchFullCity', url)
-        this.modal = !this.modal;
       }
     },
     components: {

@@ -34,45 +34,47 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar height="80"
-               style="box-shadow: none; border-bottom: 1px solid #EAEEF3; background-color: inherit"
-               class="container d-flex align-center">
-      <v-app-bar-nav-icon
-        class="d-flex d-md-none"
-        @click.stop="drawer = !drawer"
-      ></v-app-bar-nav-icon>
-      <nuxt-link
-        exact
-        class="mr-5"
-        :to="$i18n.path('')"
-      >
-        <img src="/svg/logo.svg" alt="" style="margin-bottom: -7px;" />
-      </nuxt-link>
-      <v-toolbar-items class="d-none d-md-flex pl-0 pr-0">
-        <v-btn
-          text
-          v-for="(link, i) in links"
-          :key="i"
-          :to="$i18n.path(`${link.url}`)"
+    <div style="border-bottom: 1px solid #EAEEF3;">
+      <v-app-bar height="80"
+                 style="box-shadow: none; background-color: inherit"
+                 class="container d-flex align-center">
+        <v-app-bar-nav-icon
+          class="d-flex d-md-none"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+        <nuxt-link
+          exact
+          class="mr-5"
+          :to="$i18n.path('')"
         >
-          {{link.title}}
-        </v-btn>
-        <v-btn
-          text
-          v-if="isUserloggedIn"
-          :to="$i18n.path('admin')"
-        >
-          Ad new
-        </v-btn>
-        <v-btn
-          text
-          v-if="isUserloggedIn"
-          @click="onLogout"
-        >
-          Logout
-        </v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
+          <img src="/svg/logo.svg" alt="" style="margin-left: -16px;" />
+        </nuxt-link>
+        <v-toolbar-items class="d-none d-md-flex pl-0 pr-0">
+          <v-btn
+            text
+            v-for="(link, i) in links"
+            :key="i"
+            :to="$i18n.path(`${link.url}`)"
+          >
+            {{link.title}}
+          </v-btn>
+          <v-btn
+            text
+            v-if="isUserloggedIn"
+            :to="$i18n.path('admin')"
+          >
+            Ad new
+          </v-btn>
+          <v-btn
+            text
+            v-if="isUserloggedIn"
+            @click="onLogout"
+          >
+            Logout
+          </v-btn>
+        </v-toolbar-items>
+      </v-app-bar>
+    </div>
   </div>
 </template>
 

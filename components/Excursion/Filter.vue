@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-container class="align-center justify-space-between py-0 d-md-flex d-none">
-      <div class="mr-3">
+      <div class="mr-0">
         <div class="d-flex align-center">
-          <img src="/svg/groupSize.svg" alt="">
+          <img v-lazy="img.groupSize" alt="">
           <div class="ml-3 mr-3"><b>{{$t('commonWords.groupSize.title')}}</b></div>
         </div>
         <v-chip-group
@@ -27,7 +27,7 @@
       </div>
       <div class="mr-3">
         <div class="d-flex align-center">
-          <img src="/svg/duration.svg" alt="">
+          <img v-lazy="img.duration" alt="">
           <div class="ml-3 mr-3"><b>{{$t('commonWords.duration.title')}}</b></div>
         </div>
         <v-chip-group
@@ -39,6 +39,7 @@
             v-for="(tag, i) in timeItems"
             :key="i"
             :value="tag.value"
+            class="mr-1"
           >
             {{ tag.text }}
           </v-chip>
@@ -46,10 +47,10 @@
       </div>
       <div class="mr-5">
         <div class="d-flex align-center mb-4" style="margin-left: -4px;">
-          <img src="/svg/euro.svg" alt="" width="24" height="24">
+          <img v-lazy="img.euro" alt="" width="24" height="24">
           <div class="mx-3"><b>{{$t('commonWords.price')}}</b></div>
         </div>
-        <div class="d-flex align-center" style="width: 200px;">
+        <div class="d-flex align-center" style="width: 180px;">
           <v-range-slider
             class="slider"
             messages=""
@@ -99,7 +100,7 @@
         <v-btn text class="mb-5" @click.stop="drawer = !drawer">x</v-btn>
         <div class="mb-5">
           <div class="d-flex align-center">
-            <img src="/svg/groupSize.svg" alt="">
+            <img v-lazy="img.groupSize" alt="">
             <div class="ml-3 mr-3"><b>{{$t('commonWords.groupSize.title')}}</b></div>
           </div>
           <v-chip-group
@@ -122,7 +123,7 @@
         </div>
         <div class="mb-5">
           <div class="d-flex align-center">
-            <img src="/svg/duration.svg" alt="">
+            <img v-lazy="img.duration" alt="">
             <div class="ml-3 mr-3"><b>{{$t('commonWords.duration.title')}}</b></div>
           </div>
           <v-chip-group
@@ -142,7 +143,7 @@
         </div>
         <div class="mr-5 mb-5">
           <div class="d-flex align-center mb-4">
-            <img src="/svg/euro.svg" alt="" width="24" height="24">
+            <img v-lazy="img.euro" alt="" width="24" height="24">
             <div class="mx-3"><b>{{$t('commonWords.price')}}</b></div>
           </div>
           <div class="d-flex align-center" style="width: 200px; margin-left: 4px;">
@@ -200,6 +201,11 @@
           min: this.city.price_min,
           max: this.city.price_max,
           value: [this.city.price_min, this.city.price_max]
+        },
+        img: {
+          groupSize: '/svg/groupSize.svg',
+          duration: '/svg/duration.svg',
+          euro: '/svg/euro.svg'
         }
       }
     },
@@ -226,13 +232,13 @@
           price_max: this.priceFilter.value[1],
           group_min: this.groupSizeFilter,
           category_url: !this.$route.params.id ? '.*' : this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
-        }
-        this.timeFilter.length !== 0 ? url.time_group = JSON.stringify(this.timeFilter) : false
+        };
+        this.timeFilter.length !== 0 ? url.time_group = JSON.stringify(this.timeFilter) : false;
 
-        await this.$store.dispatch('filter/fetchFilters', url)
-        await this.$store.dispatch('excursion/fetchExcursions', url)
-        await this.$store.dispatch('filter/createQuery', url)
-        let query = this.$store.getters['filter/query']
+        await this.$store.dispatch('filter/fetchFilters', url);
+        await this.$store.dispatch('excursion/fetchExcursions', url);
+        await this.$store.dispatch('filter/createQuery', url);
+        let query = this.$store.getters['filter/query'];
 
         this.$router.push({
           query: {
@@ -246,16 +252,16 @@
       async isReset() {
         this.cardFilter = null;
 
-        this.$store.commit('filter/deleteQuery')
+        this.$store.commit('filter/deleteQuery');
         const url = {
           language: this.$store.state.locale,
           city_url: this.$route.params.city,
           category_url: this.$route.params.id !== 'all' ? this.$route.params.id : '.*'
         }
-        await this.$store.dispatch('filter/fetchFilters', url)
-        await this.$store.dispatch('excursion/fetchExcursions', url)
+        await this.$store.dispatch('filter/fetchFilters', url);
+        await this.$store.dispatch('excursion/fetchExcursions', url);
         this.timeFilter = [];
-        this.groupSizeFilter = this.city.group_min;
+        this.groupSizeFilter = 4;
         this.priceFilter = {
           min: this.city.price_min,
           max: this.city.price_max,

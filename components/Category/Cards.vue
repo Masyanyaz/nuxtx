@@ -56,7 +56,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    props: ['category', 'city'],
+    props: ['category'],
     computed: mapGetters({
       loading: 'shared/loading'
     }),
