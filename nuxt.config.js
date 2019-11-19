@@ -1,6 +1,4 @@
 const colors = require('vuetify/es5/util/colors').default;
-const shrinkRay = require('shrink-ray-current');
-// import shrinkRay from 'shrink-ray-current';
 
 module.exports = {
   mode: 'universal',
@@ -76,9 +74,6 @@ module.exports = {
     },
     optionsPath: '~/plugins/vuetify.options.js',
     treeShake: process.env.NODE_ENV === 'production'
-  },
-  render: {
-    compressor: shrinkRay()
   },
   /*
   ** Build configuration
