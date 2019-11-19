@@ -1,21 +1,3 @@
-import * as fb from 'firebase/app'
-import 'firebase/database'
-import 'firebase/storage'
-import {db} from "../plugins/firebase";
-
-class City {
-  constructor(h1, name, url, title, description, language, imageSrc = '', dataCreated = Date.now()) {
-    this.h1 = h1
-    this.name = name
-    this.url = url
-    this.title = title
-    this.description = description
-    this.language = language
-    this.imageSrc = imageSrc
-    this.dataCreated = dataCreated
-  }
-}
-
 export const state = () => ({
   cities: [],
   city: []
@@ -124,20 +106,6 @@ export const actions = {
                 // commit('shared/setLoading', false, {root: true})
                 throw e;
               })
-  },
-  async updateCity({commit}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
-
-    try {
-      await fb.database().ref('cities').child(payload.id).update(payload)
-      commit('updateCity', payload)
-      // commit('setLoading', false)
-    } catch (error) {
-      // commit('setError', error.message)
-      // commit('setLoading', false)
-      throw error
-    }
   }
 }
 

@@ -1,7 +1,3 @@
-import * as fb from 'firebase/app'
-import 'firebase/database'
-import 'firebase/storage'
-
 export const state = () => ({
   category: [],
   filters: [],

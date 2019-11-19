@@ -58,6 +58,7 @@
 </script>
 
 <style scoped lang="scss">
+  //TODO Переделать картинки с бэкграунда на v-lazy
   .rev-item {
     border: 1px solid #D7DCE3;
     border-radius: 3px;

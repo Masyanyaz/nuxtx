@@ -1,7 +1,3 @@
-import * as fb from 'firebase/app'
-import 'firebase/database'
-import 'firebase/storage'
-
 export const state = () => ({
   excursions: [],
   excursion: []
@@ -43,15 +39,15 @@ export const actions = {
     commit('shared/setLoading', true, {root: true})
 
     await this.$axios.post('/admin/api/addexcursion', payload)
-      .then(res => {
-        commit('shared/setError', res.data, {root: true})
-        commit('shared/setLoading', false, {root: true})
-      })
-      .catch(e => {
-        commit('shared/setError', e.message, {root: true})
-        commit('shared/setLoading', false, {root: true})
-        throw e;
-      })
+              .then(res => {
+                commit('shared/setError', res.data, {root: true})
+                commit('shared/setLoading', false, {root: true})
+              })
+              .catch(e => {
+                commit('shared/setError', e.message, {root: true})
+                commit('shared/setLoading', false, {root: true})
+                throw e;
+              })
   },
   async fetchExcursions({commit}, payload) {
     console.log('fetchExcursions')
@@ -62,15 +58,15 @@ export const actions = {
       url += `${key}=${payload[key]}&`
     }
     await this.$axios.get(`/admin/api/getexcursions/${payload.language}${url}`)
-      .then((data) => {
-        commit('loadExcursions', data.data)
-        commit('shared/setLoading', false, {root: true})
-      })
-      .catch(e => {
-        commit('shared/setError', e.message, {root: true})
-        commit('shared/setLoading', false, {root: true})
-        throw e;
-      })
+              .then((data) => {
+                commit('loadExcursions', data.data)
+                commit('shared/setLoading', false, {root: true})
+              })
+              .catch(e => {
+                commit('shared/setError', e.message, {root: true})
+                commit('shared/setLoading', false, {root: true})
+                throw e;
+              })
   },
   async fetchExcursion({commit}, payload) {
     console.log('fetchExcursion')
@@ -80,31 +76,17 @@ export const actions = {
     for (let key in payload) {
       url += `${key}=${payload[key]}&`
     }
-    await this.$axios.get(`/admin/api/getexcursion/${payload.language}${url.slice(0,-1)}`)
-      .then((data) => {
-        commit('loadExcursion', data.data)
-        // commit('shared/setLoading', false, {root: true})
+    await this.$axios.get(`/admin/api/getexcursion/${payload.language}${url.slice(0, -1)}`)
+              .then((data) => {
+                commit('loadExcursion', data.data)
+                // commit('shared/setLoading', false, {root: true})
 
-      })
-      .catch(e => {
-        commit('shared/setError', e.message, {root: true})
-        // commit('shared/setLoading', false, {root: true})
-        throw e;
-      })
-  },
-  async updateExcursion({commit}, payload) {
-    // commit('clearError')
-    // commit('setLoading', true)
-
-    try {
-      await fb.database().ref('ads').child(payload.id).update(payload)
-      commit('updateExcursion', payload)
-      // commit('setLoading', false)
-    } catch (error) {
-      // commit('setError', error.message)
-      // commit('setLoading', false)
-      throw error
-    }
+              })
+              .catch(e => {
+                commit('shared/setError', e.message, {root: true})
+                // commit('shared/setLoading', false, {root: true})
+                throw e;
+              })
   }
 }
 

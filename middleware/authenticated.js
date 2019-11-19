@@ -22,7 +22,6 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
 
   const user = store.getters['user/user'];
   const blockedRoute = /\/admin\/*/g;
-  const Route = /\/admin\/*/g;
 
   if (!user && route.path.match(blockedRoute)) {
     redirect('/');
